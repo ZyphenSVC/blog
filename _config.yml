@@ -101,7 +101,7 @@ og_image                 : # Open Graph/Twitter default site image
 social:
   type                   : # Person or Organization (defaults to Person)
   name                   : # If the user or organization name differs from the site's name
-  links: [https://github.com/ZyphenSVC, https://twitter.com/ZyphenSVC, https://open.spotify.com/user/u1td5l8mfiale0719g49k6f0h, ]# An array of links to social media profiles
+  links: [https://github.com/ZyphenSVC, https://twitter.com/ZyphenSVC, https://open.spotify.com/user/u1td5l8mfiale0719g49k6f0h] # An array of links to social media profiles
 
 # Analytics
 analytics:
