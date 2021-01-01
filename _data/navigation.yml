@@ -1,0 +1,10 @@
+# main links
+main:
+  - title: "CTFs"
+    url: /ctfs/
+  - title: "Tags"
+    url: /tags/
+  - title: "Archives"
+    url: /archives/
+  - title: "About"
+    url: /about/
