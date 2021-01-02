@@ -118,7 +118,7 @@ description: "Interested in Cybersecurity attack and defense."
 
 author:
   name             : "Sriaditya Vedantam"
-  avatar           : /assets/images/profilepic.jpg
+  avatar           : /assets/media/profilepic.jpg
   bio              : "Interested in cryptography analysis, web exploitation, and reversing engineering."
   location         : "Georgia, USA"
   email            : sriaditya.vedantam@gmail.com
