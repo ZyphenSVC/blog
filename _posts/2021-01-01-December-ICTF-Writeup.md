@@ -8,7 +8,7 @@ categories:
 - CTFs
 ---
 
-ICTF is a practice competition that does not equate to much except for practice. However, this does not mean they are all easy. These challenges are meant to simulate real ones, usage of websites, terminal, pwning, and so much more. All just for practice with the work and dedication of the board team. They generally release challenges once on the daily and reset the round every month. We have just finished round 5 and equated to 1122 members, of which we have gained almost 400 members in one month. All of which agree is a good community. As I am writing this, I have became a board member along with another player named Jibe to help create challenges. If you would like to join, click on the link below.
+ICTF is a practice competition that does not equate to much except for practice. However, this does not mean they are all easy. These challenges are meant to simulate real ones, usage of websites, terminal, pwning, and so much more. All just for practice with the work and dedication of the board team. They generally release challenges once on the daily and reset the round every month. We have just finished round 5 and equated to 1122 members, of which we have gained almost 500 members in one month. All of which agree is a good community. As I am writing this, I have became a board member along with another player named Jibe to help create challenges. If you would like to join, click on the link below.
 
 > <https://discord.gg/Z4Vn9bw2uX>
 
@@ -97,8 +97,8 @@ In the following link named the "Actual challenge", we get access to [broken1](h
 
 I see a IHDR chunk missing, IDAT chunk messed up, and IEND just gone. So let's fix this using the same technique. For all png challenges such as this one and the future, I utilize this [website](https://en.wikipedia.org/wiki/Portable_Network_Graphics), yes the classic wikipedia. But a lot of the time, you could just use other images as a reference. After fixing this file, we get these flags. 
 
-![Broken0](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/broken0.png)
-![Broken1](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/broken1.png)
+![Broken0](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/December/broken0.png)
+![Broken1](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/December/broken1.png)
 
 > ictf{mag1c_byt35}
 >
@@ -193,7 +193,7 @@ flag = base64.b64decode(important)
 print(flag)
 ```
 
-> [Script](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/123solve.py)
+> [Script](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/December/123solve.py)
 
 After running this, we get this string. 
 
@@ -606,7 +606,7 @@ This is our flag.
 >
 >
 
-This was a difficult one to find the encryption algorithm, however once found, it made it a bit more easier. After figuring out this was a challenge in XMASCTF-2019, I was able to look at previous writeups and their solutions. I then did research into the encryption algorithm called `Rabins Public Key Cryptosystem`. Using this as a [base](https://github.com/duckbill360/Rabin-Public-Key-Cryptosystem/blob/master/Rabin.py), I wrote my [script](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/rabins.png), with many outputs as backup.
+This was a difficult one to find the encryption algorithm, however once found, it made it a bit more easier. After figuring out this was a challenge in XMASCTF-2019, I was able to look at previous writeups and their solutions. I then did research into the encryption algorithm called `Rabins Public Key Cryptosystem`. Using this as a [base](https://github.com/duckbill360/Rabin-Public-Key-Cryptosystem/blob/master/Rabin.py), I wrote my [script](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/December/rabins.png), with many outputs as backup.
 
 This is our flag.
 
@@ -860,7 +860,7 @@ This is our flag.
 >
 >
 
-![Tables](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/Tables.png)
+![Tables](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/December/Tables.png)
 
 Now this did stump many people and with purpose, not to mention that I did hide some easter eggs to throw people off. Of which in this image was the siting of XMAS and SANTA. However the major key I gave to people who made support tickets is this message.
 
@@ -913,7 +913,7 @@ Don't forget to rotate the image!!!
 
 For the second flag we needed to SSTV the second audio as well, called `quack`.
 
-![Spaceman1](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/spaceman2.jpg)
+![Spaceman1](https://raw.githubusercontent.com/zyphensvc/zyphensvc.github.io/master/assets/media/ictf/December/spaceman2.jpg)
 
 Once you have done both you can also search up futureboy to get the steganography tool to get the message from the first one. As much as this sounded easy, here is where the hardest part of the challenge comes in. Use the first flag to find the second as the key. I provided a hint for this flag to make sure people got it due to the low solve rate, next time I will try to make it a lot more notable, this was one of the only flags of mine that was the most guessy.  
 
