@@ -58,7 +58,7 @@ else
 ?>
 ```
 
-Let's take note at the bottom. There appears to be a cap at 50 characters, which is another things my teammates pointed out with the roll tag. It will normally execute fine, except when it does not... 
+Let's take note at the bottom. There appears to be a cap at 50 characters, which is another thing my teammates pointed out with the roll tag. It will normally execute fine, except when it does not... 
 
 Jibe pointed out that you could check defined functions as to see all the functions that we do not see in that source file, with a little php magic. However, it is a mess.
 
