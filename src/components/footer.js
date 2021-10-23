@@ -21,7 +21,7 @@ class Footer extends React.Component {
                         </div>
                         <div className="row justify-content-center">
                             <div className="col text-center">
-                                <p><small>Copyright © {new Date().getFullYear()} Sriaditya Vedantam. Site source on <a target="_blank" rel="noopener noreferrer" href="https://github.com/ZyphenSVC/zyphensvc.github.io">GitHub</a>.</small></p>
+                                <p><small>Copyright © {new Date().getFullYear()} Sriaditya Vedantam. Site source on <a target="_blank" rel="noopener noreferrer" href="https://github.com/ZyphenSVC/zyphensvc.com">GitHub</a>.</small></p>
                             </div>
                         </div>
                     </div>

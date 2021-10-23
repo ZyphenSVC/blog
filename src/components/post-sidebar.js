@@ -8,7 +8,7 @@ class PostSidebar extends React.Component {
         marginLeft: -30
     }
     static defaultProps = {
-        shareUrl: "https://zyphensvc.github.io"
+        shareUrl: "https://zyphensvc.com"
     }
     render() {
         return(

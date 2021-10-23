@@ -8,8 +8,8 @@ module.exports = {
         author: {
             name: `ZyphenSVC`,
         },
-        siteUrl: `https://zyphensvc.github.io`, // Do not put trailing slash
-        image: `https://zyphensvc.github.io/media/profilepic.png`,
+        siteUrl: `https://zyphensvc.com`, // Do not put trailing slash
+        image: `https://zyphensvc.com/media/profilepic.png`,
     },
     plugins: [
         `gatsby-plugin-create-page-html`,
@@ -21,7 +21,7 @@ module.exports = {
         {
             resolve: `gatsby-plugin-canonical-urls`,
             options: {
-              siteUrl: `https://zyphensvc.github.io`,
+              siteUrl: `https://zyphensvc.com`,
               stripQueryString: true,
             }
         },
@@ -138,7 +138,7 @@ module.exports = {
                         }
                     `,
                         output: "/rss.xml",
-                        title: "ZyphenSVC.github.io Posts",
+                        title: "ZyphenSVC.com Posts",
                     },
                 ],
             },

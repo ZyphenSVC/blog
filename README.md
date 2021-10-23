@@ -1,4 +1,4 @@
-# [ZyphenSVC.Github.io](https://zyphensvc.github.io)
+# [ZyphenSVC.com](https://zyphensvc.com)
 
 This website uses GatsbyJS, a static site generator based on the ReactJS framework. I chose GatsbyJS because it offered the flexibility of React without sacrificing speed and SEO.
 

@@ -10,7 +10,7 @@ const PostFooter = () => {
         const commentsTheme = darkMode.value ? "github-dark" : "github-light"
         commentScript.async = true
         commentScript.src = "https://utteranc.es/client.js"
-        commentScript.setAttribute("repo", "ZyphenSVC/zyphensvc.github.io")
+        commentScript.setAttribute("repo", "ZyphenSVC/zyphensvc.com")
         commentScript.setAttribute("issue-term", "pathname")
         commentScript.setAttribute("id", "utterances")
         commentScript.setAttribute("label", "comment")
