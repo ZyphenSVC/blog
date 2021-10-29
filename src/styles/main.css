@@ -487,3 +487,7 @@ null {
     color: #0f0 !important;
     outline: solid #f00 1px !important;
 }
+
+.tab {
+    margin-left: 40px;
+}

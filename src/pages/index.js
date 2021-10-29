@@ -239,9 +239,9 @@ class Home extends React.Component {
                                             <tr><td>NeverLAN CTF 2020</td><td>114 / 1158</td><td>Egg Heads</td></tr>
                                             <tr><td>TJCTF 2020</td><td>298 / 1205</td><td>Egg Heads</td></tr>
                                             <tr><td>Newark Academy CTF 2020</td><td>76 / 968</td><td>Egg Heads</td></tr>
-                                            <tr><td>NCL Spring 2020 Preseason</td><td>41 / 6072</td><td>sriadityavedantam</td></tr>
-                                            <tr><td>NCL Spring 2020 Individual Game</td><td>38 / 6013</td><td>sriadityavedantam</td></tr>
-                                            <tr><td>NCL Spring 2020 Team Game</td><td>27 / 957</td><td>Egg Heads</td></tr>
+                                            <tr><td>NCL Fall 2020 Preseason</td><td>41 / 6072</td><td>sriadityavedantam</td></tr>
+                                            <tr><td>NCL Fall 2020 Individual Game</td><td>38 / 6013</td><td>sriadityavedantam</td></tr>
+                                            <tr><td>NCL Fall 2020 Team Game</td><td>27 / 957</td><td>Egg Heads</td></tr>
                                             <tr><td>X-MAS CTF 2020</td><td>9 / 1064</td><td>ducks0ci3ty</td></tr>
                                             <tr><td>KSU ISA CTF 2020</td><td>3 / 12</td><td>sriadityavedantam</td></tr>
                                             <tr><td>JustCTF 2020</td><td>189 / 804</td><td>ducks0ci3ty</td></tr>
@@ -259,6 +259,7 @@ class Home extends React.Component {
                                             <tr><td>DeconstruCT.F 2021</td><td>4 / 300</td><td>ducks0ci3ty</td></tr>
                                             <tr><td>pbctf 2021</td><td>44 / 210</td><td>The Teamless</td></tr>
                                             <tr><td>NCL Fall 2021 Preseason</td><td>56 / 6455</td><td>sriadityavedantam</td></tr>
+                                            <tr><td>NCL Fall 2021 Individual</td><td>48 / 6481</td><td>sriadityavedantam</td></tr>
                                         </tbody>
                                     </table>
                                 </RevealAnimation>
