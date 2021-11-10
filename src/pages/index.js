@@ -260,6 +260,7 @@ class Home extends React.Component {
                                             <tr><td>pbctf 2021</td><td>44 / 210</td><td>The Teamless</td></tr>
                                             <tr><td>NCL Fall 2021 Preseason</td><td>56 / 6455</td><td>sriadityavedantam</td></tr>
                                             <tr><td>NCL Fall 2021 Individual</td><td>48 / 6481</td><td>sriadityavedantam</td></tr>
+                                            <tr><td>NCL Fall 2021 Team</td><td>35 / 3917</td><td>Egg Heads</td></tr>
                                         </tbody>
                                     </table>
                                 </RevealAnimation>
