@@ -138,7 +138,7 @@ class Home extends React.Component {
                                                 </div>
                                             </div>
                                             <div className="col-md-5">
-                                                <StaticImage width={1024} height={768} className="img-fluid main-rounded-start-lg" alt="CyberAvengers Team" />
+                                                <StaticImage width={1024} height={768} className="img-fluid main-rounded-start-lg" src="../img/cypatxiv.jpg" alt="CyberAvengers Team" />
                                             </div>
                                         </div>
                                     </div>
@@ -215,6 +215,7 @@ class Home extends React.Component {
                                         <li>CyberPatriot XI - Semifinalist</li>
                                         <li>CyberPatriot XII - Semifinalist, 1st Place Georgia</li>
                                         <li>CyberPatriot XIII - Semifinalist, 1st Place Georgia</li>
+                                        <li>CyberPatriot XIV - Semifinalist, 1st Place Georgia</li>
                                     </ul>
                                 </RevealAnimation>
                                 <div className="d-inline-block">
