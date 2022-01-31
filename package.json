@@ -6,7 +6,7 @@
   "license": "MIT",
   "engines": {
     "node": "16.9.1"
-  }
+  },
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
