@@ -12,7 +12,12 @@ module.exports = {
         image: `https://zyphensvc.com/media/profilepic.png`,
     },
     plugins: [
-        `gatsby-plugin-create-page-html`,
+        {
+            resolve: `gatsby-plugin-page-creator`,
+            options: {
+                path: `${__dirname}/src/pages`
+            }
+        },
         `gatsby-plugin-image`,
         `gatsby-plugin-react-helmet`,
         `gatsby-plugin-remove-trailing-slashes`,
