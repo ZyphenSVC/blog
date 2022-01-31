@@ -138,7 +138,7 @@ class Home extends React.Component {
                                                 </div>
                                             </div>
                                             <div className="col-md-5">
-                                                <StaticImage width={1024} height={768} className="img-fluid main-rounded-start-lg" src="../img/cypatxiv.jpg" alt="CyberAvengers Team" />
+                                                <StaticImage width={1024} height={768} className="img-fluid main-rounded-end-lg" src="../img/cypatxiv.jpg" alt="CyberAvengers Team" />
                                             </div>
                                         </div>
                                     </div>
