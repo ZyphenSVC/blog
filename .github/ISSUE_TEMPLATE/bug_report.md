@@ -29,9 +29,8 @@ about: "Is something not working as expected?"
   file, or problematic site content. 
 -->
 
-- Minimal Mistakes version:
 - Ruby gem or remote theme version:
-- Jekyll version:
+- Gatsby version:
 - Git repository URL:
 - GitHub Pages hosted (if yes provide URL to site):
 - Operating system:
