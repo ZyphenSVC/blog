@@ -16,7 +16,7 @@ class Contact extends React.Component {
                             <div className="col-md-10 col-xl-8">
                                 <h1 className="main-reveal-text-short mt-0">Contact</h1>
                                 <div className="main-fade-in-animation">
-                                    <p>You can send an email to <code class="language-text">sriaditya dot vedantam at protonmail dot com</code>.</p>
+                                    <p>You can send an email to <code class="language-text">svedantam at zyphensvc dot com</code>.</p>
                                     <p>Here is my <a aria-label="PGP key" href="/Zyphen.asc">PGP key</a> if you wish to communicate using encryption.</p>
                                     <p>My Discord tag is <a target="_blank" rel="noopener noreferrer" href="https://discord.com/users/328580491290607616">Zyphen#8624</a>.</p>
                                     <p>I can also be found on social media @ZyphenSVC.</p>
