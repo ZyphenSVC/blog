@@ -262,6 +262,8 @@ class Home extends React.Component {
                                             <tr><td>NCL Fall 2021 Preseason</td><td>56 / 6455</td><td>sriadityavedantam</td></tr>
                                             <tr><td>NCL Fall 2021 Individual</td><td>48 / 6481</td><td>sriadityavedantam</td></tr>
                                             <tr><td>NCL Fall 2021 Team</td><td>35 / 3917</td><td>Egg Heads</td></tr>
+                                            <tr><td>UTCTF 2022</td><td>23 / 560</td><td>TAMU Cyber Club</td></tr>
+                                            <tr><td>picoCTF 2022</td><td>27 / 7794</td><td>The Teamless A</td></tr>
                                         </tbody>
                                     </table>
                                 </RevealAnimation>
