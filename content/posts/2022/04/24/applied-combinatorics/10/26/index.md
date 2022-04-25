@@ -1,9 +1,9 @@
 ---
 title: "Applied Combinatorics - Pathfinding: Part One"
-date: "2021-04-24T11:59:59.999Z"
+date: "2022-04-24T11:59:59.999Z"
 description: "The Beginnings to my Project"
 author: "ZyphenSVC"
-slug: "posts/applied-combinatorics/2021-04-24-pathfinding-p1"
+slug: "posts/applied-combinatorics/2022-04-24-pathfinding-p1"
 ---
 <!-- October 26th 2021 -->
 
