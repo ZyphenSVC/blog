@@ -4,6 +4,7 @@ import "normalize.css/normalize.css"
 // custom CSS styles
 import "./src/styles/main.css"
 import "./src/styles/fonts.css"
+import "katex/dist/katex.min.css"
 
 // Highlighting for code blocks
 import "prismjs/themes/prism-okaidia.css"
