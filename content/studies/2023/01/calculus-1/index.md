@@ -6,4 +6,4 @@ author: "ZyphenSVC"
 slug: "studies/calculus-i/2023-01-02-calculus-i"
 ---
 
-# [Calculus I PDF](./Calculus.pdf)
+# [Calculus I PDF](/media/Calculus.pdf)
