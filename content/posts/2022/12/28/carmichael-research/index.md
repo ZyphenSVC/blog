@@ -3,12 +3,12 @@ title: "Beginnings to Research"
 date: "2022-12-30T11:59:59.999Z"
 description: "An in-depth look into Carmichael Numbers"
 author: "ZyphenSVC"
-slug: "posts/carmichael-research/2022-12-28-research-p1"
+slug: "posts/carmichael-research/2022-12-30-research-p1"
 ---
 
 # Research into Carmichael Numbers
 
-## Reasoning for this divergence
+### Reasoning for this Divergence
 
 Pursuing a career into the academia, I wish to be able to combine Mathematics and Cybersecurity. One aspect I saw this would succeed is in Cryptology. Though Cryptology is the parent to Cryptography and Cryptanalysis, it is important to look at even the minor aspects of Cryptology. One such aspect I have taken inspriration from is [Daniel Larsen's interview by Quanta Magazine](https://www.youtube.com/watch?v=Kqi_6v2RGB0&t=248s).
 
@@ -19,5 +19,3 @@ Primes hold our internet security together. It is easy to multiply two primes to
 Public keys hold the result of two primes multiplied together, and this ensures encryption. On the otherhand, private keys hold the two factors that make up the public key, allowing decryption. Such a simple concept contains our security, and it is at risk of being harmed due to better computers. Here is where Carmichael Numbers come in.
 
 If an algorithm mistakes a carmichael composite number for a prime, then security is ensured to fail sooner than later. 
-
-# [COMING SOON]

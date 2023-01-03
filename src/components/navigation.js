@@ -13,6 +13,7 @@ class Navigation extends React.Component {
                     <div className="d-flex flex-row">
                         <Link className="nav-link" to="/">/home</Link>
                         <Link className="nav-link" to="/posts">/posts</Link>
+                        <Link className="nav-link" to="/studies">/studies</Link>
                         <Link className="nav-link" to="/contact">/contact</Link>
                         <DarkModeToggle />
                     </div>

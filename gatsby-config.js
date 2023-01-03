@@ -1,7 +1,7 @@
 module.exports = {
     siteMetadata: {
         title: `ZyphenSVC`,
-        description: `I am a 17 year old security researcher studying computer science.`,
+        description: `I am a 18 year old security researcher studying computer science.`,
         social: {
             twitter: `ZyphenSVC`,
         },
@@ -82,6 +82,13 @@ module.exports = {
             resolve: `gatsby-source-filesystem`,
             options: {
                 path: `${__dirname}/content/posts`,
+                name: `posts`,
+            },
+        },
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                path: `${__dirname}/content/studies`,
                 name: `posts`,
             },
         },

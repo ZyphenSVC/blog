@@ -35,7 +35,9 @@ const variants = {
 }
 
 const PostsIndex = ({ data, location }) => {
-    const posts = data.allMdx.nodes
+    let holder = []
+    data.allMdx.nodes.forEach((node) => node.fields.slug.includes("/posts/") ? holder.push(node) : false)
+    const posts = holder
     const [indexClicked, setIndexClicked] = React.useState(null)
 
     if (location != null && location.state != null && location.state.slug != null) {
