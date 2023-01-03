@@ -3,7 +3,7 @@ title: "Attending University at UGA"
 date: "2022-12-29T11:59:59.999Z"
 description: "The beginnings to my career at UGA"
 author: "ZyphenSVC"
-slug: "posts/attending-university/2022-12-29-university-p1"
+slug: "studies/attending-university/2022-12-29-university-p1"
 ---
 
 > Forenote
