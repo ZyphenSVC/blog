@@ -10,7 +10,7 @@ slug: "posts/carmichael-research/2022-12-30-research-p1"
 
 ### Reasoning for this Divergence
 
-Pursuing a career into the academia, I wish to be able to combine Mathematics and Cybersecurity. One aspect I saw this would succeed is in Cryptology. Though Cryptology is the parent to Cryptography and Cryptanalysis, it is important to look at even the minor aspects of Cryptology. One such aspect I have taken inspriration from is [Daniel Larsen's interview by Quanta Magazine](https://www.youtube.com/watch?v=Kqi_6v2RGB0&t=248s).
+Pursuing a career into the academia, I wish to be able to combine Mathematics and Cybersecurity. One aspect I saw this would succeed is in Cryptology. Though Cryptology is the parent to Cryptography and Cryptanalysis, it is important to look at even the minor aspects of Cryptology. One such aspect I have taken inspriration from is [Daniel Larsen's interview by Quanta Magazine](https://youtu.be/Kqi_6v2RGB0?t=211).
 
 To go into detail on what he has said, in the world of cryptography, the formation of any encrypted message is preluded with the creation or rediscovery of a large number. This large number can be summed up in hex. This creates messages that are encrypted in blockchains or two key encryption. Even outside of messages, this holds true for password holding, or 2FA, digital signitures. All of these use prime numbers.
 
