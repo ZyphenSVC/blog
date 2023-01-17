@@ -233,7 +233,7 @@ class Home extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>PicoCTF 2019</td><td>43 / 60595</td><td>Egg Heads (Solo)</td></tr>
+                                            <tr><td>PicoCTF 2019</td><td>33 / 60595</td><td>Egg Heads (Solo)</td></tr>
                                             <tr><td>NGA CTF 2019</td><td>35 / ???</td><td>Egg Heads</td></tr>
                                             <tr><td>ångstromCTF 2019</td><td>71 / 1570</td><td>Egg Heads</td></tr>
                                             <tr><td>TJCTF 2019</td><td>65 / 483</td><td>Egg Heads</td></tr>

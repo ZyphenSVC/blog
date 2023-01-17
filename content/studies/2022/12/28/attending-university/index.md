@@ -38,9 +38,9 @@ My ENGL 1102 class was decent. I had Professor Sarah Turula. It opened my eyes u
 
 | Year   | Freshman                                              | Sophpmore                             | Junior                                | Senior                                 |
 |--------|-------------------------------------------------------|---------------------------------------|---------------------------------------|----------------------------------------|
-| Fall   | CSCI 1302; MATH 2250; ENGL 1002; KREN 1001; FYOS 1001 | CSCI 2670, 2720; MATH 3500; KREN 2001 | CSCI 3030, 4720; MATH 2700, 4700      | CSCI 4250, 4730; MATH 4500, 4150, 4670 |
-| Spring | CSCI 2610; MATH 2260, 3200; KREN 1002                 | CSCI 1730, 4470; MATH 3100; KREN 2002 | CSCI 4050, 4570; MATH 4000; KREN 3002 | MATH 4400, 4750; KREN 4002; PSYC 1101  |
-| Summer | GEOL 1121E; POLS 1101E                                | KREN 3001; ANTH 2045, 2045L           | KREN 4001; CMLT 2400                  |                                        |
+| Fall   | CSCI 1302; MATH 2250; ENGL 1002; KREN 1001; FYOS 1001 | CSCI 2670, 2720; MATH 3100, 3500; KREN 2001 | CSCI 3030, 4720; MATH 4670, 4700; KREN 3001      | CSCI 4250, 4730; MATH 4400, 4750; KREN 4001 |
+| Spring | CSCI 2610; MATH 2260, 3200; KREN 1002                 | CSCI 1730, 4470; MATH 3510; KREN 2002 | CSCI 4050, 4570; MATH 4150, 4500; KREN 3002 | MATH 4690, 4450; KREN 4002; PSYC 1101  |
+| Summer | GEOL 1121E; POLS 1101E                                | MATH 2700; ANTH 2045, 2045L           | MATH 4000; CMLT 2400                  |                                        |
 ## Conclusions
 
 Overall this is my first semester at UGA, and it has gone decently well. Once again I will link my [blog post](/posts/carmichael-research/2022-12-30-research-p1). Have fun reading!
