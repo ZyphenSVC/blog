@@ -34,13 +34,6 @@ My MATH 2250 class was really good. It was better than my highschool AP Calculus
 
 My ENGL 1102 class was decent. I had Professor Sarah Turula. It opened my eyes up to a lot of problems I made when writing essays, but it also amazed me with the restrictions we had on our writing. Our first essay, the entire class decided that the essay we had to write just had to appease the professor but it may as well be our worst essay to personal standards. Though it was my worst essay in all my years of academics, upon reflection I realized that the professor meant to teach us to interpret the text in a poem without insight. This is a skill that is difficult to do as all my years prior in school has told us to interpret poems on a personal level. This new skill has opened my eyes to look at poems in a different light. If needed to rewrite the essay again, with the knowledge I have gained from the course, I will do it sooo much better. Each essay after the first was more so my preferred type of writing and prompts, but each one surprised me on how I approached everything. Overall Dr. Turula has integrated such vital writing concepts into easily looked over discussions. If I were to continue English, I would be pleased by taking her class again with anew perspective. 4/5 class rating, 4/5 difficulty though in comparison to friends classes. 
 
-## Future Courses
-
-| Year   | Freshman                                              | Sophomore                                   | Junior (MATH 4400)                          | Senior                                      |
-|--------|-------------------------------------------------------|---------------------------------------------|---------------------------------------------|---------------------------------------------|
-| Fall   | CSCI 1302; MATH 2250; ENGL 1002; KREN 1001; FYOS 1001 | CSCI 1730; MATH 3100, 3220, 3500; KREN 2001 | CSCI 3030, 4050; MATH 4670, 4700; KREN 3001 | CSCI 4250, 4730; MATH 4400, 4750; KREN 4001 |
-| Spring | CSCI 2610; MATH 2260, 3200; KREN 1002                 | CSCI 4470, 4720; MATH 3510; KREN 2002       | CSCI 4570; MATH 4150, 4500; KREN 3002       | MATH 4690, 4450; KREN 4002;                 |
-| Summer | CSCI 2670E, 2720; GEOL 1121E; POLS 1101E              | MATH 2700, 4000; ANTH 2045, 2045L           | CMLT 2400, 3990; PSYC 1101                  |                                             |
 ## Conclusions
 
 Overall this is my first semester at UGA, and it has gone decently well. Once again I will link my [blog post](/posts/carmichael-research/2022-12-30-research-p1). Have fun reading!
