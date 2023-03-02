@@ -1,6 +1,6 @@
 ---
 title: "Future Courses at UGA"
-date: "2023-02-17T11:59:59.999Z"
+date: "2023-03-02T11:59:59.999Z"
 description: "Courses as a Double Major"
 author: "ZyphenSVC"
 slug: "studies/future-courses/2023-02-17-future-courses"
@@ -14,8 +14,8 @@ This will continue to change as I plan my way around, this was first made on Dec
 
 ## Future Courses
 
-| Year   | Freshman                                              | Sophomore                             | Junior (MATH 4400)               | Senior                           |
-|--------|-------------------------------------------------------|---------------------------------------|----------------------------------|----------------------------------|
-| Fall   | CSCI 1302; MATH 2250; ENGL 1002; KREN 1001; FYOS 1001 | CSCI 1730; MATH 3100, 3500; KREN 2001 | CSCI 3030, 4050; MATH 4670, 4700 | CSCI 4250, 4730; MATH 4400, 4750 |
-| Spring | CSCI 2610; MATH 2260, 3200; KREN 1002                 | CSCI 4470, 4720; MATH 3510            | CSCI 4570; MATH 4150, 4500       | MATH 4690, 4450;                 |
-| Summer | CSCI 2670E, 2720; GEOL 1121E                          | MATH 2700, 4000; ANTH 2045, 2045L     | CMLT 2400; PSYC 1101             |                                  |
+| Year   | Freshman 22-23                                        | Sophomore 23-24                  | Junior 24-25                           | Senior 25-26                     |
+|--------|-------------------------------------------------------|----------------------------------|----------------------------------------|----------------------------------|
+| Fall   | CSCI 1302; MATH 2250; ENGL 1002; KREN 1001; FYOS 1001 | CSCI 2670; MATH 3100, 3500, 6670 | CSCI 3030, 4720; MATH 6100; SPAN 2001  | CSCI 4730; MATH 6150, 6450, 8000 |
+| Spring | CSCI 2610; MATH 2260, 3200; KREN 1002                 | CSCI 1730, 4470; MATH 3510, 6000 | CSCI 4050; MATH 6010, 6400; POLS 1101E | CSCI 4250, 4260, MATH TBA        |
+| Summer | CSCI 2720; MATH 2700; GEOL 1121E                      | ANTH 2045, 2045L, SPAN 1110      | CMLT 2400; PSYC 1101;                  |                                  |
