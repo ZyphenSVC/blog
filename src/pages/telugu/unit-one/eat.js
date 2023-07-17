@@ -1,8 +1,8 @@
 import React from "react"
 
-import Footer from "../../../../components/footer"
-import NavigationSpacer from "../../../../components/navigation-spacer"
-import Seo from "../../../../components/seo"
+import Footer from "../../../components/footer"
+import NavigationSpacer from "../../../components/navigation-spacer"
+import Seo from "../../../components/seo"
 
 const variants = {
     paragraph: {
@@ -41,7 +41,7 @@ const ConjIndex = () => {
                 <div className="container flex-grow-1">
                     <div className="row justify-content-center">
                         <div className="col-md-10 col-xl-8">
-                            <h1><p className="main-reveal-text-short d-inline-block">TinuTa</p></h1>
+                            <h1><p className="main-reveal-text-short d-inline-block">Tinuta - To eat</p></h1>
                             <table>
                             <thead>
                             <tr>
@@ -78,9 +78,9 @@ const ConjIndex = () => {
                             </tr>
                             <tr>
                                 <td>She (-di)</td>
-                                <td>Tinidi</td>
+                                <td>Tinindi</td>
                                 <td>Tintundi</td>
-                                <td>Tintadi</td>
+                                <td>Tintandi</td>
                             </tr>
                             <tr>
                                 <td>We (-mu)</td>
