@@ -41,7 +41,7 @@ const ConjIndex = () => {
                 <div className="container flex-grow-1">
                     <div className="row justify-content-center">
                         <div className="col-md-10 col-xl-8">
-                            <h1><p className="main-reveal-text-short d-inline-block">Telusukonuta - To understand/know</p></h1>
+                            <h1><p className="main-reveal-text-short d-inline-block">Nerchakonuta - To learn</p></h1>
                             <table>
                             <thead>
                             <tr>
@@ -54,45 +54,45 @@ const ConjIndex = () => {
                             <tbody>
                             <tr>
                                 <td>Me (-nu)</td>
-                                <td>Telusukonanu</td>
-                                <td>Telusukonutunnanu</td>
-                                <td>Telusukonutaanu</td>
+                                <td>Nerchakonanu</td>
+                                <td>Nerchakonutunnanu</td>
+                                <td>Nerchakonutaanu</td>
                             </tr>
                             <tr>
                                 <td>You (informal) (-vu)</td>
-                                <td>Telusukonavu</td>
-                                <td>Telusukonutunnavu</td>
-                                <td>Telusukonutaavu</td>
+                                <td>Nerchakonavu</td>
+                                <td>Nerchakonutunnavu</td>
+                                <td>Nerchakonutaavu</td>
                             </tr>
                             <tr>
                                 <td>You (formal) (-ru)</td>
-                                <td>Telusukonaru</td>
-                                <td>Telusukonutunnaru</td>
-                                <td>Telusukonutaaru</td>
+                                <td>Nerchakonaru</td>
+                                <td>Nerchakonutunnaru</td>
+                                <td>Nerchakonutaaru</td>
                             </tr>
                             <tr>
                                 <td>He (-du)</td>
-                                <td>Telusukonadu</td>
-                                <td>Telusukonutunnadu</td>
-                                <td>Telusukonutaadu</td>
+                                <td>Nerchakonadu</td>
+                                <td>Nerchakonutunnadu</td>
+                                <td>Nerchakonutaadu</td>
                             </tr>
                             <tr>
                                 <td>She (-di)</td>
-                                <td>Telusukonindi</td>
-                                <td>Telusukonutunidi</td>
-                                <td>Telusukonutaadi</td>
+                                <td>Nerchakonindi</td>
+                                <td>Nerchakonutunidi</td>
+                                <td>Nerchakonutaadi</td>
                             </tr>
                             <tr>
                                 <td>We (-mu)</td>
-                                <td>Telusukonamu</td>
-                                <td>Telusukonutunnamu</td>
-                                <td>Telusukonutaamu</td>
+                                <td>Nerchakonamu</td>
+                                <td>Nerchakonutunnamu</td>
+                                <td>Nerchakonutaamu</td>
                             </tr>
                             <tr>
                                 <td>They (-ru)</td>
-                                <td>Telusukonaru</td>
-                                <td>Telusukonutunnaru</td>
-                                <td>Telusukonutaaru</td>
+                                <td>Nerchakonaru</td>
+                                <td>Nerchakonutunnaru</td>
+                                <td>Nerchakonutaaru</td>
                             </tr>
                             </tbody>
                             </table>
