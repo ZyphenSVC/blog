@@ -10,12 +10,14 @@ slug: "studies/future-courses/2023-02-17-future-courses"
 
 ```md
 This will continue to change as I plan my way around, this was first made on December 29th, 2022.
+
+Edited Recently: September 23rd, 2023.
 ```
 
 ## Future Courses
 
-| Year   | Freshman 22-23                                        | Sophomore 23-24                    | Junior 24-25                     | Senior 25-26                |
-|--------|-------------------------------------------------------|------------------------------------|----------------------------------|-----------------------------|
-| Fall   | CSCI 1302; MATH 2250; ENGL 1002; KREN 1001; FYOS 1001 | MATH 3100, 3500, 6000; POLS 1101E  | MATH 6100, 6150, 6200; SPAN 2001 | MATH 6150, 6450, 8000, 8400 |
-| Spring | CSCI 2610; MATH 2260, 3200; KREN 1002                 | MATH 3510, 6010, 6400; CMLT 2400   | MATH 6720, 6740, 8100, 8150      | TBD                         |
-| Summer | MATH 2700; GEOL 1121E                                 | (REU) ANTH 2045, 2045L, SPAN 1110E | PSYC 1101                        |                             |
+| Year   | Freshman 22-23                                        | Sophomore 23-24                            | Junior 24-25                                | Senior 25-26                     |
+|--------|-------------------------------------------------------|--------------------------------------------|---------------------------------------------|----------------------------------|
+| Fall   | CSCI 1302; MATH 2250; ENGL 1002; KREN 1001; FYOS 1001 | MATH 2510 3100, 6000; CSCI 1730, UNIV 1204 | MATH 8000, 8005, 8400; KREN 2001; PEDB 1950 | MATH 6100, 6450, 8440; ANTH 1102 |
+| Spring | CSCI 2610; MATH 2260, 3200;                           | MATH 6010, 6400; CMLT 2600; KREN 1002      | MATH 3000, 4802, 8410; RELI 2012            | TBD                              |
+| Summer | MATH 2700; GEOL 1121E                                 | BIOL 1103E, 1113E; POLS 1101               | PHIL 2030                                   |                                  |
