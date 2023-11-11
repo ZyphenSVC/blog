@@ -19,8 +19,8 @@ class Home extends React.Component {
                             <div className="col-lg-7 col-md-6">
                                 <h1 className="main-reveal-text-short">Hi, I'm Sriaditya.<br />I make things.</h1>
                                 <div className="main-fade-in-animation">
-                                    <p>I am a 18 year old security researcher studying computer science at the University of Georgia.</p>
-                                    <p>In my free time, I play CTFs, write stories, or do photography.</p>
+                                    <p>I am a 19 year old cybersecurity researcher studying mathematics at the University of Georgia.</p>
+                                    <p>In my free time, I research, write stories, or play CTFs.</p>
                                 </div>
                             </div>
                             <div className="col-lg-3 col-md-4 col-sm-7 col-8">
