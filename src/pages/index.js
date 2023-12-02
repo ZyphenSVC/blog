@@ -25,7 +25,7 @@ class Home extends React.Component {
                             </div>
                             <div className="col-lg-3 col-md-4 col-sm-7 col-8">
                                 <div className="main-fade-in-animation-delay-1">
-                                    <StaticImage width={300} height={300} className="main-fit-element main-circle" src="../img/profilepic.jpg" alt="Portrait" />
+                                    <StaticImage width={300} height={300} className="main-fit-element main-circle" src="../img/face.jpg" alt="Portrait" />
                                 </div>
                             </div>
                         </div>
@@ -93,6 +93,25 @@ class Home extends React.Component {
                                         <div className="row align-items-center justify-content-center g-0">
                                             <div className="col-md-7">
                                                 <div className="card-body">
+                                                    <p className="h5 card-title">Hats On Cybersecurity</p>
+                                                    <p className="card-text">I'm the Founder and President of the club at the University of Georgia and have a goal of teaching competition based cybersecurity to people of any level knowledge at an in-depth insight, better than other clubs currently offered.</p>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-5">
+                                                <StaticImage width={1024} height={768} className="img-fluid main-rounded-end-lg" src="../img/cyberdog.jpg" alt="HOCS Logo" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </RevealAnimation>
+                            </div>
+                        </div>
+                        <div className="row justify-content-center mb-4">
+                            <div className="col-md-10">
+                                <RevealAnimation animationClass="main-fade-in-animation">
+                                    <div className="card main-box main-color-surface">
+                                        <div className="row align-items-center justify-content-center g-0">
+                                            <div className="col-md-7">
+                                                <div className="card-body">
                                                     <p className="h5 card-title">Egg Heads Cyber Team</p>
                                                     <p className="card-text m-0">During high school, I joined Egg Heads and became a team captain for cybersecurity competitions. We have placed first in state for a large majority of our competitions including CyberPatriot.</p>
                                                     <p className="card-text m-0"><a aria-label="Egg Heads Github" target="_blank" rel="noopener noreferrer" href="https://github.com/EggHeadsCTF">See website</a></p>
@@ -150,25 +169,6 @@ class Home extends React.Component {
                                 <RevealAnimation animationClass="main-fade-in-animation">
                                     <div className="card main-box main-color-surface">
                                         <div className="row align-items-center justify-content-center g-0">
-                                            <div className="col-md-7 order-md-2">
-                                                <div className="card-body">
-                                                    <p className="h5 card-title">Future Business Leaders of America</p>
-                                                    <p className="card-text">I am also proud being a member of FBLA for all four years, gaining achievements and placing nationally in competitions. I have also learned leadership, and continue to accomplish more in this.</p>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-5 order-md-1">
-                                                <StaticImage width={1024} height={768} className="img-fluid main-rounded-end-lg" src="../img/fbla.jpg" alt="FBLA State Leadership Conference" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </RevealAnimation>
-                            </div>
-                        </div>
-                        <div className="row justify-content-center mb-4">
-                            <div className="col-md-10">
-                                <RevealAnimation animationClass="main-fade-in-animation">
-                                    <div className="card main-box main-color-surface">
-                                        <div className="row align-items-center justify-content-center g-0">
                                             <div className="col-md-7">
                                                 <div className="card-body">
                                                     <p className="h5 card-title">Cyber Teams</p>
@@ -192,6 +192,16 @@ class Home extends React.Component {
                         </div>
                         <div className="row justify-content-center">
                             <div className="col-md-10">
+                                <div className="d-inline-block">
+                                    <RevealAnimation animationClass="main-reveal-text">
+                                        <p className="h5">Academics</p>
+                                    </RevealAnimation>
+                                </div>
+                                <RevealAnimation animationClass="main-fade-in-animation">
+                                    <ul>
+                                        <li>Kossack Exam - Third Place</li>
+                                    </ul>
+                                </RevealAnimation>
                                 <div className="d-inline-block">
                                     <RevealAnimation animationClass="main-reveal-text">
                                         <p className="h5">Achievements</p>
@@ -267,14 +277,6 @@ class Home extends React.Component {
                                         </tbody>
                                     </table>
                                 </RevealAnimation>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="hobbies" className="container-fluid mb-5">
-                    <div className="container h-100">
-                        <div className="row justify-content-center">
-                            <div className="col-md-10">
                             </div>
                         </div>
                     </div>

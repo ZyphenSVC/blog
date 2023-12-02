@@ -88,13 +88,6 @@ module.exports = {
         {
             resolve: `gatsby-source-filesystem`,
             options: {
-                path: `${__dirname}/content/studies`,
-                name: `posts`,
-            },
-        },
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
                 path: `${__dirname}/content/telugu`,
                 name: `posts`,
             },

@@ -3,7 +3,7 @@ title: "Future Courses at UGA"
 date: "2023-03-02T11:59:59.999Z"
 description: "Courses as a Math Major"
 author: "ZyphenSVC"
-slug: "studies/future-courses/2023-02-17-future-courses"
+slug: "posts/future-courses/2023-02-17-future-courses"
 ---
 
 > Forenote
