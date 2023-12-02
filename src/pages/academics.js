@@ -31,6 +31,13 @@ class Home extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-md-6 offset-md-1">
+                                <div className="main-fade-in-animation-delay-2">
+                                    <p><a href="https://zyphensvc.com/media/cv.pdf">Curriculum Vitae</a></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section id="experiences" className="container-fluid mb-5">
