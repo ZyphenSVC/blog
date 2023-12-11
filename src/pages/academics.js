@@ -134,6 +134,7 @@ class Home extends React.Component {
                                             <li><b>Modern Algebra and Geometry I (Abstract Algebra) - MATH 6000</b></li>
                                             <ul>
                                                 <li>Content - "Abstract Algebra: An Introduction, 3rd Edition", Thomas Hungerford</li>
+                                                <li><a href="https://zyphensvc.com/media/AbstractAlgebraTextbook.pdf">My Notes</a></li>
                                             </ul>
                                             <li>Sequences and Series (Introduction to Real Analysis) - UGA MATH 3100</li>
                                             <li>Calculus III for Science and Engineering - UGA MATH 2270</li>
