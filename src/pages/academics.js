@@ -142,7 +142,7 @@ class Home extends React.Component {
                                         </ul>
                                         <p className="h6">Spring 2023</p>
                                         <ul>
-                                            <li><b>Introduction to Higher Mathematics (Introduction to Proofs) - MATH 3200</b></li>
+                                            <li>Introduction to Higher Mathematics (Introduction to Proofs) - MATH 3200</li>
                                             <li>Calculus II for Science and Engineering - UGA MATH 2260</li>
                                             <li>Discrete Mathematics - UGA CSCI 2610</li>
                                         </ul>
