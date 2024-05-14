@@ -126,8 +126,9 @@ class Home extends React.Component {
                                             <li><b>Modern Algebra and Geometry II (Abstract Algebra) - MATH 6010</b></li>
                                             <ul>
                                                 <li>Content - "Abstract Algebra: An Introduction, 3rd Edition", Thomas Hungerford</li>
+                                                <li><a href="https://zyphensvc.com/media/AbstractAlgebraTextbook.pdf">My Notes</a></li>
                                             </ul>
-                                            <li><b>Elementary Number Theory - MATH 6400</b></li>
+                                            <li><b>Linear Algebra - MATH 3000</b></li>
                                         </ul>
                                         <p className="h6">Fall 2023</p>
                                         <ul>
