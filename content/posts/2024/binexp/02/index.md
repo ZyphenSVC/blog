@@ -12,7 +12,7 @@ I'm bored... Might as well become a god of binary exploitation.
 
 This would not be possible if it wasnt for [Nightmare by guyinatuxedo](https://guyinatuxedo.github.io/index.html). This series is a compilation of my summarized notes and remarks done by me and me alone.
 
-# Stack Buffer Overflows
+# Variable Overflows
 
 In this section of the guide, we only have challenges to learn from. Practically pratical learning. Lets get started.
 
@@ -275,8 +275,9 @@ Now I use WSL2. For those having problems executing 32 bit binaries on their WSL
 [StackOverflow](https://stackoverflow.com/questions/42120938/exec-format-error-32-bit-executable-windows-subsystem-for-linux)
 
 ```bash
-apt-get update && apt-get upgrade
-sudo apt install gcc:i386
+sudo apt-get install libc6-i386
+sudo update-binfmts --install i386 /usr/bin/qemu-i386-static --magic '\x7fELF\x01\x01\x01\x03\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x03\x00\x01\x00\x00\x00' --mask '\xff\xff\xff\xff\xff\xff\xff\xfc\xff\xff\xff\xff\xff\xff\xff\xff\xf8\xff\xff\xff\xff\xff\xff\xff'
+sudo service binfmt-support start
 ```
 
 Now everything should be able to run!
