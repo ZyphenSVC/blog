@@ -1,7 +1,7 @@
 ---
 title: "Learning Bin Exp from Scratch 02"
 date: "2024-05-26T11:59:59.999Z"
-description: "Stack Buffer Overflows"
+description: "Variable Overflows"
 author: "ZyphenSVC"
 slug: "posts/binexp/2023-05-26-binexp"
 ---
