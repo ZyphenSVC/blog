@@ -14,7 +14,6 @@ class Navigation extends React.Component {
                         <Link className="nav-link" to="/">/home</Link>
                         <Link className="nav-link" to="/posts">/posts</Link>
                         <Link className="nav-link" to="/academics">/academics</Link>
-                        <Link className="nav-link" to="/telugu/unit-one">/telugu</Link>
                         <Link className="nav-link" to="/contact">/contact</Link>
                         <DarkModeToggle />
                     </div>
