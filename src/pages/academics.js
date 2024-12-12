@@ -19,9 +19,8 @@ class Home extends React.Component {
                             <div className="col-lg-7 col-md-6">
                                 <h1 className="main-reveal-text-short">Hi, I'm Sriaditya.<br />I make things.</h1>
                                 <div className="main-fade-in-animation">
-                                    <p>I am interested in Number Theory and Algebraic Geometry.</p>
+                                    <p>Interested in Algebraic Geometry with extensions onto Discrete Mathematics.</p>
                                     <p>Emphasis on Elliptic Curves and Post-Quantum Cryptographic Applications.</p>
-                                    <p>Generating lists of large prime numbers using more efficient algorithms.</p>
                                     <p></p>
                                 </div>
                             </div>
@@ -77,6 +76,13 @@ class Home extends React.Component {
                                 </div>
                                 <RevealAnimation animationClass="main-fade-in-animation">
                                     <ul>
+					<li>Undergraduate Research Program</li>
+					<ul>
+						<li>Spring 2024 - Exceptional Lie Algebras and Focus on Coxeter-Dynkin Diagrams</li>
+						<ul>
+							<li>Readings: AG - Hartshorne, Royal Road - Holme, UAG - Miles Reid, Comm. Algebra - Eisenbud</li>
+						</ul>
+					</ul>
                                         <li>Directed Reading Program Mentee - UGA</li>
                                         <ul>
                                             <li>Fall 2023 - Focus on Elliptic Curves</li>
@@ -110,8 +116,9 @@ class Home extends React.Component {
                                 </div>
                                 <RevealAnimation animationClass="main-fade-in-animation">
                                     <ul>
-                                        <li>Spring 2023 - Peer Learning Assistant, Calculus III for Science and Engineering - UGA MATH 2270 (UGA, 1 section)</li>
-                                        <li>Fall 2023 - Peer Learning Assistant, Calculus II for Science and Engineering - UGA MATH 2260 (UGA, 1 section)</li>
+					<li>Mathematics Tutor (Current) - Helped students in precalculus, calculus, and introductory proof classes</li>
+                                        <li>Spring 2023 - Peer Learning Assistant, Calculus III for Science and Engineering - MATH 2270 (UGA, 1 section)</li>
+                                        <li>Fall 2023 - Peer Learning Assistant, Calculus II for Science and Engineering - MATH 2260 (UGA, 1 section)</li>
                                     </ul>
                                 </RevealAnimation>
                                 <div className="d-inline-block">
@@ -121,7 +128,15 @@ class Home extends React.Component {
                                 </div>
                                 <RevealAnimation animationClass="main-fade-in-animation">
                                     <ul>
-                                        <p className="h6">Spring 2024</p>
+					<p classname="h6">Fall 2025</p>
+					<ul>
+						<li><b>Introduction to Algebraic Geometry - MATH8300</b></li>
+					</ul>
+                                        <p classname="h6">Summer 2024</p>
+					<ul>
+						<li><b>Data Structures - CSCI 2720</b></li>
+					</ul>
+					<p className="h6">Spring 2024</p>
                                         <ul>
                                             <li><b>Modern Algebra and Geometry II (Abstract Algebra) - MATH 6010</b></li>
                                             <ul>
@@ -137,20 +152,23 @@ class Home extends React.Component {
                                                 <li>Content - "Abstract Algebra: An Introduction, 3rd Edition", Thomas Hungerford</li>
                                                 <li><a href="https://zyphensvc.com/media/AbstractAlgebraTextbook.pdf">My Notes</a></li>
                                             </ul>
-                                            <li>Sequences and Series (Introduction to Real Analysis) - UGA MATH 3100</li>
-                                            <li>Calculus III for Science and Engineering - UGA MATH 2270</li>
-                                            <li>Systems Programming in C - UGA CSCI 1730</li>
+                                            <li>Sequences and Series (Introduction to Real Analysis) - MATH 3100</li>
+                                            <li>Calculus III for Science and Engineering - MATH 2270</li>
+                                            <li>Systems Programming in C - CSCI 1730</li>
                                         </ul>
                                         <p className="h6">Spring 2023</p>
                                         <ul>
                                             <li>Introduction to Higher Mathematics (Introduction to Proofs) - MATH 3200</li>
-                                            <li>Calculus II for Science and Engineering - UGA MATH 2260</li>
-                                            <li>Discrete Mathematics - UGA CSCI 2610</li>
+                                            <li>Calculus II for Science and Engineering - MATH 2260</li>
+                                            <li>Discrete Mathematics - CSCI 2610</li>
                                         </ul>
                                         <p className="h6">Fall 2022</p>
                                         <ul>
-                                            <li>Calculus I for Science and Engineering - UGA MATH 2250</li>
-                                            <li>Software Development in Java - UGA CSCI 1302</li>
+                                            <li>Calculus I for Science and Engineering - MATH 2250</li>
+					    <ul>
+						<li><a href="https://drive.google.com/file/d/18oajbLtEXl6UMGfV8U2BwxBucbkUGim7/view?usp=sharing">My Notes</a></li>
+					    </ul>
+                                            <li>Software Development in Java - CSCI 1302</li>
                                         </ul>
                                     </ul>
                                 </RevealAnimation>
