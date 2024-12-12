@@ -19,8 +19,8 @@ class Home extends React.Component {
                             <div className="col-lg-7 col-md-6">
                                 <h1 className="main-reveal-text-short">Hi, I'm Sriaditya.<br />I make things.</h1>
                                 <div className="main-fade-in-animation">
-                                    <p>I am a 19 year old cybersecurity researcher studying mathematics at the University of Georgia.</p>
-                                    <p>In my free time, I research, write stories, or play CTFs.</p>
+                                    <p>I am a 20 year old cybersecurity researcher studying mathematics and computer science at the University of Georgia.</p>
+                                    <p>Always reading papers, texts, or documenting.</p>
                                 </div>
                             </div>
                             <div className="col-lg-3 col-md-4 col-sm-7 col-8">
@@ -210,7 +210,7 @@ class Home extends React.Component {
                                 <RevealAnimation animationClass="main-fade-in-animation">
                                     <ul>
                                         <li><a aria-label="National Cyber Scholarship website" target="_blank" rel="noopener noreferrer" href="https://www.nationalcyberscholarship.org/winners-2021#block-yui_3_17_2_1_1620649009028_757451">National Cyber Scholar</a></li>
-                                        <li><a aria-label="FBLA Nationals" target="_blank" rel="noopener noreferrer" href="https://www.fbla-pbl.org/">FBLA National Finalist for Management Information Systems</a></li>
+                                        <li><a aria-label="FBLA Nationals" target="_blank" rel="noopener noreferrer" href="https://www.fbla-pbl.org/">Two-time FBLA National Finalist for Management Information Systems</a></li>
                                         <li>AP Scholar with Honors</li>
                                     </ul>
                                 </RevealAnimation>

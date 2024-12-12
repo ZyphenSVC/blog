@@ -1,7 +1,7 @@
 module.exports = {
     siteMetadata: {
         title: `ZyphenSVC`,
-        description: `I am a 19 year old security researcher studying mathematics.`,
+        description: `I am a 20 year old security researcher studying mathematics and computer science.`,
         social: {
             twitter: `ZyphenSVC`,
         },
