@@ -76,6 +76,15 @@ class Home extends React.Component {
                                 </div>
                                 <RevealAnimation animationClass="main-fade-in-animation">
                                     <ul>
+                                    <li>Undergraduate Research Assistant - Small Satellite Research Lab</li>
+					<ul>
+						<li>Topological Data Analyst - Data Science Team</li>
+						<ul>
+						  <li>Implementing and optimizing neural network algorithms with Algebraic Topology/Topological Data Analysis.</li>
+						  <li>Working with NeRF (Neural Radiance Fields) in relation to satellite imaging.</li>
+						  <li>Implementing prior research projects from Algebraic Geometry onto this project.</li>
+            </ul>
+					</ul>
 					<li>Undergraduate Research Program</li>
 					<ul>
 						<li>Spring 2024 - Exceptional Lie Algebras and Focus on Coxeter-Dynkin Diagrams</li>
@@ -85,6 +94,12 @@ class Home extends React.Component {
 					</ul>
                                         <li>Directed Reading Program Mentee - UGA</li>
                                         <ul>
+                                            <li>Spring 2025 - Focus on Birch and Swinnerton-Dyer Conjecture</li>
+                                            <ul>
+                                                <li>Mentored by Peter Cassels</li>
+                                                <li>Content - "Arithmetic of Elliptic Curves", Joseph Silverman</li>
+                                                <li>Reading Reasearch Papers, will update as we review them</li>
+                                            </ul>
                                             <li>Fall 2023 - Focus on Elliptic Curves</li>
                                             <ul>
                                                 <li>Mentored by Haiyang Wang</li>
