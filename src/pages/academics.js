@@ -82,7 +82,7 @@ class Home extends React.Component {
 						<ul>
 						  <li>Implementing and optimizing neural network algorithms with Algebraic Topology/Topological Data Analysis.</li>
 						  <li>Working with NeRF (Neural Radiance Fields) in relation to satellite imaging.</li>
-						  <li>Implementing prior research projects from Algebraic Geometry onto this project.</li>
+						  <li>Implementing research projects from Algebraic Geometry and Topology onto this project.</li>
             </ul>
 					</ul>
 					<li>Undergraduate Research Program</li>
@@ -143,14 +143,29 @@ class Home extends React.Component {
                                 </div>
                                 <RevealAnimation animationClass="main-fade-in-animation">
                                     <ul>
-					<p classname="h6">Fall 2025</p>
-					<ul>
-						<li><b>Introduction to Algebraic Geometry - MATH8300</b></li>
-					</ul>
-                                        <p classname="h6">Summer 2024</p>
-					<ul>
-						<li><b>Data Structures - CSCI 2720</b></li>
-					</ul>
+					<p classname="h6">Spring 2025</p>
+            <ul>
+              <li><b>Algebraic Topology - MATH8200</b></li>
+              <ul>
+                  <li>Content - "Algebraic Topology", Allen Hatcher</li>
+              </ul>
+              <li><b>Hodge Theory - MATH8330</b></li>
+              <ul>
+                  <li>Content - "Hodge Theory and Complex Algebraic Geometry I", Claire Voisin</li>
+              </ul>
+            </ul>
+					<p classname="h6">Fall 2024</p>
+            <ul>
+              <li><b>Introduction to Algebraic Geometry - MATH8300</b></li>
+              <ul>
+                  <li>Content - "Basic Algebraic Geometry I", Igor Shafarevich</li>
+                  <li><a href="https://zyphensvc.com/media/AlgGeoBook1.pdf">My Notes</a></li>
+              </ul>
+            </ul>
+          <p classname="h6">Summer 2024</p>
+            <ul>
+              <li><b>Data Structures - CSCI 2720</b></li>
+            </ul>
 					<p className="h6">Spring 2024</p>
                                         <ul>
                                             <li><b>Modern Algebra and Geometry II (Abstract Algebra) - MATH 6010</b></li>
