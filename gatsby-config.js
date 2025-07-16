@@ -1,3 +1,5 @@
+require('events').defaultMaxListeners = 20;
+
 module.exports = {
     siteMetadata: {
         title: `ZyphenSVC`,
