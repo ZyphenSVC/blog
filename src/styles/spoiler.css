@@ -1,0 +1,42 @@
+.spoiler-container {
+  margin: 1.5rem 0;
+  border: 1px solid #2b2b2b;
+  border-radius: 6px;
+  background-color: #111;
+  font-family: monospace;
+}
+
+.spoiler-toggle {
+  width: 100%;
+  background: #1e1e1e;
+  color: #ccc;
+  border: none;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  border-bottom: 1px solid #2b2b2b;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.spoiler-toggle:hover {
+  background: #2a2a2a;
+  color: #00ff99; /* light green accent */
+}
+
+.spoiler-content {
+  padding: 0 1.25rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #eaeaea;
+}
+
+.spoiler-content.show {
+  max-height: 500px;
+  padding: 1rem 1.25rem;
+  opacity: 1;
+  border-top: 1px solid #222;
+}
