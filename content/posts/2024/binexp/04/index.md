@@ -3,7 +3,7 @@ title: "Learning Bin Exp from Scratch 04"
 date: "2024-05-31T11:59:59.999Z"
 description: "Shellcode Overflows"
 author: "ZyphenSVC"
-slug: "posts/binexp/2023-05-31-binexp"
+slug: "posts/binexp/2024-05-31-binexp"
 ---
 
 > Forenote

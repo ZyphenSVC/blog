@@ -3,7 +3,7 @@ title: "Learning Bin Exp from Scratch 03"
 date: "2024-05-27T11:59:59.999Z"
 description: "Call Function Overflows"
 author: "ZyphenSVC"
-slug: "posts/binexp/2023-05-27-binexp"
+slug: "posts/binexp/2024-05-27-binexp"
 ---
 
 > Forenote

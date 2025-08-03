@@ -3,7 +3,7 @@ title: "Learning Bin Exp from Scratch 05"
 date: "2024-06-04T11:59:59.999Z"
 description: "ROP Overflows"
 author: "ZyphenSVC"
-slug: "posts/binexp/2023-06-04-binexp"
+slug: "posts/binexp/2024-06-04-binexp"
 ---
 
 > Forenote

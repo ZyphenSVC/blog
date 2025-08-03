@@ -3,7 +3,7 @@ title: "Learning Bin Exp from Scratch"
 date: "2024-05-25T11:59:59.999Z"
 description: "Reversing Basics"
 author: "ZyphenSVC"
-slug: "posts/binexp/2023-05-25-binexp"
+slug: "posts/binexp/2024-05-25-binexp"
 ---
 
 > Forenote
