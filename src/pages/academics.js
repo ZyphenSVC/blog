@@ -22,8 +22,6 @@ class Home extends React.Component {
                                     <p>I am a 21 year old cybersecurity researcher.</p>
                                     <p>Interested in Algebraic Geometry with extensions onto Discrete Mathematics.</p>
                                     <p>Emphasis on Post-Quantum Cryptographic Algorithms and Homomorphic Encryption.</p>
-                                    <p><a href="/media/S_Vedantam_Resume.pdf">Resume</a></p>
-                                    <p><a href="/media/cv.pdf">Curriculum Vitae</a></p>
                                 </div>
                             </div>
                             <div className="col-lg-3 col-md-4 col-sm-7 col-8">
@@ -35,7 +33,8 @@ class Home extends React.Component {
                         <div className="row">
                             <div className="col-md-6 offset-md-1">
                                 <div className="main-fade-in-animation-delay-2">
-                                    <p><a href="https://zyphensvc.com/media/cv.pdf">Curriculum Vitae</a></p>
+                                    <p><a href="/media/S_Vedantam_Resume.pdf">Resume</a></p>
+                                    <p><a href="/media/cv.pdf">Curriculum Vitae</a></p>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +160,7 @@ class Home extends React.Component {
               <li><b>Introduction to Algebraic Geometry - MATH8300</b></li>
               <ul>
                   <li>Content - "Basic Algebraic Geometry I", Igor Shafarevich</li>
-                  <li><a href="https://zyphensvc.com/media/AlgGeoBook1.pdf">My Notes</a></li>
+                  <li><a href="/media/AlgGeoBook1.pdf">My Notes</a></li>
               </ul>
             </ul>
           <p classname="h6">Summer 2024</p>
@@ -173,7 +172,7 @@ class Home extends React.Component {
                                             <li><b>Modern Algebra and Geometry II (Abstract Algebra) - MATH 6010</b></li>
                                             <ul>
                                                 <li>Content - "Abstract Algebra: An Introduction, 3rd Edition", Thomas Hungerford</li>
-                                                <li><a href="https://zyphensvc.com/media/AbstractAlgebraTextbook.pdf">My Notes</a></li>
+                                                <li><a href="/media/AbstractAlgebraTextbook.pdf">My Notes</a></li>
                                             </ul>
                                             <li><b>Linear Algebra - MATH 3000</b></li>
                                         </ul>
@@ -182,7 +181,7 @@ class Home extends React.Component {
                                             <li><b>Modern Algebra and Geometry I (Abstract Algebra) - MATH 6000</b></li>
                                             <ul>
                                                 <li>Content - "Abstract Algebra: An Introduction, 3rd Edition", Thomas Hungerford</li>
-                                                <li><a href="https://zyphensvc.com/media/AbstractAlgebraTextbook.pdf">My Notes</a></li>
+                                                <li><a href="/media/AbstractAlgebraTextbook.pdf">My Notes</a></li>
                                             </ul>
                                             <li>Sequences and Series (Introduction to Real Analysis) - MATH 3100</li>
                                             <li>Calculus III for Science and Engineering - MATH 2270</li>

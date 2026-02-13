@@ -396,7 +396,7 @@ rdx : 0x437a85
 
 Now we got our four register gadgets. And we also need to find a gadget that allows eight bytes of memory moved:
 
-Recall that a `qword` holds eight bytes of data as referenced [here](https://zyphensvc.com/posts/binexp/2023-05-25-binexp#:~:text=Note%20that%20a%20word%20is%20two%20bytes%20of%20data%2C%20dword%20is%20four%2C%20qword%20is%20eight.)
+Recall that a `qword` holds eight bytes of data as referenced [here](/posts/binexp/2023-05-25-binexp#:~:text=Note%20that%20a%20word%20is%20two%20bytes%20of%20data%2C%20dword%20is%20four%2C%20qword%20is%20eight.)
 
 ```armasm
 $ ROPgadget --binary simplecalc | grep ": mov qword" | grep "ret" | less | less
