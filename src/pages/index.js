@@ -17,10 +17,13 @@ class Home extends React.Component {
                     <div className="container h-100">
                         <div className="row h-50 justify-content-center">
                             <div className="col-lg-7 col-md-6">
-                                <h1 className="main-reveal-text-short">Hi, I'm Sriaditya.<br />I make things.</h1>
+                                <h1 className="main-reveal-text-short">Hi, I'm Sriaditya.<br />I research things.</h1>
                                 <div className="main-fade-in-animation">
-                                    <p>I am a 21 year old cybersecurity researcher studying mathematics and computer science at the University of Georgia.</p>
-                                    <p>Always reading papers, textbooks, or documenting.</p>
+                                    <p>I am a 21 year old cybersecurity researcher.</p>
+                                    <p>Interested in Algebraic Geometry with extensions onto Discrete Mathematics.</p>
+                                    <p>Emphasis on Post-Quantum Cryptographic Algorithms and Homomorphic Encryption.</p>
+                                    <p><a href="/media/S_Vedantam_Resume.pdf">Resume</a></p>
+                                    <p><a href="/media/cv.pdf">Curriculum Vitae</a></p>
                                 </div>
                             </div>
                             <div className="col-lg-3 col-md-4 col-sm-7 col-8">

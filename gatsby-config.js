@@ -3,7 +3,7 @@ require('events').defaultMaxListeners = 20;
 module.exports = {
     siteMetadata: {
         title: `ZyphenSVC`,
-        description: `I am a 20 year old security researcher studying mathematics and computer science.`,
+        description: `I am a 21 year old security researcher.`,
         social: {
             twitter: `ZyphenSVC`,
         },
