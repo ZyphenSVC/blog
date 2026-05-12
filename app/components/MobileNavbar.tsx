@@ -12,6 +12,7 @@ type NavItem = {
 const navigationItems: NavItem[] = [
   { label: "contact", href: "/contact" },
   { label: "blog", href: "/blog" },
+  { label: "notes", href: "/notes" },
   { label: "research", href: "/research" },
   { label: "projects", href: "/projects" },
 ];
@@ -25,7 +26,7 @@ export function MobileNavbar() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="font-mono text-2xl text-[#EAE0D5] md:hidden"
+        className="font-mono text-2xl text-[#EAE0D5] lg:hidden"
         aria-label="Open navigation menu"
       >
         ☰
@@ -35,7 +36,7 @@ export function MobileNavbar() {
         <button
           type="button"
           aria-label="Close navigation menu"
-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}

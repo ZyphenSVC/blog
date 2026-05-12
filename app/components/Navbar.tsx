@@ -13,6 +13,7 @@ type NavItem = {
 const navigationItems: NavItem[] = [
   { label: "contact", href: "/contact" },
   { label: "blog", href: "/blog" },
+  { label: "notes", href: "/notes" },
   { label: "research", href: "/research" },
   { label: "projects", href: "/projects" },
 ];
@@ -21,10 +22,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex h-16 w-full items-center justify-between border-b border-[#575253] bg-[#2F2D2E] px-6">
+    <nav className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-[#575253] bg-[#2F2D2E] px-6">
       <Logo />
 
-      <div className="hidden items-center gap-12 md:flex">
+      <div className="hidden items-center gap-12 lg:flex">
         {navigationItems.map((item) => {
           const active = pathname === item.href;
 
