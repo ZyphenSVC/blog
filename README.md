@@ -8,7 +8,7 @@ This website also uses Bootstrap 5.0, mainly for the grid system and a few visua
 
 ## Quick Start
 
-Make sure all dependences are installed:
+Make sure all dependencies are installed:
 
 ```
 npm install
