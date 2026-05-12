@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /wp-admin/
-Sitemap: https://zyphensvc.com/sitemap/sitemap-index.xml
-
-User-agent: nsa
-Disallow: /
