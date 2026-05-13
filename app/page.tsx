@@ -11,8 +11,8 @@ export default function Home() {
     <main className="min-h-screen bg-[#252324]">
       <Navbar />
       <section className="grid min-h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <aside className="flex flex-col justify-start border-[#575253] px-8 py-14 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:border-r lg:px-14 lg:pt-14">
-          <div className="mb-10 h-44 w-44 overflow-hidden rounded-full">
+        <aside className="flex flex-col justify-start border-[#575253] px-8 py-14 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:border-r lg:px-10 lg:pt-14">
+          <div className="mb-8 h-44 w-44 overflow-hidden rounded-full">
             <Image
               src="/media/face.jpg"
               alt="ProfessionalPicture"
@@ -23,11 +23,11 @@ export default function Home() {
             />
           </div>
 
-          <p className="mb-6 font-mono text-sm font-bold uppercase tracking-[0.32em] text-[#8C86AA]">
+          <p className="max-w-[420px] mb-6 font-mono text-sm font-bold uppercase tracking-[0.22em] text-[#8C86AA]">
             Cryptography / Math / Systems
           </p>
 
-          <h1 className="font-mono text-5xl font-bold leading-[0.95] tracking-[-0.04em] text-[#EAE0D5] sm:text-6xl xl:text-7xl">
+          <h1 className="font-mono text-5xl font-bold leading-[0.95] tracking-[-0.04em] text-[#EAE0D5] sm:text-6xl xl:text-7xl max-w-[520px]">
             Sriaditya
             <br />
             Vedantam
