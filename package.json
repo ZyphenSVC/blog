@@ -11,13 +11,18 @@
   "dependencies": {
     "fast-glob": "^3.3.3",
     "gray-matter": "^4.0.3",
+    "katex": "^0.16.45",
     "next": "16.2.6",
+    "next-mdx-remote": "^6.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "reading-time": "^1.5.0"
+    "reading-time": "^1.5.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

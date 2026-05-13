@@ -10,6 +10,7 @@ type NavItem = {
 };
 
 const navigationItems: NavItem[] = [
+  { label: "home", href: "/" },
   { label: "contact", href: "/contact" },
   { label: "blog", href: "/blog" },
   { label: "notes", href: "/notes" },
