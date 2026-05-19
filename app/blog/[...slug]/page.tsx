@@ -1,3 +1,6 @@
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkMath from "remark-math";
