@@ -18,7 +18,7 @@ const projects = [
     description:
       "An experimental Apple Music client alternative exploring Rust-backed architecture, Linux-friendly workflows, and full-stack product design.",
     stack: ["Rust", "Next.js", "Tauri", "Apple Music API"],
-    href: "/projects/orchard",
+    href: "https://github.com/ZyphenSVC/Orchard",
   },
   {
     title: "Satellite Imaging ML/CV Pipelines",
@@ -27,7 +27,7 @@ const projects = [
     description:
       "Machine learning and computer vision pipeline work for satellite imaging systems, including NeRF-oriented experimentation and heterogeneous GPU/CPU environments.",
     stack: ["Python", "PyTorch", "OpenCV", "NeRF", "GPU Systems"],
-    href: "/research",
+    href: "https://smallsat.uga.edu",
   },
   {
     title: "Selenium Operations Automation",
@@ -36,7 +36,7 @@ const projects = [
     description:
       "An automation workflow that executed 40,000+ system tasks, eliminated a six-month operational backlog, and improved reporting reliability.",
     stack: ["Python", "Selenium", "Automation", "Secure Design"],
-    href: "/projects/automation",
+    href: "https://tps.uga.edu/",
   },
   {
     title: "ECC & Cryptography Implementations",

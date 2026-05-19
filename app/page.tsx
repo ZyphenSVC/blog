@@ -4,8 +4,19 @@ import Image from "next/image"
 import { ExperienceSection } from "@/app/components/ExperienceSection"
 import { PostSection } from "@/app/components/PostSection"
 import { CompetitiveHistory } from "@/app/components/CompetitiveHistorySection"
+import { getAllPosts } from "@/lib/posts"
 
-export default function Home() {
+export default async function Home() {
+
+  const posts = await getAllPosts();
+  const recentPosts = posts.slice(0, 2).map((post) => ({
+    date: post.date,
+    type: post.tags?.[0] ?? "Writing",
+    title: post.title,
+    description: post.description,
+    tags: post.tags ?? [],
+    href: `/blog/${post.slug}`,
+  }));
 
   return (
     <main className="min-h-screen bg-[#252324]">
@@ -118,32 +129,7 @@ export default function Home() {
             titleBottom="Posts"
             href="/blog"
             linkLabel="View All"
-            items={[
-              {
-                date: "May 2026",
-                type: "Research",
-                title: "Building a Research Professional Portfolio v.2",
-                description:
-                  "Design notes on building a fast Next.js and Cloudflare Pages blog for research writing, course notes, and project documentation.",
-                tags: ["#nextjs", "#cloudflare", "#systems"],
-              },
-              {
-                date: "May 2026",
-                type: "Cryptography",
-                title: "Notes on Privacy-Preserving Computation",
-                description:
-                  "A working collection of notes on applied cryptography, FHE, and research directions in secure computation.",
-                tags: ["#math", "#cryptography", "#fhe", "#research"],
-              },
-              {
-                date: "May 2026",
-                type: "Cryptography",
-                title: "Researching Graph Theory Optimization Utilizing Networks",
-                description:
-                  "Looking into graph theory implementation when mapping networks and nodes with Active Directory.",
-                tags: ["#graphtheory", "#activedirectory", "#cybersecurity", "#research"],
-              },
-            ]}
+            items={recentPosts}
           />
 
           <ExperienceSection

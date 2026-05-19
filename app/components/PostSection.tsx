@@ -7,6 +7,7 @@ type PostItem = {
   title: string;
   description: string;
   tags: string[];
+  href: string;
 };
 
 type PostSectionProps = {
