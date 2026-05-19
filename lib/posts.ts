@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import readingTime from "reading-time";
 import { glob } from "fast-glob";
 
-const POSTS_PATH = path.join(process.cwd(), "content/posts");
+const POSTS_PATH = path.join(process.cwd(), "content", "posts");
 
 export type Post = {
   title: string;
@@ -19,6 +19,7 @@ export type Post = {
 export async function getAllPosts(): Promise<Post[]> {
   const files = await glob("**/index.mdx", {
     cwd: POSTS_PATH,
+    onlyFiles: true,
   });
 
   const posts = files.map((file) => {
@@ -26,11 +27,13 @@ export async function getAllPosts(): Promise<Post[]> {
     const source = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(source);
 
+    const slug = file.replace(/\/index\.mdx$/, "");
+
     return {
-      title: data.title,
-      date: data.date,
+      title: data.title ?? "Untitled",
+      date: data.date ?? "",
       description: data.description ?? "",
-      slug: data.slug,
+      slug,
       tags: data.tags ?? [],
       readingTime: readingTime(content).text,
       content,
