@@ -7,7 +7,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-3">
       <Image
-        src="/media/logo.png"
+        src="/media/optimized/logo.png"
         alt="logo"
         width={128}
         height={128}

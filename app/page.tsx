@@ -25,7 +25,7 @@ export default async function Home() {
         <aside className="flex flex-col justify-start border-[#575253] px-8 py-14 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:border-r lg:px-10 lg:pt-14">
           <div className="mb-8 h-44 w-44 overflow-hidden rounded-full">
             <Image
-              src="/media/face.jpg"
+              src="/media/optimized/face.webp"
               alt="ProfessionalPicture"
               width={220}
               height={220}
