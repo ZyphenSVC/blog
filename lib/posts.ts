@@ -1,4 +1,4 @@
-import posts from "@/lib/generatedPosts.json";
+import posts from "@/lib/generated-posts.json";
 
 export type Post = {
   title: string;
@@ -7,7 +7,7 @@ export type Post = {
   slug: string;
   tags: string[];
   readingTime: string;
-  content: string;
+  html: string;
 };
 
 export async function getAllPosts(): Promise<Post[]> {

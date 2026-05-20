@@ -1,6 +1,4 @@
 // app/blog/page.tsx
-export const dynamic = "force-static";
-
 import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
 import Navbar from "@/app/components/Navbar";

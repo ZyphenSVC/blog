@@ -1,23 +1,9 @@
-export const dynamic = "force-static";
-export const dynamicParams = false;
-
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 
 import Navbar from "@/app/components/Navbar";
 import { ArticleLayout } from "@/app/components/ArticleLayout";
-import { getAllPosts, getPostBySlug } from "@/lib/posts";
-
-export async function generateStaticParams() {
-  const posts = await getAllPosts();
-
-  return posts.map((post) => ({
-    slug: post.slug.split("/"),
-  }));
-}
+import { getPostBySlug } from "@/lib/posts";
 
 export default async function BlogPostPage({
                                              params,
@@ -40,14 +26,9 @@ export default async function BlogPostPage({
         readingTime={post.readingTime}
         tags={post.tags}
       >
-        <MDXRemote
-          source={post.content}
-          options={{
-            mdxOptions: {
-              remarkPlugins: [remarkMath],
-              rehypePlugins: [rehypeKatex],
-            },
-          }}
+        <div
+          className="prose prose-invert max-w-none prose-headings:text-[#F2E8DC] prose-p:text-[#BEB6AD] prose-a:text-[#8C86AA] prose-strong:text-[#F2E8DC] prose-code:text-[#EAE0D5]"
+          dangerouslySetInnerHTML={{ __html: post.html }}
         />
       </ArticleLayout>
     </main>

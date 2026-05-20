@@ -27,22 +27,30 @@ export default function Navbar() {
 
       <div className="hidden items-center gap-12 lg:flex">
         {navigationItems.map((item) => {
-          const active = pathname === item.href;
+          const active =
+            pathname === item.href ||
+            (item.href !== "/" && pathname.startsWith(`${item.href}/`));
 
           return (
             <Link
               key={item.href}
               href={item.href}
-              className="font-mono text-sm font-semibold uppercase tracking-[0.16em] transition"
+              className={`font-mono text-xs font-bold uppercase tracking-[0.18em] transition ${
+                active && item.href === "/"
+                  ? "ml-4 text-[#8C86AA]"
+                  : active
+                    ? "text-[#8C86AA]"
+                    : "text-[#C8C0B6]/85 hover:text-[#EAE0D5]"
+              }`}
             >
-              <span className={active ? "text-[#8C86AA]" : "text-[#C8C0B6] hover:text-[#EAE0D5]"}>
-                {active ? `<${item.label}>` : `${item.label}/`}
-              </span>
+              {active ? `<${item.label}>` : `${item.label}/`}
             </Link>
           );
         })}
       </div>
-      <MobileNavbar />
+      <div className="lg:hidden">
+        <MobileNavbar />
+      </div>
     </nav>
   );
 }
