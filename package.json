@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "pnpm run prebuild && next dev",
     "prebuild": "tsx lib/generatePosts.ts && tsx lib/optimizeImages.ts",
     "build": "next build",
     "preview": "opennextjs-cloudflare build && wrangler dev",

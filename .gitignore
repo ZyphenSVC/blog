@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .open-next
 .wrangler
-lib/generatedPosts.json
+lib/generated-posts.json
+public/media/optimized/
 
 # dependencies
 /node_modules
