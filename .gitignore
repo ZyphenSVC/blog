@@ -2,6 +2,7 @@
 .open-next
 .wrangler
 lib/generatedPosts.json
+content/posts/2026/05/14
 
 # dependencies
 /node_modules
@@ -42,3 +43,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/public/media/optimized/face.webp
+/lib/generated-posts.json
+/public/media/optimized/logo.webp
