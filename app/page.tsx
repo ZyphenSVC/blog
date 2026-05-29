@@ -19,11 +19,11 @@ export default async function Home() {
   }));
 
   return (
-    <main className="min-h-screen bg-[#252324]">
+    <main className="min-h-screen overflow-x-clip bg-[#252324]">
       <Navbar />
       <section className="grid min-h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <aside className="flex flex-col justify-start border-[#575253] px-8 py-14 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:border-r lg:px-10 lg:pt-14">
-          <div className="mb-8 h-44 w-44 overflow-hidden rounded-full">
+        <aside className="flex min-w-0 flex-col justify-start border-[#575253] px-5 py-12 sm:px-8 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:border-r lg:px-10 lg:pt-14">
+          <div className="mb-8 h-40 w-40 overflow-hidden rounded-full sm:h-44 sm:w-44">
             <Image
               src="/media/optimized/face.webp"
               alt="ProfessionalPicture"
@@ -34,23 +34,23 @@ export default async function Home() {
             />
           </div>
 
-          <p className="max-w-[420px] mb-6 font-mono text-sm font-bold uppercase tracking-[0.22em] text-[#8C86AA]">
+          <p className="max-w-[420px] mb-6 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#8C86AA] sm:text-sm sm:tracking-[0.22em]">
             Cryptography / Math / Systems
           </p>
 
-          <h1 className="font-mono text-5xl font-bold leading-[0.95] tracking-[-0.04em] text-[#EAE0D5] sm:text-6xl xl:text-7xl max-w-[520px]">
+          <h1 className="max-w-[520px] font-mono text-4xl font-bold leading-[0.95] tracking-[-0.02em] text-[#EAE0D5] sm:text-6xl sm:tracking-[-0.04em] xl:text-7xl">
             Sriaditya
             <br />
             Vedantam
           </h1>
 
-          <p className="mt-8 max-w-xl text-lg leading-8 text-[#C8C0B6]">
+          <p className="mt-8 max-w-xl text-base leading-8 text-[#C8C0B6] sm:text-lg">
             Technical writing, research notes, and implementation work across
             cryptography, mathematics, systems engineering, and full-stack web
             development.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-6 font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#C8C0B6]">
+          <div className="mt-10 flex flex-wrap gap-x-5 gap-y-4 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#C8C0B6] sm:gap-6 sm:tracking-[0.22em]">
             <Link href="/contact" className="hover:text-[#EAE0D5]">
               Contact
             </Link>
@@ -70,21 +70,21 @@ export default async function Home() {
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/media/resume.pdf"
-              className="border border-[#8C86AA] px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#EAE0D5] transition hover:bg-[#8C86AA] hover:text-[#252324]"
+              className="border border-[#8C86AA] px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#EAE0D5] transition hover:bg-[#8C86AA] hover:text-[#252324] sm:tracking-[0.22em]"
             >
               Resume
             </Link>
 
             <Link
               href="/media/cv.pdf"
-              className="border border-[#575253] px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#C8C0B6] transition hover:border-[#EAE0D5] hover:text-[#EAE0D5]"
+              className="border border-[#575253] px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#C8C0B6] transition hover:border-[#EAE0D5] hover:text-[#EAE0D5] sm:tracking-[0.22em]"
             >
               CV
             </Link>
           </div>
         </aside>
 
-        <section className="min-w-0 px-8 pt-6 pb-20 lg:px-14 lg:pt-8">
+        <section className="min-w-0 px-5 pt-6 pb-20 sm:px-8 lg:px-14 lg:pt-8">
           <ExperienceSection
             titleTop="Education"
             titleBottom="Background"
