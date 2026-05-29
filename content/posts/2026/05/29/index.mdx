@@ -1,0 +1,462 @@
+---
+title: "Learning RBAC by Building SecureOps"
+date: "2026-05-29"
+description: "What I learned about role-based access control while building a Dockerized Go and PostgreSQL backend with JWT authentication, explicit roles, explicit permissions, permission-guarded routes, and audit logging."
+tags:
+  [
+    "rbac",
+    "go",
+    "postgresql",
+    "jwt",
+    "backend-security",
+    "authorization",
+    "docker",
+    "audit-logging",
+  ]
+---
+
+> Foreword
+
+[SecureOps](https://github.com/ZyphenSVC/SecureOps) is an older proof-of-concept project I built
+while learning Go, PostgreSQL, JWT authentication, and backend security design. The project is not
+supposed to be a production-ready identity platform. It was more of a focused lab for answering
+one question:
+
+`What actually happens after a user logs in?`
+
+# Learning RBAC by Building SecureOps
+
+When people first learn backend authentication, the milestone is usually "can a user log in?"
+That is an important milestone, but it is only the first layer. A login endpoint answers one
+question:
+
+`Can this user prove who they are?`
+
+RBAC, or role-based access control, answers the next question:
+
+`What is this user allowed to do now that the system knows who they are?`
+
+SecureOps started as a small backend project for exploring that second question. I wanted to build
+something that felt closer to an internal operations tool than a toy login API. That meant user
+registration, password hashing with bcrypt, JWT-protected routes, PostgreSQL migrations,
+permission-guarded admin endpoints, audit logs, and Docker Compose for reproducible local
+development.
+
+## Authentication Is Not Authorization
+
+Authentication and authorization are easy to blur together because they often happen in the same
+request path. Atleast, this was how I felt when I was learning the difference once more during
+my Web-Programming course.
+
+In a JWT-based backend, a request might include a header like this:
+
+```http
+Authorization: Bearer <token>
+```
+
+The API verifies the token signature, checks expiration, and extracts claims such as the user's
+identifier. At that point, the system has authenticated the request.
+
+> But that does not mean the request should be allowed to perform the action.
+
+A valid token proves that the server issued a token for some subject. It does not automatically
+prove that the subject should be allowed to list users, read audit logs, update system settings, or
+access an admin endpoint.
+
+Therefore:
+
+- JWT verification establishes identity.
+- RBAC decides whether that identity has the required authority.
+- Audit logging records security-relevant events so the system can be inspected later.
+
+If those concerns are mixed together, the system becomes harder to reason about. If they are
+separated, every route can follow a clear pattern: authenticate first, authorize second, execute
+third, log what matters.
+
+## The Core RBAC Model
+
+The version of RBAC I built in SecureOps used a simple relational model:
+
+```text
+users
+roles
+permissions
+user_roles
+role_permissions
+audit_logs
+```
+
+This is the part that made the concept click for me. A user does not need to directly own every
+permission. A role groups permissions. A user receives one or more roles. The application checks
+whether any of the user's roles grants the permission required by the route.
+
+The schema shape looks like this:
+
+```sql
+CREATE TABLE users (
+    id UUID PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE roles (
+    id UUID PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE permissions (
+    id UUID PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE user_roles (
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    role_id UUID NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, role_id)
+);
+
+CREATE TABLE role_permissions (
+    role_id UUID NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
+    permission_id UUID NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+    PRIMARY KEY (role_id, permission_id)
+);
+```
+
+This model is small, but it already captures the core idea:
+
+```text
+user -> user_roles -> roles -> role_permissions -> permissions
+```
+
+For example, an `admin` role might grant:
+
+```text
+users:read
+audit_logs:read
+```
+
+An `auditor` role might only grant:
+
+```text
+audit_logs:read
+```
+
+The useful design choice is that handlers do not need to ask, "is this user an admin?" They can ask,
+"does this user have `audit_logs:read`?"
+
+If route handlers check for hard-coded role names, every new role becomes a code change. If route
+handlers check for permissions, roles can change without rewriting the handler logic. The route
+cares about the action. The database decides which roles grant that action.
+
+> Slightly giving me nostalgia for when I used to create discord bots and ensuring whether or not a user has a role verses a permission.
+
+## Permissions Should Name Actions
+
+One pattern I liked was naming permissions as `resource:action`.
+
+> It felt like AWS IAM configuration, but I guess I would be creating it instead.
+
+Examples:
+
+```text
+users:read
+users:create
+users:update
+audit_logs:read
+```
+
+This naming scheme is simple, but it creates a useful mental model. A permission should describe
+an action the system can authorize. It should not describe a person, job title, or UI label.
+
+Bad permission names tend to look like this:
+
+```text
+admin
+superuser
+can_do_everything
+```
+
+Better permission names are closer to actual backend behavior:
+
+```text
+users:read
+roles:assign
+audit_logs:read
+```
+
+This reminds me of AWS IAM concepts. Users, groups, roles, policies, actions, and resources are
+separate ideas. A clean access-control system should make those boundaries visible instead of
+collapsing everything into one `is_admin` boolean.
+
+## The Request Flow
+
+In SecureOps, protected routes followed a flow like this:
+
+1. Read the `Authorization` header.
+2. Verify the JWT.
+3. Extract the user identifier from the token claims.
+4. Load or check the user's current permissions.
+5. Compare those permissions with the permission required by the route.
+6. Reject the request if the permission is missing.
+7. Execute the handler if the permission is present.
+
+The authorization check can be expressed as a database query:
+
+```sql
+SELECT EXISTS (
+    SELECT 1
+    FROM user_roles ur
+    JOIN role_permissions rp ON rp.role_id = ur.role_id
+    JOIN permissions p ON p.id = rp.permission_id
+    WHERE ur.user_id = $1
+      AND p.name = $2
+);
+```
+
+The middleware version of that idea looks like this in Go:
+
+```go
+func RequirePermission(db *sql.DB, permission string) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			userID, ok := UserIDFromContext(r.Context())
+			if !ok {
+				http.Error(w, "unauthorized", http.StatusUnauthorized)
+				return
+			}
+
+			allowed, err := UserHasPermission(r.Context(), db, userID, permission)
+			if err != nil {
+				http.Error(w, "internal server error", http.StatusInternalServerError)
+				return
+			}
+
+			if !allowed {
+				http.Error(w, "forbidden", http.StatusForbidden)
+				return
+			}
+
+			next.ServeHTTP(w, r)
+		})
+	}
+}
+```
+
+Then the route can be wired around a specific action:
+
+```go
+adminMux.Handle(
+	"/admin/audit-logs",
+	RequirePermission(db, "audit_logs:read")(auditLogHandler),
+)
+```
+
+I like this structure because the route announces its authorization rule. You do not need to dig
+through the handler and guess who should be allowed to call it.
+
+## Default Deny
+
+Access control should fail closed.
+
+If the token is missing, reject the request. If the token is invalid, reject the request. If the
+permission lookup fails, reject the request. If the user has a valid account but lacks the required
+permission, reject the request.
+
+This sounds obvious, but it is easy to accidentally build fail-open behavior when authorization is
+treated as a small helper instead of a security boundary.
+
+The behavior should be:
+
+```text
+no token             -> 401 Unauthorized
+bad token            -> 401 Unauthorized
+valid token, no perm -> 403 Forbidden
+valid token, perm    -> handler executes
+```
+
+The distinction between `401` and `403` is also useful. `401` means the system could not establish
+identity. `403` means the system knows who the caller is, but the caller is not allowed to perform
+the action.
+
+## JWTs Are Not the Whole Authorization System
+
+JWTs are useful because they are compact, signed tokens for carrying claims between parties.
+The JWT standard is defined in [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519), and the
+main idea is straightforward: claims are encoded in a token that can be verified by the receiver.
+
+The trap is treating the token as the entire authorization system.
+
+For example, a token could contain a role claim:
+
+```json
+{
+  "sub": "user-id",
+  "email": "admin@example.com",
+  "role": "admin",
+  "exp": 1770000000
+}
+```
+
+That is convenient, but it creates a problem: what happens if the user's role changes before the
+token expires?
+
+If the application fully trusts the old role claim until expiration, authorization decisions can lag
+behind reality.
+
+Possible approaches include to fix this would be:
+
+- keeping access tokens short lived
+- checking current permissions server-side
+- using refresh tokens with rotation
+- maintaining token revocation state for high-risk events
+- including a token version or session version that can be invalidated
+- avoiding long-lived tokens that embed privileged authorization state
+
+The broader lesson is that JWTs are an authentication and claims transport mechanism. They do not
+replace authorization logic.
+
+## RBAC Does Not Solve Every Access-Control Problem
+
+RBAC answers questions like:
+
+Can this user perform this type of action?
+
+It does not automatically answer:
+
+Can this user perform this action on this specific object?
+
+For example, `tickets:read` might allow a support engineer to read tickets. But if the product is
+multi-tenant, the system still needs to check whether the ticket belongs to an organization the
+engineer is allowed to access.
+
+That means RBAC is usually only one layer:
+
+```text
+Can the user perform the action?       RBAC
+Can the user access this object?       object-level authorization
+Can the user access this tenant?       tenant boundary check
+Should this event be recorded?         audit logging
+```
+
+This is where broken access control bugs often appear. A system checks the general permission but
+forgets the object-specific check. The user is allowed to read a report, but not every report. The
+user is allowed to edit a project, but not every project.
+
+SecureOps was intentionally small, so the focus was endpoint-level RBAC. But building it made it
+clear that production authorization needs both permission checks and object-scoped checks.
+
+## Audit Logging Makes Authorization Easier to Reason About
+
+For SecureOps, I wanted the system to record events such as registration, login, and admin access.
+
+If a privileged endpoint is called, the system should be able to answer:
+
+- Who performed the action?
+- What action did they perform?
+- When did it happen?
+- Was the action allowed or denied?
+- What request context is safe to record?
+
+A simple audit log table might look like this:
+
+```sql
+CREATE TABLE audit_logs (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES users(id),
+    action TEXT NOT NULL,
+    metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+```
+
+The important part is being careful about what not to log. Passwords, password hashes, raw JWTs,
+session secrets, API keys, and sensitive request bodies should not end up in audit logs.
+
+Good audit logging should make the system easier to investigate without creating a new data leak.
+
+## Why Docker Compose Helped
+
+Docker Compose made the project feel closer to a real engineering workflow because the API,
+database, and migrations could run together in a reproducible local environment.
+
+That matters for RBAC because authorization bugs often live in the relationship between code and
+data. The middleware might be correct, but the seed data might grant the wrong permission. The SQL
+query might be correct, but the migration might miss a uniqueness constraint. The login flow might
+work, but the default admin user might not receive the role needed to reach the protected endpoint.
+
+Being able to reset the database, re-run migrations, and test the same route flow repeatedly made
+the access-control model easier to reason about.
+
+## Mistakes I Would Watch For Now
+
+Building SecureOps gave me a clearer checklist of RBAC mistakes to avoid.
+
+### Checking Roles Instead of Permissions
+
+This is the common shortcut:
+
+```go
+if user.Role != "admin" {
+	return forbidden()
+}
+```
+
+It works until the system needs another role that should have the same access. Then the code starts
+accumulating role-name checks everywhere.
+
+Checking permissions keeps the route tied to an action:
+
+```go
+RequirePermission(db, "users:read")
+```
+
+Roles can then evolve as data.
+
+### Using `is_admin` as the Authorization Model
+
+An `is_admin` boolean is fine for a tiny demo, but it does not scale into a real permission model.
+Eventually the system needs an auditor, a support engineer, a billing admin, a read-only admin, or
+some other role that does not map cleanly to true or false.
+
+RBAC creates a better path because roles and permissions are explicit.
+
+### Forgetting Object-Level Authorization
+
+RBAC can say that a user has `users:read`. It cannot automatically say which users they should be
+allowed to read.
+
+That second check depends on the product model: organization membership, tenant boundaries,
+ownership, data classification, or another policy layer.
+
+### Logging Too Much or Too Little
+
+No audit logs means poor visibility. Overly detailed audit logs can leak sensitive data.
+
+Useful audit logs should capture security-relevant facts while avoiding secrets.
+
+## What I Took Away
+
+The main lesson from SecureOps was that access control becomes clearer when it is modeled directly.
+
+Authentication by itself is not enough. A JWT can establish identity, but the backend still needs a
+consistent way to decide what that identity can do. RBAC gives the system a vocabulary for that:
+users, roles, permissions, assignments, checks, and logs.
+
+It also made me appreciate authorization as a systems problem. The code matters, but so do the
+database schema, migrations, seed data, route structure, error behavior, tests, and logs.
+
+This project touched backend engineering and application
+security at the same time. I wrote HTTP handlers in GoLang, design relational tables, think about JWT
+claims, hash passwords, run migrations, and test what happens when different identities hit the
+same endpoint.
+
+A secure backend should not only know who a user is. It should know what that user is allowed to do,
+why they are allowed to do it, and what happened when they tried.
+
+## References
+
+- [SecureOps GitHub repository](https://github.com/ZyphenSVC/SecureOps)
+- [The NIST Model for Role-Based Access Control](https://www.nist.gov/publications/nist-model-role-based-access-control-towards-unified-standard)
+- [RFC 7519: JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519)
+- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
