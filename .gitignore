@@ -3,6 +3,8 @@
 .wrangler
 lib/generatedPosts.json
 content/posts/2026/05/14
+public/media/optimized/
+lib/generated-posts.json
 
 # dependencies
 /node_modules
