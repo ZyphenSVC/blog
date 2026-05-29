@@ -12,6 +12,15 @@ const projects = [
     href: "/blog",
   },
   {
+    title: "SecureOps",
+    type: "Backend / Application Security",
+    status: "Proof of Concept",
+    description:
+      "A Dockerized Go/PostgreSQL backend for a secure internal operations platform, implementing JWT authentication, bcrypt password hashing, RBAC permission checks, protected admin APIs, database migrations, and audit logging.",
+    stack: ["Go", "PostgreSQL", "Docker Compose", "JWT", "bcrypt", "RBAC"],
+    href: "https://github.com/ZyphenSVC/SecureOps",
+  },
+  {
     title: "Orchard",
     type: "Systems / Music Client",
     status: "In Development",
