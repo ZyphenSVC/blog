@@ -1,0 +1,834 @@
+---
+title: "The One Hit Wonder: Solving MIDHNP with Coppersmith"
+date: "2026-09-13"
+description: "How I was the only solve on The One Hit Wonder by recognizing a Modular Inversion Double Hidden Numbers Problem (MIDHNP)."
+tags:
+  [
+    "cryptography",
+    "ctf",
+    "coppersmith",
+    "lattices",
+    "sage",
+    "mihnp",
+    "midhnp",
+    "number-theory",
+  ]
+---
+
+> Foreword
+
+When I started this challenge, I told my friends, how is there not a blood on this? Only to recognize that I had experience reading the exact paper in question previously, which both presented the problem, attack vector, and could not find a recognized or published ctf challenge on this until now; especially given that this paper was released in March only. Needless to say, this has definitely been the most proud I had been showing the successes of my research journey.
+
+Enough about glazing myself, but I started working on this problem around throughout the day since it was dropped, and finished around 2/3AM. Most of that time was not the lattice reduction, but recognizing which hidden problem it was, and building constructions trial and error approach in Sage, and especially the determinant structure.
+
+This was the first CTF I had participated in with maximum effort since my first year in uni, and had I not been familiar with what  a MIHNP was to begin with and drawing the dots to MIDHNP, then I would have been cooked with no further solves and a beautiful construction and blogpost lost.
+
+# DISCLAIMER PLEASE READ
+
+Another thing, I am going to explain the math of it all first, and then the CTF Mindset you should take away after. Look for the header `Math Brain vs CTF Brain`.
+
+# The One Hit Wonder : Solving MIDHNP with Coppersmith
+
+The challenge was almost centralized to one `while True` loop, which I was cocky enough to claim this was going to be a cinch... how wrong I was. The service openly gives $p$, how many bits are leaked, and lets us choose input. I spent a while wondering whether the chosen-input oracle itself could be abused, meaning whether some carefully selected $t_i$ values could force outputs with exploitable structure. It is the same general adversarial mindset as a chosen-plaintext attack, even though this is not literally a CPA. Clearly it wasnt. And the more annoying part was that both values we need are hidden was behind a modular inverse.
+
+For every tap, the challenge computes
+$$
+z_i = v(t_i + u)^{-1}\mod p
+$$
+and returns the top $k$ bits:
+$$
+y_i = \operatorname{MSB}_k(z_i).
+$$
+
+For this instance, $p$ is 1536 bits, prime, and the challenge only keeps around 58% of the output, meaning not the exact mod inverse value. This partial leak, repeated across values sharing the same hidden $u,v$ starts to make it look like an HNP (Hidden Number Problem). 
+
+## MSB Leak into Small Errors
+
+From working through LWE and homomorphic encryption, I have gotten very used to thinking about secrets in terms of a known relation plus some bounded error. This is obviously a very different setting, since the challenge is not intentionally adding noise, but the same question came to mind: how much missing information is too much?
+
+Let
+$$
+X = 2^{n-k}
+$$
+Since $y_i$ contains the high bits of $z_i$, the exact value can be written as
+$$
+z_i = y_iX + e_i
+$$
+where the unknown low part satisfies
+$$
+0 \leq e_i < X
+$$
+
+Hence, we now have $p,t_i,y_i$ known, $e_i$ small unknown, $u,v$ large hidden. If we can recover $e_i$, then we can reconstruct the exact $z_i$, and then recover $u,v$. Which sounds easier to say than actually doing it. 
+
+## First Thoughts of MIHNP
+
+Around this time, there was a nagging question at the back of my mind of this idea being similar. My research mentor had told me I was too math brained for applied cryptography as I was reading Silverman, Hoffstein, and Washington (different famous textbooks on mathematical cryptography), but had recommended Boneh and Shoup's. Overtime for the entirety of this year, I had became interested in Boneh's work. And in fact, in preparation for my reading course this semester on current applied cryptography research, we were planning on crash-coursing through Boneh and Shoup. The construction of a Modular Inversion Hidden Number Problem, introduced by Boneh, Halevi, Howgrave-Graham looks roughly like
+$$
+\operatorname{MSB}_k \left(\frac{1}{\alpha + t_i}\mod p\right).
+$$
+However, as stated before we have two hidden values:
+$$
+\operatorname{MSB}_k \left(\frac{v}{u + t_i}\mod p\right).
+$$
+
+I tried the simpler MIHNP-style lattice attack first, just to see if I can modify it in some direction. [This is what I was able to use as a reference for that construction](https://jia.je/ctf-writeups/misc/mihnp.html). But clearly, nothing useful came out of this direction, as I speak from hindsight. The construction is extremely similar, but the idea of a Double Hidden Numbers Problem -> MIDHNP, was something that I had skimmed over this year around beginning of summer. [This connection thus led me to finding that paper](https://eprint.iacr.org/2026/423) and realize we could break this problem with a determinant based Coppersmith construction.
+
+Therefore, in the words of this author:
+
+> "...our analysis reveals that MIDHNP is not harder than MIHNP" - Ding et al.
+
+## Choosing the Inputs
+
+The challenge let us choose each $t_i$, and we only get around eight queries. There is also no reason to make the equations worse than they need to be, so we can just choose $0,1,2,3,4,5,6,7$ for the eight taps. Then for every exact sample:
+$$
+z_i(u + t_i)\equiv v\mod p.
+$$
+
+Substitute
+$$
+z_i = y_iX + e_i = \bar{x}_i
+$$
+then every sample satisfies
+$$
+\bar{x}_iu + t_i\bar{x}_i-v\equiv 0 \mod p
+$$
+
+Given $e_i$ small, $u,v$ unknowns modulo $p$, then we want to eliminate them from the final lattice. $\S 3.2$ btw of the Ding et al. paper.
+
+## Elimination of Hidden Values
+
+With the determinant construction, for $d = 1$, choose $i,j,k$ such that 
+$$
+\det(M)\quad:\quad M = \begin{bmatrix}
+    t_i\bar{x}_i & \bar{x}_i & 1\\
+    t_j\bar{x}_j & \bar{x}_j & 1\\
+    t_k\bar{x}_k & \bar{x}_k & 1
+\end{bmatrix}
+$$
+
+and the rows come from $u,v$ and some constant. Which satisfy the relations of the sample modulo $p$, and the determinant vanishes modulo $p$. And does not include $u,v$ also.
+
+To hold the hand of a typical CTF player not in academia, myself years ago:
+$$
+\begin{align*}
+  t_i\bar{x}_i + \bar{x}_iu - v &\equiv 0\mod p\\
+  \begin{pmatrix}t_i\bar{x}_i& \bar{x}_i & 1\end{pmatrix}\begin{pmatrix}1\\u\\-v\end{pmatrix} &\equiv 0\mod p\\
+  M\begin{pmatrix}1\\u\\-v\end{pmatrix} &= \vec{0}\mod p.
+\end{align*}
+$$
+Given we are working over $\mathbb{F}_p$, finite field and our nonzero vector, this implies we have $M$ having a nontrivial kernel. Therefore, $M$ is singular over $\mathbb{F}_p$. Hence $\det(M) \equiv 0 \mod p$, coming down to basic linear algebra. We all took that as computer scientists, right? Q.E.D.
+
+Now that we have a polynomial only in the small low-bit variable, the solver builds the general $d$ construction here:
+
+```python
+def fundamental(t, b, idx, d, p, R):
+    mod = p ** d
+    F = PolynomialRing(Zmod(mod), R.variable_names(), order="degrevlex")
+
+    x = F.gens()
+    rows = []
+
+    for i in idx:
+        z = x[i] + F(b[i])
+        row = []
+
+        for j in range(d, -1, -1):
+            row.append(F(t[i]) ** j * z)
+
+        for j in range(d - 1, -1, -1):
+            row.append(F(t[i]) ** j)
+
+        rows.append(row)
+
+    f = matrix(F, rows).det()
+
+    lm = f.monomials()[0]
+    lc = f.monomial_coefficient(lm)
+
+    f *= lc ** -1
+
+    return lift(f, R, mod)
+```
+
+For a given $d$, this gives a degree $d+1$ polynomial that vanishes modulo $p^d$ at the true low-bit values.
+
+## Moving to d = 2.
+
+For $d = 2$, the determinant used five samples, giving a $5\times 5$ determinant, which you can see the paper work out. After normalization, the resulting polynomial is a degree $3$, vanishes at modulo $p^2$ at the true low-bit values, and hence we get the final working lattice. Given our eight small unknowns:
+
+$$
+e_0,\ldots,e_7
+$$
+For the $d = 2$ construction, we have squarefree monomials through degree 3, $1,e_i,e_ie_j,e_ie_je_k$ which results in
+$$
+\binom{8}{0} + \binom{8}{1} + \binom{8}{2} + \binom{8}{3} = 93
+$$
+or, that our monomial basis has dimension 93, and hence the final lattice is exactly $93x93$.
+
+## Building Shift Polynomials
+
+Starting with $p^2$:
+```python
+for monomial in monomials:
+    shifts[monomial] = p ** 2 * monomial
+    level[monomial] = 2
+```
+Which vanishes at modulo $p^2$. The $d=1$ determinants vanish modulo $p$, so multiplying them by $p$ gives valid relations modulo
+$p^2$:
+```python
+for idx in combinations(range(count), 3):
+    f = fundamental(t, b, idx, 1, p, R)
+    degree2.append((idx, f))
+
+    lm = f.monomials()[0]
+
+    if lm in shifts and level[lm] > 1:
+        shifts[lm] = p * f
+        level[lm] = 1
+```
+Those are degree 2. Multiplying by one additional variable gives degree-3 shifts:
+```python
+for idx, f in degree2:
+    for j in range(count):
+        if j in idx:
+            continue
+
+        g = p * f * x[j]
+        lm = g.monomials()[0]
+
+        if lm in shifts and level[lm] > 1:
+            shifts[lm] = g
+            level[lm] = 1
+```
+Then the actual $d=2$ determinants already vanish modulo $p^2$, so they are the strongest degree-3
+relations:
+```python
+for idx in combinations(range(count), 5):
+    f = fundamental(t, b, idx, 2, p, R)
+    lm = f.monomials()[0]
+
+    if lm in shifts:
+        shifts[lm] = f
+        level[lm] = 0
+```
+At this point I finally had the Coppersmith lattice I wanted.
+
+### Quick Coppersmith recall
+
+In the multivariate Coppersmith construction we are using here, we build several polynomials that share the same bounded root modulo a sufficiently high power of the modulus, scale the variables by their expected root bounds, and use their coefficient vectors to build an integer lattice. `jvdsn`’s `small_roots` code follows this same idea for lattice creation, then we reduce and reconstruct integer polynomials and solve for the roots.
+
+## Building the Coppersmith Lattice
+
+I used the generic small root utilities from [jvdsn/crypto-attacks](https://github.com/jvdsn/crypto-attacks) instead of manually implementing all of the lattice scaling and polynomial reconstruction. Every low bit variable satisfies the same bound:
+$$
+|e_i| < X=2^{n-k}.
+$$
+The lattice is created with:
+```python
+bounds = [X] * count
+
+L, monomials = small_roots.create_lattice(
+    R,
+    list(shifts.values()),
+    bounds,
+    order="degrevlex"
+)
+```
+For the actual reduction I used [flatter](https://github.com/keeganryan/flatter):
+```python
+B = L.LLL(algorithm="flatter")
+```
+I already had `flatter` installed from another challenge, and it was significantly faster for this lattice than just sitting around waiting on the default Sage reduction. After lattice reduction, `jvdsn` reconstructs the short vector relations as integer polynomials:
+```python
+polys = small_roots.reconstruct_polynomials(
+    B,
+    None,
+    p ** 2,
+    monomials,
+    bounds
+)
+```
+Then I solve the resulting polynomial system using a Groebner basis:
+```python
+roots = next(
+    small_roots.find_roots(
+        R,
+        polys,
+        method="groebner"
+    )
+)
+```
+That finally gives
+$$
+e_0,\ldots,e_7.
+$$
+At that point, all eight exact modular inverse outputs are known:
+$$
+z_i=y_iX+e_i.
+$$
+The lattice part is completely over.
+
+## Recovering u and v
+
+Okay, the final step is recovering the hidden values:
+
+Given two samples:
+$$
+z_0(u+t_0)\equiv v\mod p\qquad z_1(u+t_1)\equiv v\mod p,
+$$
+then
+$$
+z_0u+t_0z_0\equiv z_1u+t_1z_1\mod p.
+$$
+Therefore,
+$$
+u(z_0-z_1)\equiv t_1z_1-t_0z_0\mod p.
+$$
+Assuming the denominator is invertible, which it is for the samples here,
+$$
+u=(t_1z_1-t_0z_0)(z_0-z_1)^{-1}\mod p.
+$$
+Then
+$$
+v=z_0(u+t_0)\mod p.
+$$
+In code:
+```python
+u = ((t[1] * z[1] - t[0] * z[0]) * inverse_mod(z[0] - z[1], p)) % p
+v = z[0] * (u + t[0]) % p
+```
+Submit those two values to option 4 and the challenge gives the flag.
+
+## Math Brain vs CTF Brain
+
+To be real with you, this was cool and all, but no way in hell am I going to be thinking all of this casually. If I did, call me Erdos or something. If I had not seen MIHNP or MIDHNP before, then I would be equally lost. But, work it through experimentation:
+
+Starting from the same leak:
+$$
+z_i = \frac{v}{u + t_i} \mod p
+$$
+and the fact that only high bits are known, doesn't immediately scream HNP. Rewriting this unknown value as a known part plus small part, we get:
+$$
+z_i = y_iX + e_i\qquad |e_i| < X.
+$$
+From here, you can search up "missing low bits into bounded error variable ctf" and you will absolutely encounter HNP ctf writeups. Jiegec, for example, after following the MIHNP setup which our code structure suggests. Takes partial inverse leakage into an equation of small errors.
+
+And anyone doing cryptography, from a non-researcher or researcher perspective already can know that leakage of any kind is odd, and this becomes the likley attack vector. What can we gain with that? One sample we have:
+$$
+\bar{x_i}u + t_i\bar{x}_i - v\equiv 0\mod p.
+$$
+Which minimally helps us, because here we realize we do not know what $u,v$ is. So now we think about, "What theorem helps us solve MIDHNP". And another question we should have is, "Can I take the construction of MIHNP attack to several equations?". This latter question is given that one took an undergraduate course in somewhat rigorous linear algebra, nothing more is needed.
+
+I did not have to trust the determinant construction immediately. I temporarily kept the real $z_i$ values, reconstructed the exact low-bit errors $e_i$, and checked the proposed relation directly. Given we have the chall, we just trial and error with our ideas in place:
+
+```python
+import os
+from secrets import randbelow
+from Crypto.Util.number import getStrongPrime
+
+
+def take(s):
+    return int(input(s).strip())
+def top(x, k, n):
+    return x >> (n - k)
+
+
+
+
+def main():
+    p = int(getStrongPrime(1536))
+    n = p.bit_length()
+    k = (58 * n) // 100
+    cap = 8
+    u = randbelow(p)
+    v = randbelow(p - 1) + 1
+    seen = set()
+    bag = []
+    debug = []
+    flag = os.getenv('FLAG', 'pwnsec{????????????????}')
+
+    while True:
+        print('1) info')
+        print('2) tap')
+        print('3) log')
+        print('4) check')
+        print('5) quit')
+        c = input('> ').strip()
+
+        if c == '1':
+            print(f'p = {p}')
+            print(f'bits = {n}')
+            print(f'keep = {k}')
+            print(f'left = {cap - len(bag)}')
+        elif c == '2':
+            if len(bag) >= cap:
+                print('locked')
+                continue
+            t = take('x = ')
+            if t is None:
+                print('bad')
+                continue
+            t %= p
+            if t in seen or (t + u) % p == 0:
+                print('bad')
+                continue
+            z = (v * pow((t + u) % p, -1, p)) % p
+            h = top(z, k, n)
+            X = 1 << (n - k)
+            e = z - h * X
+            seen.add(t)
+            bag.append((t, h))
+            debug.append((t, h, e, z))
+            print(f't = {t}')
+            print(f'y = {h}')
+
+            if len(debug) == 3:
+                rows = []
+                for t, h, e, z in debug:
+                    x = h * X + e
+                    rows.append([(t * x) % p, x % p, 1])
+
+                a, b, c = rows[0]
+                d, e, f = rows[1]
+                g, h, i = rows[2]
+
+                det = (
+                    a * (e * i - f * h)
+                    - b * (d * i - f * g)
+                    + c * (d * h - e * g)
+                ) % p
+
+                kernel = [
+                    (row[0] + row[1] * u - row[2] * v) % p
+                    for row in rows
+                ]
+
+                print(f'kernel = {kernel}')
+                print(f'det(M) mod p = {det}')
+
+        elif c == '3':
+            for i, (t, h) in enumerate(bag):
+                print(f'{i}: {t} {h}')
+        elif c == '4':
+            a = take('a = ')
+            b = take('b = ')
+            if a is None or b is None:
+                print('bad')
+                continue
+            if a % p == u and b % p == v:
+                print(flag)
+                return
+            print('no')
+        elif c == '5':
+            return
+        else:
+            print('bad')
+
+
+if __name__ == '__main__':
+    main()
+```
+
+For people who have brainrot, all I did:
+```python
+$diff chall.py ape1.py
+22a23
+>     debug = []
+51a53,54
+>             X = 1 << (n - k)
+>             e = z - h * X
+53a57
+>             debug.append((t, h, e, z))
+55a60,84
+> 
+>             if len(debug) == 3:
+>                 rows = []
+>                 for t, h, e, z in debug:
+>                     x = h * X + e
+>                     rows.append([(t * x) % p, x % p, 1])
+> 
+>                 a, b, c = rows[0]
+>                 d, e, f = rows[1]
+>                 g, h, i = rows[2]
+> 
+>                 det = (
+>                     a * (e * i - f * h)
+>                     - b * (d * i - f * g)
+>                     + c * (d * h - e * g)
+>                 ) % p
+> 
+>                 kernel = [
+>                     (row[0] + row[1] * u - row[2] * v) % p
+>                     for row in rows
+>                 ]
+> 
+>                 print(f'kernel = {kernel}')
+>                 print(f'det(M) mod p = {det}')
+```
+
+Which outputs
+```
+1) info
+2) tap
+3) log
+4) check
+5) quit
+> 2
+x = 0
+t = 0
+y = 4144326278093805175101331056452845743817752632618214190709875462260618683777150303166775707764778434612974478089626990646007181811040951832001721203514875316700030308619060072655972725613483658882164053475988028910825227335140598706849345633446569439042799792544372849
+1) info
+2) tap
+3) log
+4) check
+5) quit
+> 2
+x = 1
+t = 1
+y = 2126753815024291676080917392637955467379932697318534161996500248827859522833910524701439706421771429360269557986452470578601196405387776967140214234217678697899643479850271913598718344241842241148094599171011739743526833052461125637492637291801054945819944690505475311
+1) info
+2) tap
+3) log
+4) check
+5) quit
+> 2
+x = 3
+t = 3
+y = 7017568039752484941023916482951244934685836917683055828937649976305763700170692460121587217591875325414916059686084380246070192344607451169086718176621267056793096141378246050553926422081465237022784563149003550803243995031625058979035293503717857889274758277371134379
+kernel = [0, 0, 0]
+det(M) mod p = 0
+1) info
+2) tap
+3) log
+4) check
+5) quit
+```
+Win! Can I do the same thing with $p^2$? Yeah, of course:
+
+```python
+10a11,12
+> from sage.all import *
+> from itertools import combinations
+11a14,60
+> def lift(f, R, mod):
+>     xs = R.gens()
+>     out = R(0)
+> 
+>     for powers, coeff in f.dict().items():
+>         coeff = ZZ(coeff)
+> 
+>         if coeff > mod // 2:
+>             coeff -= mod
+> 
+>         term = R(1)
+> 
+>         for i in range(len(xs)):
+>             term *= xs[i] ** powers[i]
+> 
+>         out += coeff * term
+> 
+>     return out
+> 
+> 
+> def fundamental(t, b, idx, d, p, R):
+>     mod = p ** d
+>     F = PolynomialRing(Zmod(mod), R.variable_names(), order="degrevlex")
+> 
+>     x = F.gens()
+>     rows = []
+> 
+>     for i in idx:
+>         z = x[i] + F(b[i])
+>         row = []
+> 
+>         for j in range(d, -1, -1):
+>             row.append(F(t[i]) ** j * z)
+> 
+>         for j in range(d - 1, -1, -1):
+>             row.append(F(t[i]) ** j)
+> 
+>         rows.append(row)
+> 
+>     f = matrix(F, rows).det()
+> 
+>     lm = f.monomials()[0]
+>     lc = f.monomial_coefficient(lm)
+> 
+>     f *= lc ** -1
+> 
+>     return lift(f, R, mod)
+22a72
+>     debug = []
+51a102,103
+>             X = 1 << (n - k)
+>             e = z - h * X
+53a106
+>             debug.append((t, h, e, z))
+55a109,144
+> 
+>             if len(debug) == 3:
+>                 rows = []
+>                 for t, h, e, z in debug:
+>                     x = h * X + e
+>                     rows.append([(t * x) % p, x % p, 1])
+> 
+>                 a, b, c = rows[0]
+>                 d, e, f = rows[1]
+>                 g, h, i = rows[2]
+> 
+>                 det = (
+>                     a * (e * i - f * h)
+>                     - b * (d * i - f * g)
+>                     + c * (d * h - e * g)
+>                 ) % p
+> 
+>                 kernel = [
+>                     (row[0] + row[1] * u - row[2] * v) % p
+>                     for row in rows
+>                 ]
+> 
+>                 print(f'kernel = {kernel}')
+>                 print(f'det(M) mod p = {det}')
+>             if len(debug) == 5:
+>                 t = [ZZ(a) for a, _, _, _ in debug]
+>                 b = [ZZ(h) << (n - k) for _, h, _, _ in debug]
+>                 errors = [ZZ(e) for _, _, e, _ in debug]
+> 
+>                 R = PolynomialRing(ZZ, [f"x{i}" for i in range(5)], order="degrevlex")
+> 
+>                 f = fundamental(t, b, tuple(range(5)), 2, p, R)
+> 
+>                 print(f'degree = {f.degree()}')
+>                 print(f'f(errors) mod p^2 = {f(*errors) % (p ** 2)}')
+```
+
+
+```
+Same taps as before, and then...
+> 2
+x = 3
+t = 3
+y = 4105912895164956294414788101866064691122266425080373150627155195784616759346103540342746121928075470048039283144955875628786050881970430011073858966099972239934495096303201376469711375303956882249818562198835004420735050496649423115367422729609774968427844163503255211
+1) info
+2) tap
+3) log
+4) check
+5) quit
+> 2
+x = 4
+t = 4
+y = 5888357312264926089077455228583162387196209603559567542855945547345780598225787683936147942742824953755019299644642478652880531890637670819158861652333317855015039141161297629958057928479880500168044856097567973896665807571144219282188770483278774661345089116815081683
+degree = 3
+f(errors) mod p^2 = 0
+1) info
+2) tap
+3) log
+4) check
+5) quit
+```
+
+At this point, I am no longer blindly implementing equations from a paper. Locally, I know the real $e_i$, so I can test whether the construction actually behaves the way I expect. For $d=1$, the determinant vanished modulo $p$. For $d=2$, I now get a degree-3 polynomial that vanishes modulo $p^2$ at root. That is enough evidence for me during a CTF to keep going and start building shifts around it.
+
+If the determinant does not vanish at the real errors, then my algebra or implementation is wrong. If the determinant works but the lattice does not reduce into useful relations, then the problem moved somewhere else: maybe the scaling is wrong, maybe the monomial basis is bad, maybe the modulus power is not strong enough, or maybe the reconstruction step is failing.
+
+From there, we just keep following the construction: build the shifts, throw them into the lattice, recover the $e_i$, reconstruct the exact $z_i$, and solve for $u,v$ like above. Finally giving us our flag.
+
+# References
+- [Exisiting MIHNP CTF Attack Writeup](https://jia.je/ctf-writeups/misc/mihnp.html)
+- [Zhaopeng Ding, Zhaopeng Dai, Baofeng Wu, Rundong Wang, and Yanshuo Zhang, "Coppersmith's Method for Solving Modular Inversion Hidden Number Problem via Determinant-Based Elimination," Cryptology {ePrint} Archive, Paper 2026/423](https://eprint.iacr.org/2026/423)
+- [Dan Boneh, Shai Halevi, and Nick Howgrave-Graham, "The Modular Inversion Hidden Number Problem," ASIACRYPT 2001](https://crypto.stanford.edu/~dabo/abstracts/mihnp.html)
+- [jvdsn/crypto-attacks](https://github.com/jvdsn/crypto-attacks)
+- [keeganryan/flatter](https://github.com/keeganryan/flatter)
+
+# Appendix
+
+## Solve Script
+
+```python
+from sage.all import *
+from pwn import *
+from shared import small_roots
+from itertools import combinations
+import sys
+
+def lift(f, R, mod):
+    xs = R.gens()
+    out = R(0)
+
+    for powers, coeff in f.dict().items():
+        coeff = ZZ(coeff)
+
+        if coeff > mod // 2:
+            coeff -= mod
+
+        term = R(1)
+
+        for i in range(len(xs)):
+            term *= xs[i] ** powers[i]
+
+        out += coeff * term
+
+    return out
+
+
+def fundamental(t, b, idx, d, p, R):
+    mod = p ** d
+    F = PolynomialRing(Zmod(mod), R.variable_names(), order="degrevlex")
+
+    x = F.gens()
+    rows = []
+
+    for i in idx:
+        z = x[i] + F(b[i])
+        row = []
+
+        for j in range(d, -1, -1):
+            row.append(F(t[i]) ** j * z)
+
+        for j in range(d - 1, -1, -1):
+            row.append(F(t[i]) ** j)
+
+        rows.append(row)
+
+    f = matrix(F, rows).det()
+
+    lm = f.monomials()[0]
+    lc = f.monomial_coefficient(lm)
+
+    f *= lc ** -1
+
+    return lift(f, R, mod)
+
+
+def recover(p, n, k, samples):
+    count = len(samples)
+    X = 2 ** (n - k)
+
+    t = []
+    b = []
+
+    for ti, yi in samples:
+        t.append(ZZ(ti))
+        b.append(ZZ(yi) << (n - k))
+
+    names = [f"x{i}" for i in range(count)]
+    R = PolynomialRing(ZZ, names, order="degrevlex")
+    x = R.gens()
+
+    monomials = [R(1)]
+
+    for degree in range(1, 4):
+        for idx in combinations(range(count), degree):
+            term = R(1)
+
+            for i in idx:
+                term *= x[i]
+
+            monomials.append(term)
+
+    shifts = {}
+    level = {}
+
+    for monomial in monomials:
+        shifts[monomial] = p ** 2 * monomial
+        level[monomial] = 2
+
+    degree2 = []
+
+    for idx in combinations(range(count), 3):
+        f = fundamental(t, b, idx, 1, p, R)
+        degree2.append((idx, f))
+
+        lm = f.monomials()[0]
+
+        if lm in shifts and level[lm] > 1:
+            shifts[lm] = p * f
+            level[lm] = 1
+
+    for idx, f in degree2:
+        for j in range(count):
+            if j in idx:
+                continue
+
+            g = p * f * x[j]
+            lm = g.monomials()[0]
+
+            if lm in shifts and level[lm] > 1:
+                shifts[lm] = g
+                level[lm] = 1
+
+    for idx in combinations(range(count), 5):
+        f = fundamental(t, b, idx, 2, p, R)
+        lm = f.monomials()[0]
+
+        if lm in shifts:
+            shifts[lm] = f
+            level[lm] = 0
+
+    bounds = [X] * count
+
+    L, monomials = small_roots.create_lattice(R, list(shifts.values()), bounds, order="degrevlex")
+
+    B = L.LLL(algorithm="flatter")
+
+    polys = small_roots.reconstruct_polynomials(B, None, p ** 2, monomials, bounds)
+
+    roots = next(
+        small_roots.find_roots(R, polys, method="groebner")
+    )
+
+    low = []
+
+    for i in range(count):
+        low.append(ZZ(roots[x[i]]))
+
+    z = []
+
+    for i in range(count):
+        z.append(b[i] + low[i])
+
+    u = (
+        (t[1] * z[1] - t[0] * z[0])
+        * inverse_mod(z[0] - z[1], p)
+    ) % p
+
+    v = z[0] * (u + t[0]) % p
+
+    return u, v
+
+
+def tap(io, value):
+    io.sendlineafter(b"> ", b"2")
+    io.sendlineafter(b"x = ", str(value).encode())
+
+    t = int(io.recvline().split(b"=")[1])
+    y = int(io.recvline().split(b"=")[1])
+
+    return t, y
+
+
+# io = remote("", 443, ssl=True, sni="")
+io = process(["python3", "chall.py"])
+
+io.sendlineafter(b"> ", b"1")
+
+p = ZZ(io.recvline().split(b"=")[1])
+n = int(io.recvline().split(b"=")[1])
+k = int(io.recvline().split(b"=")[1])
+
+io.recvline()
+
+samples = []
+
+for i in range(8):
+    samples.append(tap(io, i))
+
+u, v = recover(p, n, k, samples)
+
+io.sendlineafter(b"> ", b"4")
+io.sendlineafter(b"a = ", str(u).encode())
+io.sendlineafter(b"b = ", str(v).encode())
+
+print(io.recvline().decode().strip())
+```
