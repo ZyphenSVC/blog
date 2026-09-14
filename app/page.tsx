@@ -89,6 +89,19 @@ export default async function Home() {
             titleTop="Education"
             titleBottom="Background"
             items={[
+	      {
+                org: "University of Georgia",
+                role: "M.S. Cybersecurity and Privacy (Thesis)",
+                date: "Expected May 2028",
+                location: "Athens, GA",
+                description:
+                  "Emphasis on cryptography: Homomorphic Encryption and Privacy Preserving Machine Learning.",
+                tags: [
+                  "#cryptography",
+		  "#privacy-preserving",
+		  "#machine-learning"
+                ],
+              },
               {
                 org: "University of Georgia",
                 role: "B.S. Computer Science",
