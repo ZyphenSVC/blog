@@ -24,6 +24,8 @@ The compact lavender layout includes heading wipes and scroll reveals inspired b
 
 Competition records live in `lib/competitions.ts`, reconciled from the original site at `960835f` and `public/media/cv.pdf` (September 2026, pages 3–4). The newer CV takes precedence where rankings differ; unknown field sizes remain unspecified.
 
+The homepage also covers the CV’s academic talks, research, employment, teaching, service, skills, languages, and all 34 coursework entries. These records live in `lib/cv.ts`, with the added sections rendered by `app/components/CvSections.tsx`. Experience details expand in native HTML disclosures, and section links help navigate the longer page. The October 2026 lecture series is marked scheduled; audited courses and expired Security+ certification are labeled explicitly. The two 2023 seminar references describe the named academic talks and are consolidated into those entries, with Directed Reading Program links. Existing portfolio roles and planned certifications are preserved alongside the CV updates.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

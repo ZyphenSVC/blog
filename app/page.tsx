@@ -5,6 +5,8 @@ import { PostSection } from "@/app/components/PostSection"
 import { CompetitiveHistory } from "@/app/components/CompetitiveHistorySection"
 import { getAllPosts } from "@/lib/posts"
 import { Icon } from "@/app/components/Icon"
+import { AcademicTalks, ServiceSection, SkillsSection, CourseworkSection } from "@/app/components/CvSections"
+import { researchExperience, workExperience, teachingExperience } from "@/lib/cv"
 
 export default async function Home() {
 
@@ -53,8 +55,17 @@ export default async function Home() {
         )}
       </section>
       <div className="content-container">
+        <nav className="profile-jumps" aria-label="Profile sections">
+          {[
+            ["education", "Education"], ["research", "Research"], ["talks", "Talks"],
+            ["leadership", "Leadership"], ["service", "Service"],
+            ["certifications", "Certifications"], ["work", "Work"], ["teaching", "Teaching"],
+            ["skills", "Skills"], ["coursework", "Coursework"], ["awards", "Awards"], ["competitions", "Competitions"],
+          ].map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
+        </nav>
           <ExperienceSection
             titleTop="Education"
+            id="education"
             icon="education"
             columns={3}
             titleBottom="Background"
@@ -93,7 +104,7 @@ export default async function Home() {
                 date: "May 2026",
                 location: "Athens, GA",
                 description:
-                  "Graduated with Bachelor of Science degrees in" +
+                  "Graduated with a Bachelor of Science in" +
                   " Mathematics, with academic focus areas across pure mathematics, algebraic" +
                   " geometry, and cryptography",
                 tags: [
@@ -117,68 +128,26 @@ export default async function Home() {
 
           <ExperienceSection
             titleTop="Research"
+            id="research"
             icon="research"
             titleBottom="Experience"
             href="/research"
             linkLabel="View Research"
-            items={[
-              {
-                org: "Small Satellite Research Lab",
-                role: "Data Science Team Lead Researcher",
-                date: "August 2024 — Present",
-                location: "Athens, GA",
-                description:
-                  "Designed and optimized ML/data pipelines for satellite imaging systems, including NeRF and computer vision pipelines, with attention to scalability and heterogeneous GPU/CPU environments.",
-                tags: ["#nerf", "#mlcv", "#satellite-imaging", "#gpu-systems"],
-              },
-              {
-                org: "Directed Reading Program",
-                role: "Researcher",
-                date: "January 2023 — May 2025",
-                location: "Athens, GA",
-                description:
-                  "Reading and presenting on elliptic curves, the Birch and Swinnerton-Dyer conjecture, discrete logarithms, Kähler manifolds, complex geometry, and cryptographic applications.",
-                tags: ["#elliptic-curves", "#cryptography", "#complex-geometry"],
-              },
-              {
-                org: "University of Georgia — Mathematics Department",
-                role: "Undergraduate Researcher",
-                date: "August 2024 — December 2025",
-                location: "Athens, GA",
-                description:
-                  "Studying exceptional Lie algebras, Coxeter-Dynkin diagrams, algebraic geometry, and research-level mathematical exposition.",
-                tags: ["#algebraic-geometry", "#lie-algebras", "#coxeter-dynkin"],
-              },
-              {
-                org: "ImaginaryCTF",
-                role: "Board Member",
-                date: "November 2020 — May 2023",
-                location: "Leuven, Belgium",
-                description:
-                  "Designed cryptography challenges grounded in current research, coordinated international CTF operations, and worked with sponsors across security and infrastructure.",
-                tags: ["#ctf", "#iacr", "#cryptography", "#security"],
-              },
-              {
-                org: "Georgia Institute of Technology — Mathematics Department",
-                role: "Research Project Developer",
-                date: "August 2021 — December 2021",
-                location: "Atlanta, GA",
-                description:
-                  "Built a graph theory route-mapping application in Java using Dijkstra’s algorithm, Eulerian circuit logic, and Open Maps API calls for real-world pathfinding and traversal modeling.",
-                tags: ["#graph-theory", "#dijkstra", "#java", "#pathfinding"],
-              },
-            ]}
+            items={researchExperience}
           />
+
+        <AcademicTalks />
 
           <ExperienceSection
             titleTop="Leadership"
+            id="leadership"
             icon="users"
             titleBottom="Experience"
             items={[
               {
                 org: "Small Satellite Research Laboratory",
                 role: "Data Science Team Lead",
-                date: "August 2024 — Present",
+                date: "August 2024 — May 2026",
                 location: "University of Georgia",
                 description:
                   "Led a research engineering team of 12 members by defining technical milestones, coordinating cross-functional development, and translating research requirements into deployable ML/CV systems for satellite imaging work.",
@@ -191,7 +160,7 @@ export default async function Home() {
                 date: "Fall 2022 — Fall 2023",
                 location: "University of Georgia",
                 description:
-                  "Founded and led a cybersecurity club focused on teaching competition-based cybersecurity to students across experience levels, emphasizing deeper technical training than typical introductory club programming.",
+                  "Founded and led a cybersecurity club teaching competition-based cybersecurity to students across experience levels. The club merged into The Hack Pack.",
                 tags: ["#cybersecurity", "#leadership", "#education", "#ctf"],
               },
               {
@@ -237,10 +206,13 @@ export default async function Home() {
             ]}
           />
 
+        <ServiceSection />
+
           <ExperienceSection
             titleTop="Certifications"
+            id="certifications"
             icon="shield"
-            titleBottom="In Progress"
+            titleBottom="& Professional Development"
             items={[
               {
                 org: "Amazon Web Services",
@@ -272,7 +244,7 @@ export default async function Home() {
               {
                 org: "CompTIA",
                 role: "Security+",
-                date: "Expired",
+                date: "May 2021 — May 2024 · Expired",
                 location: "Cybersecurity",
                 description:
                   "Previously held Security+ certification, supporting foundational knowledge in cybersecurity, networking, risk, and secure systems practices.",
@@ -280,61 +252,45 @@ export default async function Home() {
               },
               {
                 org: "Microsoft",
-                role: "MTA Software Development & Networking",
-                date: "Expired",
+                role: "MTA Software Development Associate",
+                date: "April 2021",
                 location: "Technical Foundations",
-                description:
-                  "Previously held Microsoft Technology Associate certifications in software development and networking fundamentals.",
-                tags: ["#microsoft", "#software-development", "#networking"],
+                description: "Earned the Microsoft Technology Associate credential in software development.",
+                tags: ["#microsoft", "#software-development"],
+              },
+              {
+                org: "Microsoft",
+                role: "MTA Networking Associate",
+                date: "November 2020",
+                location: "Technical Foundations",
+                description: "Earned the Microsoft Technology Associate credential in networking.",
+                tags: ["#microsoft", "#networking"],
               },
             ]}
           />
 
           <ExperienceSection
             titleTop="Work"
+            id="work"
             icon="briefcase"
             titleBottom="Experience"
-            items={[
-              {
-                org: "University of Georgia",
-                role: "Parking Operations Representative",
-                date: "March 2024 — Present",
-                location: "Athens, GA",
-                description:
-                  "Engineered Selenium automation workflows executing 40,000+ system tasks, eliminating a 6-month backlog while improving reporting reliability and operational efficiency.",
-                tags: ["#automation", "#selenium", "#operations", "#secure-design"],
-              },
-              {
-                org: "Cornerstone Entertainment Company",
-                role: "Community Specialist Manager",
-                date: "Spring 2021 — Fall 2021",
-                location: "Raleigh, NC",
-                description:
-                  "Managed community operations for a network of 200 users, improving retention, staffing stability, and customer satisfaction through coordination with developers.",
-                tags: ["#operations", "#community", "#platform-reliability"],
-              },
-            ]}
+            items={workExperience}
           />
 
           <ExperienceSection
             titleTop="Teaching"
+            id="teaching"
             icon="book"
             titleBottom="Experience"
-            items={[
-              {
-                org: "University of Georgia — Department of Academic Enhancement",
-                role: "Peer Learning Assistant",
-                date: "Spring 2023 — Fall 2023",
-                location: "Athens, GA",
-                description:
-                  "Supported Calculus II and III instruction through discussion facilitation, homework review, individual student support, and weekly office hours.",
-                tags: ["#calculus", "#teaching", "#mathematics", "#student-support"],
-              },
-            ]}
+            items={teachingExperience}
           />
+
+        <SkillsSection />
+        <CourseworkSection />
 
           <ExperienceSection
             titleTop="Awards /"
+            id="awards"
             icon="award"
             titleBottom="Honors"
             items={[

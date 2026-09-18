@@ -11,14 +11,15 @@ type ExperienceSectionProps = {
   items: ExperienceCardProps[];
   icon?: IconName;
   columns?: 2 | 3;
+  id?: string;
 };
 
-export function ExperienceSection({ titleTop, titleBottom, href, linkLabel, items, icon = "briefcase", columns = 2 }: ExperienceSectionProps) {
+export function ExperienceSection({ titleTop, titleBottom, href, linkLabel, items, icon = "briefcase", columns = 2, id }: ExperienceSectionProps) {
   return (
-    <section className="portfolio-section">
+    <section className="portfolio-section" id={id} aria-labelledby={id ? `${id}-title` : undefined}>
       <Reveal>
       <div className="section-heading">
-        <h2 className="section-title"><Icon name={icon} />{titleTop} {titleBottom}</h2>
+        <h2 className="section-title" id={id ? `${id}-title` : undefined}><Icon name={icon} />{titleTop} {titleBottom}</h2>
         {href && linkLabel && <Link href={href}>{linkLabel} →</Link>}
       </div>
       <div className={`experience-list experience-columns-${columns}`}>
