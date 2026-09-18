@@ -1,9 +1,45 @@
 import { notFound } from "next/navigation";
+import type { Metadata, ResolvingMetadata } from "next";
 import "katex/dist/katex.min.css";
 import { ArticleLayout } from "@/app/components/ArticleLayout";
 import { getPostBySlug } from "@/lib/posts";
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string[] }> }) {
+type BlogPostProps = { params: Promise<{ slug: string[] }> };
+
+export async function generateMetadata(
+  { params }: BlogPostProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug.join("/"));
+  if (!post) notFound();
+
+  const inherited = await parent;
+  const url = `/blog/${post.slug.split("/").map(encodeURIComponent).join("/")}`;
+
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      siteName: "ZyphenSVC",
+      title: post.title,
+      description: post.description,
+      url,
+      tags: post.tags,
+      images: inherited.openGraph?.images ?? [],
+    },
+    twitter: {
+      card: "summary",
+      title: post.title,
+      description: post.description,
+      images: inherited.twitter?.images ?? [],
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: BlogPostProps) {
   const { slug } = await params;
   const post = await getPostBySlug(slug.join("/"));
   if (!post) notFound();
