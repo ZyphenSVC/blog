@@ -1,10 +1,10 @@
-import Navbar from "@/app/components/Navbar"
 import Link from "next/link"
 import Image from "next/image"
 import { ExperienceSection } from "@/app/components/ExperienceSection"
 import { PostSection } from "@/app/components/PostSection"
 import { CompetitiveHistory } from "@/app/components/CompetitiveHistorySection"
 import { getAllPosts } from "@/lib/posts"
+import { Icon } from "@/app/components/Icon"
 
 export default async function Home() {
 
@@ -19,74 +19,44 @@ export default async function Home() {
   }));
 
   return (
-    <main className="min-h-screen overflow-x-clip bg-[#252324]">
-      <Navbar />
-      <section className="grid min-h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <aside className="flex min-w-0 flex-col justify-start border-[#575253] px-5 py-12 sm:px-8 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:border-r lg:px-10 lg:pt-14">
-          <div className="mb-8 h-40 w-40 overflow-hidden rounded-full sm:h-44 sm:w-44">
-            <Image
-              src="/media/optimized/face.webp"
-              alt="ProfessionalPicture"
-              width={220}
-              height={220}
-              priority
-              className="h-full w-full scale-125 object-cover translate-x-[24px]"
-            />
+    <main id="main-content">
+      <section className="intro content-container" aria-labelledby="intro-title">
+        <div className="intro-grid">
+          <div className="intro-copy fade-in">
+            <h1 id="intro-title" className="reveal-text">Hi, I’m Sriaditya.<br />I research things.</h1>
+            <p>I’m Sriaditya Vedantam, a security researcher working across cryptography, mathematics, and systems engineering.</p>
+            <p>Interested in algebraic geometry, post-quantum cryptography, and homomorphic encryption.</p>
+            <p>I write about research, build software, and study privacy-preserving machine learning at the University of Georgia.</p>
+            <div className="intro-links">
+              <Link href="/media/resume.pdf"><Icon name="download" />Resume</Link>
+              <Link href="/media/cv.pdf"><Icon name="document" />Curriculum Vitae</Link>
+              <Link href="/contact"><Icon name="mail" />Get in touch</Link>
+              <a href="#competitions"><Icon name="trophy" />Competitions</a>
+            </div>
           </div>
-
-          <p className="max-w-[420px] mb-6 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#8C86AA] sm:text-sm sm:tracking-[0.22em]">
-            Cryptography / Math / Systems
-          </p>
-
-          <h1 className="max-w-[520px] font-mono text-4xl font-bold leading-[0.95] tracking-[-0.02em] text-[#EAE0D5] sm:text-6xl sm:tracking-[-0.04em] xl:text-7xl">
-            Sriaditya
-            <br />
-            Vedantam
-          </h1>
-
-          <p className="mt-8 max-w-xl text-base leading-8 text-[#C8C0B6] sm:text-lg">
-            Technical writing, research notes, and implementation work across
-            cryptography, mathematics, systems engineering, and full-stack web
-            development.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-x-5 gap-y-4 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#C8C0B6] sm:gap-6 sm:tracking-[0.22em]">
-            <Link href="/contact" className="hover:text-[#EAE0D5]">
-              Contact
-            </Link>
-            <Link href="/blog" className="hover:text-[#EAE0D5]">
-              Blog
-            </Link>
-            <Link href="/research" className="hover:text-[#EAE0D5]">
-              Research
-            </Link>
-            <Link href="/notes" className="hover:text-[#EAE0D5]">
-              Notes
-            </Link>
-            <Link href="/projects" className="hover:text-[#EAE0D5]">
-              Projects
-            </Link>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/media/resume.pdf"
-              className="border border-[#8C86AA] px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#EAE0D5] transition hover:bg-[#8C86AA] hover:text-[#252324] sm:tracking-[0.22em]"
-            >
-              Resume
-            </Link>
-
-            <Link
-              href="/media/cv.pdf"
-              className="border border-[#575253] px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#C8C0B6] transition hover:border-[#EAE0D5] hover:text-[#EAE0D5] sm:tracking-[0.22em]"
-            >
-              CV
-            </Link>
-          </div>
-        </aside>
-
-        <section className="min-w-0 px-5 pt-6 pb-20 sm:px-8 lg:px-14 lg:pt-8">
+          <Image
+            src="/media/optimized/face_circ.webp"
+            alt="Sriaditya Vedantam"
+            width={270}
+            height={270}
+            priority
+            className="portrait fade-in"
+          />
+        </div>
+        {posts[0] && (
+          <aside className="latest-post surface-card fade-in" aria-labelledby="latest-post-title">
+            <h2 id="latest-post-title" className="icon-heading"><Icon name="pen" />Latest post</h2>
+            <h3><Link href={`/blog/${posts[0].slug}`}>{posts[0].title}</Link></h3>
+            <p>{posts[0].description}</p>
+            <Link href="/blog" className="all-posts">All posts →</Link>
+          </aside>
+        )}
+      </section>
+      <div className="content-container">
           <ExperienceSection
             titleTop="Education"
+            icon="education"
+            columns={3}
             titleBottom="Background"
             items={[
 	      {
@@ -147,6 +117,7 @@ export default async function Home() {
 
           <ExperienceSection
             titleTop="Research"
+            icon="research"
             titleBottom="Experience"
             href="/research"
             linkLabel="View Research"
@@ -201,6 +172,7 @@ export default async function Home() {
 
           <ExperienceSection
             titleTop="Leadership"
+            icon="users"
             titleBottom="Experience"
             items={[
               {
@@ -215,6 +187,7 @@ export default async function Home() {
               {
                 org: "Hats On Cybersecurity",
                 role: "Founder & President",
+                image: { src: "/media/classic/cyberdog.webp", alt: "Hats On Cybersecurity logo", width: 900, height: 885 },
                 date: "Fall 2022 — Fall 2023",
                 location: "University of Georgia",
                 description:
@@ -224,6 +197,7 @@ export default async function Home() {
               {
                 org: "Egg Heads Cyber Team",
                 role: "Team Captain",
+                image: { src: "/media/classic/cypatxiii.webp", alt: "Egg Heads CyberPatriot team", width: 900, height: 675 },
                 date: "High School",
                 location: "Georgia",
                 description:
@@ -233,6 +207,7 @@ export default async function Home() {
               {
                 org: "ImaginaryCTF",
                 role: "Board Member & Infrastructure Contributor",
+                image: { src: "/media/classic/ictf.webp", alt: "ImaginaryCTF logo", width: 300, height: 300 },
                 date: "Nov 2020 — May 2023",
                 location: "International",
                 description:
@@ -242,6 +217,7 @@ export default async function Home() {
               {
                 org: "CyberAvengers",
                 role: "Vice President & Team Captain",
+                image: { src: "/media/classic/cypatxiv.webp", alt: "CyberAvengers team", width: 900, height: 504 },
                 date: "High School",
                 location: "Georgia",
                 description:
@@ -251,6 +227,7 @@ export default async function Home() {
               {
                 org: "Ducksociety / TeamlessCTF",
                 role: "Competitive Team Member",
+                image: { src: "/media/classic/ducks0ci3ty.webp", alt: "Ducksociety logo", width: 300, height: 300 },
                 date: "2020 — 2022",
                 location: "International",
                 description:
@@ -262,6 +239,7 @@ export default async function Home() {
 
           <ExperienceSection
             titleTop="Certifications"
+            icon="shield"
             titleBottom="In Progress"
             items={[
               {
@@ -314,6 +292,7 @@ export default async function Home() {
 
           <ExperienceSection
             titleTop="Work"
+            icon="briefcase"
             titleBottom="Experience"
             items={[
               {
@@ -339,6 +318,7 @@ export default async function Home() {
 
           <ExperienceSection
             titleTop="Teaching"
+            icon="book"
             titleBottom="Experience"
             items={[
               {
@@ -355,6 +335,7 @@ export default async function Home() {
 
           <ExperienceSection
             titleTop="Awards /"
+            icon="award"
             titleBottom="Honors"
             items={[
               {
@@ -390,16 +371,14 @@ export default async function Home() {
                 date: "2021, 2022",
                 location: "United States",
                 description:
-                  "Placed seventh nationally while representing Georgia in a case study competition.",
+                  "Placed seventh nationally in 2021 and eighth nationally in 2022 while representing Georgia in Management Information Systems case study competitions.",
                 tags: ["#mis", "#case-study", "#national-finalist"],
               },
             ]}
           />
 
-        </section>
-      </section>
-
-      <CompetitiveHistory />
+        <CompetitiveHistory />
+      </div>
     </main>
   );
 }
