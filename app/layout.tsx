@@ -12,9 +12,25 @@ const inconsolata = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zyphensvc.com"),
   title: { default: "ZyphenSVC", template: "%s | ZyphenSVC" },
   description:
     "Sriaditya Vedantam’s research, writing, and projects in cryptography, mathematics, and systems engineering.",
+  openGraph: {
+    type: "website",
+    siteName: "ZyphenSVC",
+    images: [{
+      url: "/media/face_circ.png",
+      width: 900,
+      height: 900,
+      type: "image/png",
+      alt: "Sriaditya Vedantam",
+    }],
+  },
+  twitter: {
+    card: "summary",
+    images: [{ url: "/media/face_circ.png", alt: "Sriaditya Vedantam" }],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
