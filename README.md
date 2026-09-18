@@ -18,7 +18,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses `next/font/local` to load the original portfolio’s Inconsolata variable font from `public/fonts`, without downloading fonts at build time. Shared styles and the dark/light palettes live in `app/globals.css`; the theme toggle remembers the reader’s preference.
+
+The compact lavender layout includes heading wipes and scroll reveals inspired by [WhiteHoodHacker’s portfolio](https://github.com/WhiteHoodHacker/whitehoodhacker.net). Animations respect reduced-motion settings, and content remains readable without JavaScript. Icons are local SVG components in `app/components/Icon.tsx`.
+
+Competition records live in `lib/competitions.ts`, reconciled from the original site at `960835f` and `public/media/cv.pdf` (September 2026, pages 3–4). The newer CV takes precedence where rankings differ; unknown field sizes remain unspecified.
 
 ## Learn More
 
