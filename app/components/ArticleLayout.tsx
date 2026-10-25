@@ -6,13 +6,15 @@ type ArticleLayoutProps = {
   date: string;
   readingTime?: string;
   tags?: string[];
+  backHref?: string;
+  backLabel?: string;
   children: React.ReactNode;
 };
 
-export function ArticleLayout({ title, description, date, readingTime, tags = [], children }: ArticleLayoutProps) {
+export function ArticleLayout({ title, description, date, readingTime, tags = [], backHref = "/blog", backLabel = "Back to blog", children }: ArticleLayoutProps) {
   return (
     <article className="reading-container page-content">
-      <Link href="/blog">← Back to blog</Link>
+      <Link href={backHref}>← {backLabel}</Link>
       <header className="article-header">
         <h1 className="reveal-text">{title}</h1>
         <div className="post-meta">

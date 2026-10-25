@@ -48,11 +48,14 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
-h1, h2, h3 { color: var(--title); font-weight: 700; line-height: 1.2; text-wrap: balance; }
-h1 { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
-h2 { font-size: 1.6rem; }
-h3 { font-size: 1.3rem; }
-p { margin: 0; }
+/* Let article typography override the general text defaults. */
+@layer base {
+  h1, h2, h3 { color: var(--title); font-weight: 700; line-height: 1.2; text-wrap: balance; }
+  h1 { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
+  h2 { font-size: 1.6rem; }
+  h3 { font-size: 1.3rem; }
+  p { margin: 0; }
+}
 main { flex: 1; min-width: 0; }
 article { min-width: 0; overflow-wrap: anywhere; }
 .site-shell { min-height: 100vh; display: flex; flex-direction: column; }
@@ -177,6 +180,22 @@ a.detail-card:hover h2 { color: var(--accent); }
 .article-body :where(blockquote) { padding: 1rem 1.25rem; background: var(--surface); font-style: normal; }
 .article-body :where(img) { max-width: 100%; height: auto; border-radius: .25rem; }
 .article-body :where(table) { display: block; max-width: 100%; overflow-x: auto; }
+
+/* Academic blocks share the article palette and remain readable when nested. */
+.article-body .note-block { margin-block: 1.5em; padding: 1rem 1.25rem; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: .3rem; background: var(--surface); scroll-margin-top: 1rem; }
+.article-body .note-block-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .75rem; margin-bottom: .65rem; }
+.article-body .note-block-heading > strong { color: var(--accent); }
+.article-body .note-block-title { min-width: 0; font-weight: 600; }
+.article-body .note-anchor { margin-left: auto; font-size: .9rem; text-decoration: none; }
+.article-body .note-block > p:first-of-type { margin-top: 0; }
+.article-body .note-block > :last-child { margin-bottom: 0; }
+.article-body .note-block .note-block { padding: .65rem 0 .65rem 1rem; border: 0; border-left: 2px solid var(--border); border-radius: 0; background: transparent; }
+.article-body .note-block-proof, .article-body .note-block-solution { border-left-color: var(--muted); }
+.article-body .note-proof-label { font-weight: 700; }
+.article-body .note-qed { text-align: right; color: var(--accent); }
+.article-body .note-source-fallback { margin-block: 1.5em; padding: .75rem; border: 1px dashed var(--border); border-radius: .3rem; }
+.article-body .note-source-fallback > p { color: var(--muted); font-size: .9rem; }
+
 .competition-years { display: grid; gap: 1.25rem; }
 .competition-year h3 { padding-bottom: .4rem; margin-bottom: .35rem; border-bottom: 1px solid var(--divider); }
 .competition-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.5rem; }

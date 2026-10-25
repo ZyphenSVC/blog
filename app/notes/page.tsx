@@ -1,4 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { courses as readingGroups } from "@/lib/courses";
+
+export const metadata: Metadata = { title: "Notes" };
 
 const courses = [
   {
@@ -54,19 +58,35 @@ export default function NotesPage() {
     <main id="main-content" className="content-container page-content">
       <header className="page-heading">
         <h1 className="reveal-text">Notes from my studies.</h1>
-        <p>Course notes, proofs, and technical summaries from mathematics and computer science coursework.</p>
+        <p>Lecture notes, reading groups, and course notes in mathematics and computer science.</p>
       </header>
-      <div className="card-grid">
-        {courses.map((course) => (
-          <Link key={course.slug} href={"/media/notes/" + course.pdf} className="surface-card detail-card">
-            <div className="card-meta"><span>{course.code}</span><span>{course.term}</span></div>
-            <h2>{course.title}</h2>
-            <p>{course.description}</p>
-            <div className="tags">{course.topics.map((topic) => <span key={topic}>{topic}</span>)}</div>
-            <span className="card-link contact-value">Read notes (PDF) →</span>
-          </Link>
-        ))}
-      </div>
+      <section className="portfolio-section" aria-labelledby="reading-groups-title">
+        <div className="section-heading"><h2 id="reading-groups-title">Reading groups</h2></div>
+        <div className="card-grid">
+          {readingGroups.map((course) => (
+            <Link key={course.slug} href={`/notes/${course.slug}`} className="surface-card detail-card">
+              <h3>{course.title}</h3>
+              <p>{course.description}</p>
+              <div className="tags">{course.topics.map((topic) => <span key={topic}>#{topic}</span>)}</div>
+              <span className="card-link contact-value">View lecture notes →</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section aria-labelledby="course-notes-title">
+        <div className="section-heading"><h2 id="course-notes-title">Course notes</h2></div>
+        <div className="card-grid">
+          {courses.map((course) => (
+            <Link key={course.slug} href={"/media/notes/" + course.pdf} className="surface-card detail-card">
+              <div className="card-meta"><span>{course.code}</span><span>{course.term}</span></div>
+              <h3>{course.title}</h3>
+              <p>{course.description}</p>
+              <div className="tags">{course.topics.map((topic) => <span key={topic}>{topic}</span>)}</div>
+              <span className="card-link contact-value">Read notes (PDF) →</span>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

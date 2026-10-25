@@ -4,29 +4,10 @@ import matter from "gray-matter";
 import readingTime from "reading-time";
 import { glob } from "fast-glob";
 
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
-import remarkRehype from "remark-rehype";
-import rehypeKatex from "rehype-katex";
-import rehypeStringify from "rehype-stringify";
+import { markdownToHtml, mathProfile } from "./markdown";
 
 const POSTS_PATH = path.join(process.cwd(), "content", "posts");
 const OUTPUT_PATH = path.join(process.cwd(), "lib", "generated-posts.json");
-
-async function markdownToHtml(content: string) {
-  const result = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkMath)
-    .use(remarkRehype)
-    .use(rehypeKatex)
-    .use(rehypeStringify)
-    .process(content);
-
-  return result.toString();
-}
 
 async function main() {
   const files = await glob("**/index.mdx", {
@@ -41,7 +22,7 @@ async function main() {
       const { data, content } = matter(source);
 
       const slug = file.replace(/\/index\.mdx$/, "");
-      const html = await markdownToHtml(content);
+      const html = await markdownToHtml(content, mathProfile(data.mathProfile));
 
       return {
         title: data.title ?? "Untitled",

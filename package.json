@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm run prebuild && next dev",
-    "prebuild": "tsx lib/generatePosts.ts && tsx lib/optimizeImages.ts",
+    "dev": "pnpm run prebuild && node scripts/dev.mjs",
+    "prebuild": "tsx lib/generatePosts.ts && tsx lib/generateNotes.ts && tsx lib/optimizeImages.ts",
     "build": "next build",
+    "test:markdown": "node --import tsx --test tests/markdown.test.ts",
     "preview": "opennextjs-cloudflare build && wrangler dev",
     "deploy": "opennextjs-cloudflare build && wrangler deploy"
   },

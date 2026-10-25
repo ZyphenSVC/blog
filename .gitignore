@@ -48,3 +48,5 @@ next-env.d.ts
 /public/media/optimized/face.webp
 /lib/generated-posts.json
 /public/media/optimized/logo.webp
+
+/lib/generated-notes.json

@@ -16,6 +16,8 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+Local development watches lecture-note files for live updates and uses Webpack to avoid the observed Turbopack “Next.js package not found” panic. For better filesystem performance on Linux, keep the working copy and dependencies on a native Linux filesystem (such as ext4). Production builds retain their existing configuration.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses `next/font/local` to load the original portfolio’s Inconsolata variable font from `public/fonts`, without downloading fonts at build time. Shared styles and the dark/light palettes live in `app/globals.css`; the theme toggle remembers the reader’s preference.
@@ -40,3 +42,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Lecture notes
+
+Reading groups appear under `/notes`. To add an Isogeny Reading Group lecture, follow [the authoring guide](content/notes/README.md). Lecture files are compiled during `prebuild`, separate from the blog feed, with Markdown and KaTeX support.
