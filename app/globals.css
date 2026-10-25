@@ -148,6 +148,14 @@ a.detail-card:hover h2 { color: var(--accent); }
 .contact-value { color: var(--accent); overflow-wrap: anywhere; }
 .documents { margin-top: 2rem; }
 .documents h2 { font-size: 1.35rem; }
+/* Search only sends feed summaries to the browser, not article bodies. */
+.blog-search { margin-bottom: 1.75rem; }
+.blog-search label { display: block; font-size: .95rem; margin-bottom: .45rem; color: var(--muted); }
+.blog-search-controls { display: flex; align-items: center; gap: .75rem; }
+.blog-search input { width: 100%; min-width: 0; padding: .65rem .8rem; border: 1px solid var(--border); border-radius: .35rem; background: var(--surface); color: var(--text); font: inherit; }
+.blog-search input::placeholder { color: var(--muted); opacity: 1; }
+.blog-search button { color: var(--accent); border: 0; background: transparent; padding: .5rem; }
+.blog-search .section-count { margin-top: .5rem; }
 .post-list { display: grid; gap: 1.5rem; }
 .portfolio-section .post-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .post-card h2, .post-card h3 { font-size: 1.3rem; line-height: 1.4; margin-bottom: .4rem; }

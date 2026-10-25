@@ -3,21 +3,21 @@ import Image from "next/image"
 import { ExperienceSection } from "@/app/components/ExperienceSection"
 import { PostSection } from "@/app/components/PostSection"
 import { CompetitiveHistory } from "@/app/components/CompetitiveHistorySection"
-import { getAllPosts } from "@/lib/posts"
+import { getWritingFeed } from "@/lib/feed"
 import { Icon } from "@/app/components/Icon"
 import { AcademicTalks, ServiceSection, SkillsSection, CourseworkSection } from "@/app/components/CvSections"
 import { researchExperience, workExperience, teachingExperience } from "@/lib/cv"
 
 export default async function Home() {
 
-  const posts = await getAllPosts();
+  const posts = await getWritingFeed();
   const recentPosts = posts.slice(0, 2).map((post) => ({
     date: post.date,
-    type: post.tags?.[0] ?? "Writing",
+    type: post.type ?? post.tags?.[0] ?? "Writing",
     title: post.title,
     description: post.description,
     tags: post.tags ?? [],
-    href: `/blog/${post.slug}`,
+    href: post.href,
   }));
 
   return (
@@ -48,7 +48,7 @@ export default async function Home() {
         {posts[0] && (
           <aside className="latest-post surface-card fade-in" aria-labelledby="latest-post-title">
             <h2 id="latest-post-title" className="icon-heading"><Icon name="pen" />Latest post</h2>
-            <h3><Link href={`/blog/${posts[0].slug}`}>{posts[0].title}</Link></h3>
+            <h3><Link href={posts[0].href}>{posts[0].title}</Link></h3>
             <p>{posts[0].description}</p>
             <Link href="/blog" className="all-posts">All posts →</Link>
           </aside>
