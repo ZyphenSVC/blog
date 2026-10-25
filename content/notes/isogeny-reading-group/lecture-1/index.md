@@ -23,7 +23,7 @@ Mathematicians against the current state of mathematics because of AI but are fi
 
 In this reading group, we will emphasize the reasoning behind definitions and theorems. Our goal is to understand not only which results hold, but why they hold and how they help us study isogenies.
 
-Also please check out [Note 29](https://zyphensvc.com/notes/isogeny-reading-group/lecture-1#note-33) for Zichen's comment on cosets and subgroups.
+Also please check out [Note 33](https://zyphensvc.com/notes/isogeny-reading-group/lecture-1#note-33) for Zichen's comment on cosets and subgroups.
 
 We begin our study of Isogeny Based Cryptosystems by providing an idea of what an Isogeny is informally, and then formally building up it's toolbelt.
 
