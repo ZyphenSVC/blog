@@ -10,8 +10,8 @@ draft: false
 
 > In order to address Isogeny Based Cryptography, we will need to have a crash course on mathematical structures. This will also hopefully bleed into other aspects of your cryptographic research.
 
-Generally the same way we concern about how sets are one of the simplest notion of mathematical structures ones deals with, we will see the same within algebra. There are generally three motivations for pools studying mathematics are:
-1. Those who only care about results, which are the theorems.
+There are generally three motivations for pools studying mathematics are:
+1. Those who primarily care about results, which are the theorems.
 2. Those who care about the proofs of such results.
 3. And those who do math for the love of the game.
 
@@ -21,10 +21,14 @@ Mathematicians against the current state of mathematics because of AI but are fi
 
 # Introduction
 
+In this reading group, we will emphasize the reasoning behind definitions and theorems. Our goal is to understand not only which results hold, but why they hold and how they help us study isogenies.
+
+Also please check out [Note 29](https://zyphensvc.com/notes/isogeny-reading-group/lecture-1#note-33) for Zichen's comment on cosets and subgroups.
+
 We begin our study of Isogeny Based Cryptosystems by providing an idea of what an Isogeny is informally, and then formally building up it's toolbelt.
 
-:::openquestion What is an isogeny?
-An isogeny is a nonconstant morphism between elliptic curves that perserves their group structure and identities.
+:::question What is an isogeny?
+An isogeny is a nonconstant morphism between elliptic curves that preserves their group structure and identities.
 :::
 
 Our goal is to eventually understand each of these terms, and also be able to state how it all relates back to our cryptosystem.
@@ -34,7 +38,7 @@ Our goal is to eventually understand each of these terms, and also be able to st
 :::definition Binary Operation
 Given a set $G$, we define a binary operation as:
 $$
-\mu : G\longrightarrow G,\qquad (a,b)\longmapsto ab
+\mu : G\times G\longrightarrow G,\qquad (a,b)\longmapsto ab
 $$
 This operation is closed, meaning every operation maintains being within the set same $G$.
 :::
@@ -55,7 +59,7 @@ A **group** is a monoid $(G,\mu)$ that also has inverses for every element. Both
 The group $(\mathbb{Z},+)$ has identity zero, inverse of $n$ is $-n$. But notice that $(\mathbb{Z},\cdot)$ is only a monoid since most integers do not have inverses closed within the integers.
 :::
 
-For the sake of simplicity, we will always denote $G$ as a group unless explicitely said.
+For the sake of simplicity, we will always denote $G$ as a group unless explicitly said.
 
 :::definition Abelian (commutative)
 If $ab = ba$ for every $a,b\in G$, then the group is abelian.
@@ -113,18 +117,30 @@ $$
 f(P+Q)=f(P)+f(Q)
 $$
 for every $P,Q\in G$.
+:::
 
-A **surjective homomorphism** is one that maps all elements from the domain to the codomain. Denoted in a mapping as $G \rightarrowtail H$.
+:::definition Surjective homomorphism
+A surjective homomorphism is one that maps all elements from the domain to the codomain. Denoted in a mapping as $G \twoheadrightarrow H$.
 
-An **injective homormorphism** is one that maps any valid element from the domain only once to the codomain. Denoted in a mapping as $G \hookrightarrow H$.
+> Every $h\in H$ equals $f(g)$ for atleast one $g\in G$.
+:::
 
-A **bijective homomorphism** is an isomorphism. If an isomorphism exists, we write $G\cong H$. Denoted in a mapping as $G \overset{\sim}{\longrightarrow} H$.
+:::definition Injective homomorphism
+An injective homomorphism is one that maps any valid element from the domain only once to the codomain. Denoted in a mapping as $G \hookrightarrow H$.
 
+> $f(P) = f(Q)$ implies $P = Q$.
+:::
+
+:::definition Isomorphism
+A bijective homomorphism is an isomorphism. If an isomorphism exists, we write $G\cong H$. Denoted in a mapping as $G \overset{\sim}{\longrightarrow} H$.
+:::
+
+:::definition Automorphism
 An isomorphism:
 $$
 f : G \overset{\sim}{\longrightarrow} G
 $$
-is known as a **automorphism**.
+is known as an **automorphism**.
 :::
 
 :::example Reduction of residue classes
@@ -189,7 +205,12 @@ $$
 \ker f=\{0_G\}.
 $$
 
-Now suppose $\ker f=\{0_G\}$. To prove injectivity, take any $P,Q\in G$ with $f(P)=f(Q)$. The kernel theorem gives
+Now suppose $\ker f=\{0_G\}$. To prove injectivity, take any $P,Q\in G$ with $f(P)=f(Q)$.
+\begin{align}
+f(P-Q) &= f(P) - f(Q)\\
+&= 0_H.
+\end{align}
+Therefore:
 $$
 P-Q\in\ker f.
 $$
