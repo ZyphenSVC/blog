@@ -1,0 +1,19 @@
+---
+title: "Lecture 1: Your lecture title"
+date: "YYYY-MM-DD"
+description: "A short summary of this lecture."
+tags: [isogenies, elliptic-curves]
+draft: true
+---
+
+## Overview
+
+Write your lecture notes here. Inline math uses $E/k$ and display math uses:
+
+$$
+\varphi : E \longrightarrow E'
+$$
+
+## References
+
+Add readings, exercises, or a link to a companion PDF here.
