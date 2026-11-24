@@ -83,7 +83,7 @@ article { min-width: 0; overflow-wrap: anywhere; }
 .intro-copy p + p { margin-top: .45rem; }
 .intro-links { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1.2rem; margin-top: 1.3rem; font-size: .94rem; }
 .intro-links a:first-child { padding: .4rem .8rem; border: 1px solid var(--border); border-radius: .35rem; }
-.portrait { width: 100%; height: auto; aspect-ratio: 1; border-radius: .5rem; object-fit: cover; filter: grayscale(1); }
+.portrait { width: 100%; height: auto; aspect-ratio: 1; border-radius: .5rem; object-fit: cover; }
 .surface-card { border: 1px solid var(--border); border-radius: .5rem; background: var(--surface); padding: 1.25rem; transition: border-color .2s ease; }
 .portfolio-section { margin-bottom: clamp(2.5rem, 5vw, 4.5rem); scroll-margin-top: 1rem; }
 .section-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .75rem 2rem; border-top: 1px solid var(--divider); padding-top: 1.65rem; margin-bottom: 1.25rem; }
