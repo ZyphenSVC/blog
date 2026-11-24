@@ -9,7 +9,7 @@ export default async function BlogPage() {
   return (
     <main id="main-content" className="reading-container page-content">
       <header className="page-heading">
-        <h1 className="reveal-text">Posts.</h1>
+        <h1 className="reveal-text">Writing</h1>
         <p>Research, technical writing, and things I’ve learned along the way.</p>
       </header>
       <BlogSearch posts={posts.map(({ title, description, date, tags, href, readingTime, type }) => ({

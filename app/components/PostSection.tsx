@@ -17,7 +17,7 @@ export function PostSection({ titleTop, titleBottom, href, linkLabel, items }: P
       <Reveal>
       <div className="section-heading">
         <h2 className="section-title"><Icon name="pen" />{titleTop} {titleBottom}</h2>
-        {href && linkLabel && <Link href={href}>{linkLabel} →</Link>}
+        {href && linkLabel && <Link href={href}>{linkLabel}</Link>}
       </div>
       <div className="post-list">{items.map((item) => <PostCard key={item.href} {...item} />)}</div>
       </Reveal>

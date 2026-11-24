@@ -8,6 +8,19 @@ import { Icon } from "@/app/components/Icon"
 import { AcademicTalks, ServiceSection, SkillsSection, CourseworkSection } from "@/app/components/CvSections"
 import { researchExperience, workExperience, teachingExperience } from "@/lib/cv"
 
+// Run during HTML parsing so an ordinary reload never paints the curtain.
+// The flag belongs to this page instance and disappears on client navigation.
+const entranceScript = `
+  {
+    const navigation = performance.getEntriesByType('navigation')[0];
+    const hardReload = navigation?.type === 'reload' &&
+      navigation.serverTiming?.some(metric => metric.name === 'portfolio-hard-reload');
+    if (navigation?.type === 'navigate' || hardReload) {
+      document.currentScript?.parentElement?.setAttribute('data-play-entrance', '');
+    }
+  }
+`;
+
 export default async function Home() {
 
   const posts = await getWritingFeed();
@@ -22,11 +35,16 @@ export default async function Home() {
 
   return (
     <main id="main-content">
-      <section className="intro content-container" aria-labelledby="intro-title">
+      <section className="intro content-container" aria-labelledby="intro-title" suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: entranceScript }} />
+        <div className="home-entrance" aria-hidden="true">
+          <span className="intro-lockup"><span className="intro-handle">zyphensvc</span></span>
+        </div>
         <div className="intro-grid">
           <div className="intro-copy fade-in">
-            <h1 id="intro-title" className="reveal-text">Hi, I’m Sriaditya.<br />I research things.</h1>
-            <p>I’m Sriaditya Vedantam, a security researcher working across cryptography, mathematics, and systems engineering.</p>
+            <p className="intro-role">Security researcher</p>
+            <h1 id="intro-title" className="reveal-text">Sriaditya Vedantam</h1>
+            <p>I work across cryptography, mathematics, and systems engineering.</p>
             <p>Interested in algebraic geometry, post-quantum cryptography, and homomorphic encryption.</p>
             <p>I write about research, build software, and study privacy-preserving machine learning at the University of Georgia.</p>
             <div className="intro-links">
@@ -37,7 +55,7 @@ export default async function Home() {
             </div>
           </div>
           <Image
-            src="/media/optimized/face_circ.webp"
+            src="/media/optimized/face.webp"
             alt="Sriaditya Vedantam"
             width={270}
             height={270}
@@ -45,16 +63,17 @@ export default async function Home() {
             className="portrait fade-in"
           />
         </div>
-        {posts[0] && (
-          <aside className="latest-post surface-card fade-in" aria-labelledby="latest-post-title">
-            <h2 id="latest-post-title" className="icon-heading"><Icon name="pen" />Latest post</h2>
-            <h3><Link href={posts[0].href}>{posts[0].title}</Link></h3>
-            <p>{posts[0].description}</p>
-            <Link href="/blog" className="all-posts">All posts →</Link>
-          </aside>
-        )}
       </section>
       <div className="content-container">
+        {recentPosts.length > 0 && (
+          <PostSection
+            titleTop="Recent"
+            titleBottom="writing"
+            href="/blog"
+            linkLabel="All posts"
+            items={recentPosts}
+          />
+        )}
         <nav className="profile-jumps" aria-label="Profile sections">
           {[
             ["education", "Education"], ["research", "Research"], ["talks", "Talks"],
@@ -118,13 +137,6 @@ export default async function Home() {
             ]}
           />
 
-          <PostSection
-            titleTop="Recent"
-            titleBottom="Posts"
-            href="/blog"
-            linkLabel="View All"
-            items={recentPosts}
-          />
 
           <ExperienceSection
             titleTop="Research"
