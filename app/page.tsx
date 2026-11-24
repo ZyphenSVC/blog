@@ -8,6 +8,19 @@ import { Icon } from "@/app/components/Icon"
 import { AcademicTalks, ServiceSection, SkillsSection, CourseworkSection } from "@/app/components/CvSections"
 import { researchExperience, workExperience, teachingExperience } from "@/lib/cv"
 
+// Run during HTML parsing so an ordinary reload never paints the curtain.
+// The flag belongs to this page instance and disappears on client navigation.
+const entranceScript = `
+  {
+    const navigation = performance.getEntriesByType('navigation')[0];
+    const hardReload = navigation?.type === 'reload' &&
+      navigation.serverTiming?.some(metric => metric.name === 'portfolio-hard-reload');
+    if (navigation?.type === 'navigate' || hardReload) {
+      document.currentScript?.parentElement?.setAttribute('data-play-entrance', '');
+    }
+  }
+`;
+
 export default async function Home() {
 
   const posts = await getWritingFeed();
@@ -22,7 +35,8 @@ export default async function Home() {
 
   return (
     <main id="main-content">
-      <section className="intro content-container" aria-labelledby="intro-title">
+      <section className="intro content-container" aria-labelledby="intro-title" suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: entranceScript }} />
         <div className="home-entrance" aria-hidden="true">
           <span className="intro-lockup"><span className="intro-handle">zyphensvc</span></span>
         </div>

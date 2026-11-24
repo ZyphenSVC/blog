@@ -225,13 +225,13 @@ a.detail-card:hover h2 { color: var(--accent); }
 .contact-heading { display: flex; align-items: center; gap: .6rem; }
 .contact-heading .icon { color: var(--accent); }
 @media (prefers-reduced-motion: no-preference) {
-  .intro-copy, .portrait, .page-heading, .article-header, .scroll-reveal[data-revealed="true"] {
+  .page-heading, .article-header, .scroll-reveal[data-revealed="true"] {
     animation: content-enter .36s ease-out;
   }
 }
 .home-entrance { display: none; }
 @media screen and (prefers-reduced-motion: no-preference) {
-  .home-entrance {
+  .intro[data-play-entrance] .home-entrance {
     display: grid;
     place-items: center;
     position: fixed;
@@ -262,7 +262,7 @@ a.detail-card:hover h2 { color: var(--accent); }
     white-space: nowrap;
     animation: type-handle 1.15s steps(9, end) 1.25s both;
   }
-  .intro-copy, .portrait { animation-delay: 2.88s; animation-fill-mode: backwards; }
+  .intro[data-play-entrance] :is(.intro-copy, .portrait) { animation: content-enter .36s ease-out 2.88s backwards; }
   body:focus-within .home-entrance { opacity: 0 !important; }
   body:focus-within .intro-copy, body:focus-within .portrait { opacity: 1 !important; translate: none !important; }
   @keyframes intro-curtain {
