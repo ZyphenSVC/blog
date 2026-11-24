@@ -151,7 +151,7 @@ export const teachingExperience = [
 export const hackPackVP = {
   organization: "The Hack Pack",
   role: "Vice President",
-  date: "November 14, 2026 — Present",
+  date: "November 2026 — Present",
   href: "https://thehackpack.org/",
 };
 

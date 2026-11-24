@@ -6,6 +6,7 @@
     "dev": "pnpm run prebuild && node scripts/dev.mjs",
     "prebuild": "tsx lib/generatePosts.ts && tsx lib/generateNotes.ts && tsx lib/optimizeImages.ts",
     "build": "next build",
+    "security:verify": "node scripts/verify-security.mjs",
     "test:markdown": "node --import tsx --test tests/markdown.test.ts",
     "preview": "opennextjs-cloudflare build && wrangler dev",
     "deploy": "opennextjs-cloudflare build && wrangler deploy"

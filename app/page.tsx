@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import Link from "next/link"
 import Image from "next/image"
 import { ExperienceSection } from "@/app/components/ExperienceSection"
@@ -23,6 +24,7 @@ const entranceScript = `
 
 export default async function Home() {
 
+  const nonce = (await headers()).get("x-portfolio-nonce") ?? undefined;
   const posts = await getWritingFeed();
   const recentPosts = posts.slice(0, 2).map((post) => ({
     date: post.date,
@@ -36,7 +38,7 @@ export default async function Home() {
   return (
     <main id="main-content">
       <section className="intro content-container" aria-labelledby="intro-title" suppressHydrationWarning>
-        <script dangerouslySetInnerHTML={{ __html: entranceScript }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: entranceScript }} />
         <div className="home-entrance" aria-hidden="true">
           <span className="intro-lockup"><span className="intro-handle">zyphensvc</span></span>
         </div>
@@ -168,7 +170,7 @@ export default async function Home() {
               {
                 org: "MurderKernel Labs",
                 role: "Founder",
-                date: "Present",
+                date: "November 2026 — Present",
                 href: "https://murderkernel.com/",
                 location: "Independent research",
                 description: "I founded MurderKernel Labs to explore cryptography, computational privacy, and low-level systems security.",
