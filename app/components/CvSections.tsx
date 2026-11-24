@@ -11,16 +11,18 @@ export function AcademicTalks() {
         </div>
         <div className="academic-list">
           {academicTalks.map((talk) => (
-            <article key={talk.startDate} className="surface-card talk-card">
+            <article key={talk.title} className="surface-card talk-card">
               <div className="talk-meta">
                 <time dateTime={talk.startDate}>{talk.date}</time>
                 <span>{talk.format}</span>
-                {talk.status && <span className="status-badge">{talk.status}</span>}
               </div>
               <div>
                 <h3>{talk.title}</h3>
                 <p className="talk-venue">{talk.venue}</p>
                 <p className="talk-location">{talk.location}</p>
+                {talk.abstract && <p>{talk.abstract}</p>}
+                {talk.prerequisites && <p><strong>Prerequisites:</strong> {talk.prerequisites}</p>}
+                {talk.slidesUrl && <a href={talk.slidesUrl} aria-label={`View slides for ${talk.title} on Canva`}>View slides on Canva ↗</a>}
                 {talk.programUrl && <a href={talk.programUrl}>Directed Reading Program ↗</a>}
               </div>
             </article>

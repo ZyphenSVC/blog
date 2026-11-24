@@ -2,14 +2,26 @@
 // Existing portfolio-only roles and certification plans remain on the homepage.
 export const academicTalks = [
   {
-    title: "Crash Course on Competitive Cryptography",
-    format: "Lecture series",
-    date: "October 27–29, 2026",
-    startDate: "2026-10-27",
-    endDate: "2026-10-29",
-    venue: "University of Georgia — The Hack Pack — Society for Cybersecurity",
+    title: "Zero-Knowledge Proofs: Art of Knowing Nothing",
+    format: "Talk",
+    date: "October 27, 2026 · 6:30 p.m.",
+    startDate: "2026-10-27T18:30:00-04:00",
+    venue: "University of Georgia — The Hack Pack",
+    location: "Physics 303, Athens, GA",
+    abstract: "How can you prove that you know a secret while keeping it private? Examples and a demonstration introduce completeness, soundness, and zero-knowledge. The talk closes with Google’s 2026 research on elliptic-curve cryptography and how the researchers used a zero-knowledge proof to validate their quantum resource estimates.",
+    prerequisites: "No prior cryptography experience required. Basic familiarity with programming is helpful.",
+    slidesUrl: "https://canva.link/d8mposraa96h3he",
+  },
+  {
+    title: "Homomorphic Encryption: The Ciphertext Heist",
+    slidesUrl: "https://canva.link/saruhf9xry54ss6",
+    format: "Talk",
+    date: "October 29, 2026",
+    startDate: "2026-10-29",
+    venue: "University of Georgia — The Hack Pack",
     location: "Athens, GA",
-    status: "Scheduled",
+    abstract: "What can you change about an encrypted message without knowing what it says? The Paillier cryptosystem gives us a concrete example: a calculation on ciphertexts can add their underlying plaintexts. Through examples of ciphertext malleability, chosen-ciphertext attacks, and reused randomness, we explore what confidentiality alone guarantees. A closing CTF challenge asks participants to change a simulated bank balance while it remains encrypted.",
+    prerequisites: "Basic programming, modular arithmetic, and introductory cryptography are helpful. No prior experience with homomorphic encryption is required.",
   },
   {
     title: "Rational Solutions to Pythagorean Triples",
