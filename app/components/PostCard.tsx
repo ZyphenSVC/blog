@@ -15,14 +15,16 @@ export function PostCard({ date, type, title, description, tags, href, readingTi
   const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
     <article className="post-card">
-      <Heading><Link href={href}>{title}</Link></Heading>
-      <div className="post-meta">
-        <time dateTime={date}>{date.slice(0, 10)}</time>
-        {readingTime && <span>• {readingTime}</span>}
-        {type && <span>• {type}</span>}
+      <time dateTime={date} className="post-date">{date.slice(0, 10)}</time>
+      <div>
+        <Heading><Link href={href}>{title}</Link></Heading>
+        <div className="post-meta">
+          {type && <span>{type}</span>}
+          {readingTime && <span>{readingTime}</span>}
+        </div>
+        <p>{description}</p>
+        {tags.length > 0 && <div className="tags">{tags.map((tag) => <span key={tag}>#{tag.replace(/^#/, "")}</span>)}</div>}
       </div>
-      <p>{description}</p>
-      {tags.length > 0 && <div className="tags">{tags.map((tag) => <span key={tag}>#{tag.replace(/^#/, "")}</span>)}</div>}
     </article>
   );
 }

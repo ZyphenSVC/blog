@@ -25,8 +25,9 @@ export default async function Home() {
       <section className="intro content-container" aria-labelledby="intro-title">
         <div className="intro-grid">
           <div className="intro-copy fade-in">
-            <h1 id="intro-title" className="reveal-text">Hi, I’m Sriaditya.<br />I research things.</h1>
-            <p>I’m Sriaditya Vedantam, a security researcher working across cryptography, mathematics, and systems engineering.</p>
+            <p className="intro-role">Security researcher</p>
+            <h1 id="intro-title" className="reveal-text">Sriaditya Vedantam</h1>
+            <p>I work across cryptography, mathematics, and systems engineering.</p>
             <p>Interested in algebraic geometry, post-quantum cryptography, and homomorphic encryption.</p>
             <p>I write about research, build software, and study privacy-preserving machine learning at the University of Georgia.</p>
             <div className="intro-links">
@@ -37,7 +38,7 @@ export default async function Home() {
             </div>
           </div>
           <Image
-            src="/media/optimized/face_circ.webp"
+            src="/media/optimized/face.webp"
             alt="Sriaditya Vedantam"
             width={270}
             height={270}
@@ -45,16 +46,17 @@ export default async function Home() {
             className="portrait fade-in"
           />
         </div>
-        {posts[0] && (
-          <aside className="latest-post surface-card fade-in" aria-labelledby="latest-post-title">
-            <h2 id="latest-post-title" className="icon-heading"><Icon name="pen" />Latest post</h2>
-            <h3><Link href={posts[0].href}>{posts[0].title}</Link></h3>
-            <p>{posts[0].description}</p>
-            <Link href="/blog" className="all-posts">All posts →</Link>
-          </aside>
-        )}
       </section>
       <div className="content-container">
+        {recentPosts.length > 0 && (
+          <PostSection
+            titleTop="Recent"
+            titleBottom="writing"
+            href="/blog"
+            linkLabel="All posts"
+            items={recentPosts}
+          />
+        )}
         <nav className="profile-jumps" aria-label="Profile sections">
           {[
             ["education", "Education"], ["research", "Research"], ["talks", "Talks"],
@@ -118,13 +120,6 @@ export default async function Home() {
             ]}
           />
 
-          <PostSection
-            titleTop="Recent"
-            titleBottom="Posts"
-            href="/blog"
-            linkLabel="View All"
-            items={recentPosts}
-          />
 
           <ExperienceSection
             titleTop="Research"
