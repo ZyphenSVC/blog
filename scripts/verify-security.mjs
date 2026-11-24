@@ -59,7 +59,14 @@ for (const path of ["/", "/", "/projects", "/research", "/contact", "/blog", "/n
     const src = scriptTag.getAttribute("src");
     if (src) {
       const url = new URL(src, base);
-      assert.equal(url.origin, base, path + " external script");
+      if (url.origin !== base) {
+        // Cloudflare adds this script after the Worker renders the document.
+        assert.match(url.href, /^https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js\/v[a-zA-Z0-9]+$/, path + " unexpected external script");
+        assert.equal(scriptTag.getAttribute("nonce"), nonce, path + " beacon nonce");
+        assert.equal(scriptTag.getAttribute("crossorigin"), "anonymous", path + " beacon CORS");
+        assert.match(scriptTag.getAttribute("integrity") ?? "", /^sha512-[A-Za-z0-9+/]{86}==$/, path + " beacon integrity");
+        continue;
+      }
       assets.add(url.pathname);
     } else if (scriptTag.rawText.trim()) {
       assert.equal(scriptTag.getAttribute("nonce"), nonce, path + " inline script");
