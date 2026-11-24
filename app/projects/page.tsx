@@ -2,6 +2,15 @@ import Link from "next/link";
 
 const projects = [
   {
+    title: "MurderKernel Labs",
+    type: "Independent Research",
+    status: "Active",
+    description:
+      "I founded MurderKernel Labs to explore the mathematics of secure computation, from cryptographic protocols to the systems that implement them.",
+    stack: ["Cryptography", "Computational Privacy", "Systems Security"],
+    href: "https://murderkernel.com/",
+  },
+  {
     title: "ZyphenSVC Blog Platform",
     type: "Full-Stack / Web Infrastructure",
     status: "Active",

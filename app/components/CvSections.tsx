@@ -40,10 +40,10 @@ export function ServiceSection() {
         </div>
         <div className="experience-list experience-columns-3">
           {serviceRoles.map((service) => (
-            <article key={service.organization} className="surface-card service-card">
+            <article key={service.organization + "-" + service.role} className="surface-card service-card">
               <p className="experience-meta">{service.date}</p>
               <h3>{service.role}</h3>
-              <p className="experience-org">{service.organization}</p>
+              <p className="experience-org">{service.href ? <a href={service.href}>{service.organization}</a> : service.organization}</p>
               {service.note && <p className="experience-description">{service.note}</p>}
             </article>
           ))}
