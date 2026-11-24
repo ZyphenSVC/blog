@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import { devContentRefreshScript } from "@/lib/dev-content-refresh";
+import { getDevContentVersion } from "@/lib/dev-content-version";
 import "./globals.css";
 
 const inconsolata = localFont({
@@ -36,10 +38,17 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const nonce = (await headers()).get("x-portfolio-nonce") ?? undefined;
+  const contentVersion = process.env.NODE_ENV === "development"
+    ? await getDevContentVersion().catch(() => null)
+    : null;
+
   return (
     <html lang="en" className={inconsolata.variable} suppressHydrationWarning>
       <head>
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('portfolio-theme')==='light')document.documentElement.dataset.theme='light'}catch{}" }} />
+        {process.env.NODE_ENV === "development" && (
+          <script nonce={nonce} id="dev-content-refresh" dangerouslySetInnerHTML={{ __html: devContentRefreshScript(contentVersion) }} />
+        )}
       </head>
       <body className="site-shell">
         <a className="skip-link" href="#main-content">Skip to content</a>

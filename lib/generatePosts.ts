@@ -44,4 +44,4 @@ async function main() {
   console.log(`Generated ${posts.length} posts.`);
 }
 
-main();
+main().catch((error) => { console.error(error); process.exitCode = 1; });

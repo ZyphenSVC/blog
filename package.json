@@ -8,6 +8,8 @@
     "build": "next build",
     "security:verify": "node scripts/verify-security.mjs",
     "test:markdown": "node --import tsx --test tests/markdown.test.ts",
+    "test:watch": "node --test tests/watch-content.test.mjs",
+    "test:content-refresh": "node --import tsx --test tests/dev-content.test.ts",
     "preview": "opennextjs-cloudflare build && wrangler dev",
     "deploy": "opennextjs-cloudflare build && wrangler deploy"
   },
