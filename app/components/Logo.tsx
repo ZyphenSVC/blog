@@ -3,9 +3,9 @@ import Image from "next/image";
 
 export function Logo() {
   return (
-    <Link href="/" className="site-brand" aria-label="ZyphenSVC home">
+    <Link href="/" className="site-brand" aria-label="zyphensvc home">
       <Image src="/media/classic/circleprofilepic.png" alt="" width={48} height={48} priority />
-      <span>ZyphenSVC</span>
+      <span>zyphensvc</span>
     </Link>
   );
 }

@@ -23,6 +23,9 @@ export default async function Home() {
   return (
     <main id="main-content">
       <section className="intro content-container" aria-labelledby="intro-title">
+        <div className="home-entrance" aria-hidden="true">
+          <span className="intro-lockup"><span className="intro-handle">zyphensvc</span></span>
+        </div>
         <div className="intro-grid">
           <div className="intro-copy fade-in">
             <p className="intro-role">Security researcher</p>

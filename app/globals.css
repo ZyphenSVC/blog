@@ -229,6 +229,56 @@ a.detail-card:hover h2 { color: var(--accent); }
     animation: content-enter .36s ease-out;
   }
 }
+.home-entrance { display: none; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .home-entrance {
+    display: grid;
+    place-items: center;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    visibility: hidden;
+    background: var(--bg);
+    animation: intro-curtain 1.65s ease-out;
+  }
+  .intro-lockup {
+    display: flex;
+    align-items: center;
+    gap: .65em;
+    color: var(--title);
+    font: 600 clamp(1.4rem, 4vw, 2rem)/1 var(--font-mono);
+  }
+  .intro-lockup::before {
+    content: "";
+    width: clamp(3.5rem, 8vw, 5rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: url("/media/classic/circleprofilepic.png") center / contain no-repeat;
+    animation: logo-shift .68s cubic-bezier(.25,.7,.25,1) both;
+  }
+  .intro-handle {
+    width: 9ch;
+    white-space: nowrap;
+    animation: type-handle .55s steps(9, end) .68s both;
+  }
+  .intro-copy, .portrait { animation-delay: 1.32s; animation-fill-mode: backwards; }
+  body:focus-within .home-entrance { opacity: 0 !important; }
+  body:focus-within .intro-copy, body:focus-within .portrait { opacity: 1 !important; translate: none !important; }
+  @keyframes intro-curtain {
+    0%, 80% { visibility: visible; opacity: 1; }
+    100% { visibility: visible; opacity: 0; }
+  }
+  @keyframes logo-shift {
+    /* Center the mark alone, then uncover the reserved nine-character wordmark. */
+    0%, 45% { transform: translateX(calc(4.5ch + .325em)); }
+    100% { transform: none; }
+  }
+  @keyframes type-handle {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+}
 @keyframes content-enter {
   from { opacity: 0; translate: 0 .3rem; }
   to { opacity: 1; translate: 0 0; }
