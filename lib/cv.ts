@@ -37,6 +37,7 @@ export const academicTalks = [
 export const researchExperience = [
   {
     org: "Small Satellite Research Lab, University of Georgia",
+    image: { src: "/media/ssrl.webp", alt: "", width: 320, height: 144 },
     role: "Data Science Team Lead Researcher",
     date: "August 2024 — May 2026",
     location: "Athens, GA",

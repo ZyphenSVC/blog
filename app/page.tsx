@@ -160,6 +160,7 @@ export default async function Home() {
             items={[
               {
                 org: hackPackVP.organization,
+                image: { src: "/media/hack-pack.webp", alt: "", width: 256, height: 256 },
                 role: hackPackVP.role,
                 date: hackPackVP.date,
                 href: hackPackVP.href,
@@ -169,6 +170,7 @@ export default async function Home() {
               },
               {
                 org: "MurderKernel Labs",
+                image: { src: "/media/murderkernel.webp", alt: "", width: 256, height: 256 },
                 role: "Founder",
                 date: "November 2026 — Present",
                 href: "https://murderkernel.com/",
@@ -178,6 +180,7 @@ export default async function Home() {
               },
               {
                 org: "Small Satellite Research Laboratory",
+                image: { src: "/media/ssrl.webp", alt: "", width: 320, height: 144 },
                 role: "Data Science Team Lead",
                 date: "August 2024 — May 2026",
                 location: "University of Georgia",
