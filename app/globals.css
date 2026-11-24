@@ -240,7 +240,7 @@ a.detail-card:hover h2 { color: var(--accent); }
     pointer-events: none;
     visibility: hidden;
     background: var(--bg);
-    animation: intro-curtain 1.65s ease-out;
+    animation: intro-curtain 3.6s ease-out;
   }
   .intro-lockup {
     display: flex;
@@ -255,14 +255,14 @@ a.detail-card:hover h2 { color: var(--accent); }
     aspect-ratio: 1;
     border-radius: 50%;
     background: url("/media/classic/circleprofilepic.png") center / contain no-repeat;
-    animation: logo-shift .68s cubic-bezier(.25,.7,.25,1) both;
+    animation: logo-shift 1.25s cubic-bezier(.25,.7,.25,1) both;
   }
   .intro-handle {
     width: 9ch;
     white-space: nowrap;
-    animation: type-handle .55s steps(9, end) .68s both;
+    animation: type-handle 1.15s steps(9, end) 1.25s both;
   }
-  .intro-copy, .portrait { animation-delay: 1.32s; animation-fill-mode: backwards; }
+  .intro-copy, .portrait { animation-delay: 2.88s; animation-fill-mode: backwards; }
   body:focus-within .home-entrance { opacity: 0 !important; }
   body:focus-within .intro-copy, body:focus-within .portrait { opacity: 1 !important; translate: none !important; }
   @keyframes intro-curtain {
