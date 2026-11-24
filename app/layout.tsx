@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Navbar from "@/app/components/Navbar";
@@ -33,11 +34,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const nonce = (await headers()).get("x-portfolio-nonce") ?? undefined;
   return (
     <html lang="en" className={inconsolata.variable} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('portfolio-theme')==='light')document.documentElement.dataset.theme='light'}catch{}" }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('portfolio-theme')==='light')document.documentElement.dataset.theme='light'}catch{}" }} />
       </head>
       <body className="site-shell">
         <a className="skip-link" href="#main-content">Skip to content</a>

@@ -148,7 +148,21 @@ export const teachingExperience = [
   },
 ];
 
-export const serviceRoles = [
+export const hackPackVP = {
+  organization: "The Hack Pack",
+  role: "Vice President",
+  date: "November 2026 — Present",
+  href: "https://thehackpack.org/",
+};
+
+export const serviceRoles: {
+  organization: string;
+  role: string;
+  date: string;
+  href?: string;
+  note?: string;
+}[] = [
+  hackPackVP,
   { organization: "Math Club", role: "VP of Communications and Promotion", date: "Fall 2025 — Present" },
   { organization: "The Hack Pack", role: "Red Team", date: "Fall 2023 — Present" },
   { organization: "Hats On Cybersecurity", role: "President", date: "Fall 2022 — Fall 2023", note: "Merged into The Hack Pack." },

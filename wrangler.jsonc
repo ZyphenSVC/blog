@@ -7,7 +7,9 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "main": ".open-next/worker.js",
+  "main": "worker.js",
+  "rules": [{ "type": "Text", "globs": ["**/_headers"], "fallthrough": true }],
+  "vars": { "CSP_MODE": "enforce" },
   "observability": {
     "enabled": true
   }

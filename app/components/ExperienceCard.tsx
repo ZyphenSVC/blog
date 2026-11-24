@@ -2,6 +2,7 @@ import Image from "next/image";
 
 export type ExperienceCardProps = {
   org: string;
+  href?: string;
   role: string;
   date: string;
   location: string;
@@ -11,12 +12,12 @@ export type ExperienceCardProps = {
   image?: { src: string; alt: string; width: number; height: number };
 };
 
-export function ExperienceCard({ org, role, date, location, description, tags, highlights, image }: ExperienceCardProps) {
+export function ExperienceCard({ org, href, role, date, location, description, tags, highlights, image }: ExperienceCardProps) {
   return (
     <article className="surface-card experience-card">
         <div className="experience-meta"><span>{date}</span><span>{location}</span></div>
         <div className="experience-heading">
-          <div><h3>{role}</h3><p className="experience-org">{org}</p></div>
+          <div><h3>{role}</h3><p className="experience-org">{href ? <a href={href}>{org}</a> : org}</p></div>
           {image && <Image {...image} alt={image.alt} className="experience-image" sizes="80px" />}
         </div>
         <p className="experience-description">{description}</p>

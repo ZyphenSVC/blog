@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import Link from "next/link"
 import Image from "next/image"
 import { ExperienceSection } from "@/app/components/ExperienceSection"
@@ -6,7 +7,7 @@ import { CompetitiveHistory } from "@/app/components/CompetitiveHistorySection"
 import { getWritingFeed } from "@/lib/feed"
 import { Icon } from "@/app/components/Icon"
 import { AcademicTalks, ServiceSection, SkillsSection, CourseworkSection } from "@/app/components/CvSections"
-import { researchExperience, workExperience, teachingExperience } from "@/lib/cv"
+import { hackPackVP, researchExperience, workExperience, teachingExperience } from "@/lib/cv"
 
 // Run during HTML parsing so an ordinary reload never paints the curtain.
 // The flag belongs to this page instance and disappears on client navigation.
@@ -23,6 +24,7 @@ const entranceScript = `
 
 export default async function Home() {
 
+  const nonce = (await headers()).get("x-portfolio-nonce") ?? undefined;
   const posts = await getWritingFeed();
   const recentPosts = posts.slice(0, 2).map((post) => ({
     date: post.date,
@@ -36,7 +38,7 @@ export default async function Home() {
   return (
     <main id="main-content">
       <section className="intro content-container" aria-labelledby="intro-title" suppressHydrationWarning>
-        <script dangerouslySetInnerHTML={{ __html: entranceScript }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: entranceScript }} />
         <div className="home-entrance" aria-hidden="true">
           <span className="intro-lockup"><span className="intro-handle">zyphensvc</span></span>
         </div>
@@ -156,6 +158,24 @@ export default async function Home() {
             icon="users"
             titleBottom="Experience"
             items={[
+              {
+                org: hackPackVP.organization,
+                role: hackPackVP.role,
+                date: hackPackVP.date,
+                href: hackPackVP.href,
+                location: "University of Georgia",
+                description: "I joined The Hack Pack’s Red Team in fall 2023 and became vice president in November 2026.",
+                tags: ["#cybersecurity", "#leadership"],
+              },
+              {
+                org: "MurderKernel Labs",
+                role: "Founder",
+                date: "November 2026 — Present",
+                href: "https://murderkernel.com/",
+                location: "Independent research",
+                description: "I founded MurderKernel Labs to explore cryptography, computational privacy, and low-level systems security.",
+                tags: ["#cryptography", "#privacy", "#systems"],
+              },
               {
                 org: "Small Satellite Research Laboratory",
                 role: "Data Science Team Lead",

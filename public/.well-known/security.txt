@@ -1,0 +1,4 @@
+Contact: mailto:svedantam@zyphensvc.com
+Expires: 2027-11-01T00:00:00Z
+Preferred-Languages: en
+Canonical: https://zyphensvc.com/.well-known/security.txt
