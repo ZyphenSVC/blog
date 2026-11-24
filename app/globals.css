@@ -102,6 +102,26 @@ article { min-width: 0; overflow-wrap: anywhere; }
 .experience-disclosure.surface-card { padding: 0; align-self: start; }
 .experience-disclosure > summary { display: block; cursor: pointer; padding: 1.25rem; border-radius: inherit; }
 .experience-disclosure > summary::-webkit-details-marker { display: none; }
+.experience-disclosure .experience-meta > :last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+}
+.experience-disclosure .experience-meta > :last-child::after {
+  content: "";
+  width: .55rem;
+  height: .55rem;
+  flex: none;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+.experience-disclosure[open] .experience-meta > :last-child::after {
+  transform: translateY(2px) rotate(225deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .experience-disclosure .experience-meta > :last-child::after { transition: transform 240ms ease; }
+}
 .experience-disclosure > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .experience-highlights { min-height: 0; overflow: hidden; }
 .experience-highlights ul { margin: 0 1.25rem 1.25rem; padding-left: 1.2rem; list-style: disc; }
