@@ -1,0 +1,113 @@
+---
+title: "Building My First Encrypted Inference Benchmark"
+date: "2026-11-25"
+description: "Start with two numbers and a prediction you can check by hand. Follow the same model under encryption and find where the answers disagree."
+tags: ["cryptography", "homomorphic encryption", "CKKS", "benchmarking"]
+---
+
+> Foreword
+
+For this experiment, I wanted to understand encrypted inference with a model simple enough to work through by hand. I wanted to see how a small difference in a decrypted score could change the model’s **prediction** from yes to no.
+
+I used a deliberately small task with two numbers as input. I’ll introduce the rule before any encryption, calculate a couple of answers on paper, and then follow the same calculation on ciphertexts with OpenFHE. Once the basic example works, we can examine the awkward cases near the decision boundary and compare two ways of doing the arithmetic. I’ll show the measurements I recorded and how to interpret them.
+
+# Building My First Encrypted Inference Benchmark
+
+## 1. Make a prediction by hand
+
+Here is the entire task. Take two numbers, $x$ and $y$, add them, and say yes if the absolute value of that sum is at least $0.5$. Say no otherwise. Both $(0.2,0.4)$ and $(-0.2,-0.4)$ get a yes because the sums have magnitude $0.6$. The pair $(0.2,-0.2)$ gets a no because the numbers cancel. For $(0.2,-0.4)$, the sum is $-0.2$, so the answer is no.
+
+This yes or no is the **label** attached to a pair. When the model sees a new pair, its yes or no answer is a **prediction**. We compare that prediction with the label from our original rule to measure how often the fitted model gets the task right. We also compare the model's plaintext prediction with its encrypted prediction to measure whether approximate arithmetic changed the answer. Those are different comparisons, and keeping them straight helped me read the results.
+
+The inputs $x$ and $y$ are the model's two **features**. Once the model has its fitted cutoff, using it to make predictions is called **inference**. Nothing in this dataset comes from a person or an application. I chose a rule that makes every correct answer easy to verify.
+
+I wanted the part running under encryption to use only addition, subtraction and multiplication. Raising a number to the fourth power gives the same result for either sign and grows as its magnitude grows. So we can compute a **score**, send it back, and let whoever decrypts it make the comparison.
+
+$$
+s=(x+y)^4-t.
+$$
+
+For a hand calculation, set $t=0.5^4=0.0625$. For $(0.2,0.4)$, the sum is $0.6$, its fourth power is $0.1296$, and its score is $0.0671$. A score greater than or equal to zero means yes. For $(0.2,-0.4)$, the sum is $-0.2$, its fourth power is $0.0016$, and its score is $-0.0609$. The prediction is no.
+
+The actual benchmark learns $t$ from 1,024 labeled training pairs. Line up their fourth powers, take the largest value labeled no and the smallest value labeled yes, and put the cutoff halfway between them. That gives $t\approx 0.0624104$. Learning one number is enough here. With this fitted value, an input very close to the original cutoff can receive a different label even before we encrypt it.
+
+## 2. Decide who can see what
+
+Think of the **client** as the person holding the inputs. The **evaluator** has the public model and does the arithmetic. In this walkthrough your computer plays both roles. Here’s what you would pass between them.
+
+| Step | Responsible party | Output |
+| --- | --- | --- |
+| Make keys | Client | A public encryption key, a secret decryption key, and material for evaluating multiplications |
+| Encode and encrypt the inputs | Client | Two ciphertexts holding the two columns of numbers |
+| Add, square twice, subtract the public cutoff | Evaluator | One ciphertext holding the scores |
+| Decrypt and compare each score with zero | Client | A score and a label for each input pair |
+
+Encoding turns numbers into the library’s arithmetic representation. Encryption uses a key and randomness to conceal that representation. With CKKS, the evaluator can add and multiply ciphertexts. Decrypting the result yields an *approximation* to the arithmetic on the original numbers. Encoding at finite precision and rounding during evaluation contribute to the difference. If you’ve ever seen a calculator round a decimal, you already know why a tiny difference might disappear in a printed result. Here it can also change a yes into a no. [Original CKKS paper](https://eprint.iacr.org/2016/421)
+
+The secret key is needed only in the last row, when the client decrypts the scores. The evaluator can finish the entire polynomial without seeing an input or deciding whether a score is positive.
+
+## 3. Work through four inputs
+
+The hand calculation used $t=0.0625$. For the recorded experiment I used the fitted value $t=0.06241039574305908$. The same formula, $s=(x+y)^4-t$, gives these plaintext scores for four pairs:
+
+| $x$ | $y$ | $x+y$ | Plaintext score | Prediction |
+| ---: | ---: | ---: | ---: | :--- |
+| $0.2$ | $0.4$ | $0.6$ | $+0.0671896$ | yes |
+| $0.2$ | $-0.4$ | $-0.2$ | $-0.0608104$ | no |
+| $-0.2$ | $-0.4$ | $-0.6$ | $+0.0671896$ | yes |
+| $0$ | $0$ | $0$ | $-0.0624104$ | no |
+
+The first score differs from the earlier $0.0671$ because the fitted cutoff differs from $0.0625$. That change happens even in ordinary plaintext arithmetic. To measure an error caused by encrypted evaluation, compare the encrypted result with the plaintext score computed using the **same** fitted cutoff.
+
+## 4. Follow the encrypted calculation
+
+The client can pack the four $x$ values into one ciphertext and the four $y$ values into another. The evaluator adds the ciphertexts, squares the sum, squares it again, and subtracts the public cutoff. Each operation acts on corresponding positions, so one sequence produces four encrypted scores. The client decrypts those scores and compares each one with zero.
+
+The table above shows the ideal plaintext values so we can check the arithmetic. The evaluator does not see those values. CKKS may return slightly different numerical scores after decryption, but these four examples are far enough from zero that a small error should leave their yes or no predictions unchanged. Swapping only the first two $y$ values would change which inputs are paired. Even exact arithmetic would then return different answers, so that comparison would not isolate encryption error.
+
+## 5. Make a prediction that is easy to flip
+
+Suppose a plaintext score is $0.1$. A numerical error of $-0.00001$ leaves its label positive. Move the score to $0.000001$ and the same error makes it negative. The distance from the score to zero is its **margin**. For this classifier, if the error is smaller in magnitude than the margin, the prediction stays on the same side of zero.
+
+The benchmark deliberately constructs hard inputs. Put $b=t^{1/4}$. At $|x+y|=b$, the plaintext score is zero. Pick a small positive distance $d$. To make a sample just outside the boundary, choose $x$ and set $y=(b+d)-x$. For a sample just inside it, use $b-d$. This lets us decide how hard to make the test before encrypting anything.
+
+For our fitted cutoff, $b\approx0.4998207$. Choose $d=2^{-26}\approx1.49\times10^{-8}$. The scores for $b-d$ and $b+d$ are about $-7.44\times10^{-9}$ and $+7.44\times10^{-9}$. Both are so close to zero that an error around $10^{-8}$ can change a prediction. The same construction works with negative sums because the fourth power ignores the sign.
+
+The plaintext scores stay fixed when the inputs stay fixed. Fresh encryption keys and ciphertexts can change the small numerical errors in the decrypted scores. A single run might agree on every label, so I repeated the experiment rather than judging it from one batch.
+
+## 6. Time two ways of computing the same answer
+
+On paper, $(z^2)^2$ and $((z^2)z)z$ are both $z^4$. The first needs two squarings. The second needs one squaring and two more multiplications. That count along the longest dependent chain is the *multiplicative depth*. The *depth budget* tells the library how much depth to prepare for when it chooses encryption parameters.
+
+I evaluated both circuits on the same encrypted batch, timed the encrypted arithmetic separately, and decrypted each result. I varied the scale modulus size (30, 40 or 50 bits) and depth budget (3 or 4). The scale controls the size used to represent approximate values. More scale bits can preserve smaller differences. To see what actually happened, compare the decrypted scores with plaintext scores for the same inputs.
+
+Three scale settings × two budgets × five repetitions × two circuits gave 60 evaluations. Each batch contained 128 randomly drawn test pairs plus 128 constructed boundary pairs. Each evaluation returned 256 scores, giving 15,360 score records. The same 256 inputs appeared repeatedly so I could compare settings on equal terms. I’m publishing summary measurements here and keeping the benchmark code and individual score records private.
+
+## 7. Read the measurements
+
+At 40 scale bits and depth budget 3, the two circuits produced these results on the same inputs:
+
+| Circuit | Ordinary inputs: changed labels | Inputs at $2^{-26}$ from the boundary: changed labels | Median time per 256-score batch |
+| :--- | ---: | ---: | ---: |
+| Balanced | $0/640$ | $74/160$ | $16.32$ ms |
+| Serial | $0/640$ | $68/160$ | $24.53$ ms |
+
+The ordinary denominator is 128 inputs encrypted five times. The boundary denominator is 32 inputs encrypted five times. A changed label means the encrypted prediction differed from the **same model’s plaintext prediction**, not necessarily from the rule that labeled the training data. The balanced circuit was faster here, but it still changed labels near the boundary. The difference of six changed labels between circuits is too little evidence to rank their general reliability: those 160 comparisons reuse just 32 input pairs.
+
+The scale setting also changed the result for the balanced circuit at that same offset:
+
+| Scale modulus | Changed labels at $2^{-26}$ |
+| ---: | ---: |
+| 30 bits | $79/160$ |
+| 40 bits | $74/160$ |
+| 50 bits | $0/160$ |
+
+Each timing is the median time to evaluate a packed batch across five runs. Dividing it by 256 gives an amortized time per prediction in a full batch. To find out how long one person submitting a single input would wait, we would have to time that workload, including the steps the person waits for. To use either flip count for a real model, we would first need to know how often its inputs fall this close to the boundary.
+
+## Conclusion
+
+Building this benchmark made me more careful about what I call an error. The fitted cutoff can make the plaintext model disagree with the original labeling rule before encryption enters the picture. To measure what CKKS changes, I have to compare its decrypted score with the **same model’s** plaintext score, then check whether the two predictions fall on opposite sides of zero.
+
+At 40 scale bits and a depth budget of 3, neither circuit changed a label on the ordinary inputs. On the deliberately constructed inputs at $2^{-26}$ from the boundary, the balanced circuit changed 74 of 160 labels and the serial circuit changed 68 of 160. The balanced circuit also evaluated the batch faster: $16.32$ ms versus $24.53$ ms. Those 160 comparisons reused only 32 input pairs across five encryptions, so the six-flip difference does not establish which circuit would be more reliable on new inputs. Increasing the balanced circuit’s scale to 50 bits removed the observed flips at that one distance, not at every distance.
+
+The next thing I would measure is the margin distribution on fresh inputs. The boundary pairs were designed to make tiny numerical differences matter; a real workload may put very few inputs there, or many. I would also time a single-input request, including the steps the client waits for, before treating batch evaluation time as user-facing latency. The [MurderKernel Labs research report](https://murderkernel.com/research/ckks-inference/) has the full precision table, circuit comparison, and figure.
