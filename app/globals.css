@@ -221,7 +221,8 @@ a.detail-card:hover h2 { color: var(--accent); }
 .article-body :where(pre, .katex-display) { max-width: 100%; overflow-x: auto; }
 .article-body :where(blockquote) { padding: 1rem 1.25rem; background: var(--surface); font-style: normal; }
 .article-body :where(img) { max-width: 100%; height: auto; border-radius: .25rem; }
-.article-body :where(table) { display: block; max-width: 100%; overflow-x: auto; }
+.article-body :where(table) { display: block; width: max-content; max-width: 100%; margin-inline: auto; overflow-x: auto; }
+.article-body :where(th, td) { overflow-wrap: normal; word-break: normal; }
 
 /* Academic blocks share the article palette and remain readable when nested. */
 .article-body .note-block { margin-block: 1.5em; padding: 1rem 1.25rem; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: .3rem; background: var(--surface); scroll-margin-top: 1rem; }
